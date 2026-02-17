@@ -2,6 +2,7 @@
 # Write delete_range(head, start, end) that removes all nodes from
 # index start to index end (inclusive), then returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,21 @@ class Node:
 
 
 def delete_range(head, start, end):
-    raise NotImplementedError('Implement delete_range(head, start, end).')
+    count = -1
+    dummy = Node(1)
+    dummy.next = head
+    a = dummy
+    while a is not None:
+        # while count in range(start - 1, end):
+        while start - 1 <= count < end:
+            a.next = a.next.next
+            count += 1
+        if a.next is None:
+            return dummy.next
+        else:
+            a = a.next
+            count += 1
+
 
 #
 #
@@ -56,6 +71,7 @@ def delete_range(head, start, end):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +98,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +116,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,13 +170,14 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_delete_middle_range():
     head = _make_linked_list([1, 2, 3, 4, 5])
     result = delete_range(head, 1, 3)
     _assert_equal(
         _linked_list_to_list(result),
         [1, 5],
-        'delete_range should remove the inclusive range in the middle.',
+        "delete_range should remove the inclusive range in the middle.",
     )
 
 
@@ -170,7 +187,7 @@ def test_delete_range_from_head():
     _assert_equal(
         _linked_list_to_list(result),
         [3, 4],
-        'delete_range with start=0 should correctly update the head.',
+        "delete_range with start=0 should correctly update the head.",
     )
 
 
@@ -180,7 +197,7 @@ def test_delete_range_to_tail():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3],
-        'delete_range should remove a suffix when end reaches the tail.',
+        "delete_range should remove a suffix when end reaches the tail.",
     )
 
 
@@ -190,22 +207,22 @@ def test_delete_single_index_range():
     _assert_equal(
         _linked_list_to_list(result),
         [10, 30],
-        'delete_range with start=end should remove exactly one node.',
+        "delete_range with start=end should remove exactly one node.",
     )
 
 
 def test_delete_entire_list_range_returns_none():
     head = _make_linked_list([7, 8, 9])
     result = delete_range(head, 0, 2)
-    _assert_true(result is None, 'Deleting the full index range should return None.')
+    _assert_true(result is None, "Deleting the full index range should return None.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('delete middle range', test_delete_middle_range),
-        ('delete range from head', test_delete_range_from_head),
-        ('delete range to tail', test_delete_range_to_tail),
-        ('delete single-index range', test_delete_single_index_range),
-        ('delete entire list range', test_delete_entire_list_range_returns_none),
+        ("delete middle range", test_delete_middle_range),
+        ("delete range from head", test_delete_range_from_head),
+        ("delete range to tail", test_delete_range_to_tail),
+        ("delete single-index range", test_delete_single_index_range),
+        ("delete entire list range", test_delete_entire_list_range_returns_none),
     ]
     _run_all_tests(TEST_CASES)

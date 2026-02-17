@@ -2,6 +2,7 @@
 # Write delete_at(head, index) that removes the node at the given
 # 0-indexed position and returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,19 @@ class Node:
 
 
 def delete_at(head, index):
-    raise NotImplementedError('Implement delete_at(head, index).')
+    count = 0
+    dummy = Node(1)
+    dummy.next = head
+    a = dummy
+    while a is not None:
+        if count == index:
+            a.next = a.next.next
+            return dummy.next
+        elif a.next is None:
+            raise IndexError
+        a = a.next
+        count += 1
+
 
 #
 #
@@ -56,6 +69,7 @@ def delete_at(head, index):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +96,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +114,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,13 +168,14 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_delete_at_head_index_zero():
     head = _make_linked_list([1, 2, 3])
     result = delete_at(head, 0)
     _assert_equal(
         _linked_list_to_list(result),
         [2, 3],
-        'delete_at(..., 0) should remove the head node.',
+        "delete_at(..., 0) should remove the head node.",
     )
 
 
@@ -170,7 +185,7 @@ def test_delete_at_middle_index():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 4],
-        'delete_at should remove the node at a middle index correctly.',
+        "delete_at should remove the node at a middle index correctly.",
     )
 
 
@@ -180,7 +195,7 @@ def test_delete_at_last_index():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2],
-        'delete_at should remove the tail when index points to the last node.',
+        "delete_at should remove the tail when index points to the last node.",
     )
 
 
@@ -188,23 +203,23 @@ def test_delete_at_raises_for_invalid_indexes():
     head = _make_linked_list([1, 2, 3])
     _assert_raises(
         lambda: delete_at(head, 3),
-        'delete_at should raise an error when index == length.',
+        "delete_at should raise an error when index == length.",
     )
     _assert_raises(
         lambda: delete_at(head, -1),
-        'delete_at should raise an error for a negative index.',
+        "delete_at should raise an error for a negative index.",
     )
     _assert_raises(
         lambda: delete_at(None, 0),
-        'delete_at should raise an error when deleting from an empty list.',
+        "delete_at should raise an error when deleting from an empty list.",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('delete head index', test_delete_at_head_index_zero),
-        ('delete middle index', test_delete_at_middle_index),
-        ('delete tail index', test_delete_at_last_index),
-        ('invalid indexes raise errors', test_delete_at_raises_for_invalid_indexes),
+        ("delete head index", test_delete_at_head_index_zero),
+        ("delete middle index", test_delete_at_middle_index),
+        ("delete tail index", test_delete_at_last_index),
+        ("invalid indexes raise errors", test_delete_at_raises_for_invalid_indexes),
     ]
     _run_all_tests(TEST_CASES)

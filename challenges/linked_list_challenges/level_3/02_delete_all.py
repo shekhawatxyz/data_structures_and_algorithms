@@ -12,24 +12,16 @@ class Node:
 def delete_all(head, value):
     if head is None:
         return None
-    while head.data == value:
-        head = head.next
-        if head is None:
-            return None
-    a = head
-    if a is None:
-        return None
+    dummy = Node(1)
+    dummy.next = head
+    a = dummy
     while a is not None:
-        # if a.data == value:
-        #     a = a.next
         if a.next is None:
-            return head
+            return dummy.next
         if a.next.data == value:
             a.next = a.next.next
-        a = a.next
-    if a is None:
-        return None
-    return head
+        else:
+            a = a.next
 
 
 #
