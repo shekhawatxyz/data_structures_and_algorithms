@@ -2,6 +2,7 @@
 # Write find_middle(head) that returns the middle node value.
 # For even-length lists, return the second middle value.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,17 @@ class Node:
 
 
 def find_middle(head):
-    raise NotImplementedError('Implement find_middle(head).')
+    h = head
+    tail = head
+    while head is not None:
+        if tail.next is None:
+            return h.data
+        elif tail.next.next is None:
+            return h.next.data
+        h = h.next
+        tail = tail.next.next
+    raise IndexError
+
 
 #
 #
@@ -56,6 +67,7 @@ def find_middle(head):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +94,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +112,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,9 +166,10 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_find_middle_in_odd_length_list():
     head = _make_linked_list([1, 2, 3, 4, 5])
-    _assert_equal(find_middle(head), 3, 'Middle of [1,2,3,4,5] should be 3.')
+    _assert_equal(find_middle(head), 3, "Middle of [1,2,3,4,5] should be 3.")
 
 
 def test_find_middle_in_even_length_list_returns_second_middle():
@@ -164,27 +177,32 @@ def test_find_middle_in_even_length_list_returns_second_middle():
     _assert_equal(
         find_middle(head),
         4,
-        'For even length, find_middle should return the second middle value.',
+        "For even length, find_middle should return the second middle value.",
     )
 
 
 def test_find_middle_single_node_list():
     head = _make_linked_list([42])
-    _assert_equal(find_middle(head), 42, 'Single-node list middle should be that node value.')
+    _assert_equal(
+        find_middle(head), 42, "Single-node list middle should be that node value."
+    )
 
 
 def test_find_middle_raises_on_empty_list():
     _assert_raises(
         lambda: find_middle(None),
-        'find_middle should raise an error when called on an empty list.',
+        "find_middle should raise an error when called on an empty list.",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('odd length middle', test_find_middle_in_odd_length_list),
-        ('even length returns second middle', test_find_middle_in_even_length_list_returns_second_middle),
-        ('single-node middle', test_find_middle_single_node_list),
-        ('empty list raises error', test_find_middle_raises_on_empty_list),
+        ("odd length middle", test_find_middle_in_odd_length_list),
+        (
+            "even length returns second middle",
+            test_find_middle_in_even_length_list_returns_second_middle,
+        ),
+        ("single-node middle", test_find_middle_single_node_list),
+        ("empty list raises error", test_find_middle_raises_on_empty_list),
     ]
     _run_all_tests(TEST_CASES)
