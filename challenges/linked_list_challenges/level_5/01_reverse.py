@@ -2,6 +2,7 @@
 # Write reverse(head) that reverses a linked list iteratively
 # and returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,15 @@ class Node:
 
 
 def reverse(head):
-    raise NotImplementedError('Implement reverse(head).')
+    prev = None
+    curr = head
+    while curr is not None:
+        nxt = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nxt
+    return prev
+
 
 #
 #
@@ -56,6 +65,7 @@ def reverse(head):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +92,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +110,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,15 +164,18 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_reverse_empty_list_returns_none():
     result = reverse(None)
-    _assert_true(result is None, 'reverse(None) should return None.')
+    _assert_true(result is None, "reverse(None) should return None.")
 
 
 def test_reverse_single_node_list():
     head = _make_linked_list([5])
     result = reverse(head)
-    _assert_equal(_linked_list_to_list(result), [5], 'Single-node reverse should stay [5].')
+    _assert_equal(
+        _linked_list_to_list(result), [5], "Single-node reverse should stay [5]."
+    )
 
 
 def test_reverse_multiple_nodes():
@@ -171,7 +184,7 @@ def test_reverse_multiple_nodes():
     _assert_equal(
         _linked_list_to_list(result),
         [4, 3, 2, 1],
-        'reverse should invert the order of all nodes.',
+        "reverse should invert the order of all nodes.",
     )
 
 
@@ -181,15 +194,15 @@ def test_reverse_with_duplicate_values():
     _assert_equal(
         _linked_list_to_list(result),
         [3, 2, 2, 1],
-        'reverse should handle duplicate values correctly.',
+        "reverse should handle duplicate values correctly.",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('empty list reverse', test_reverse_empty_list_returns_none),
-        ('single-node reverse', test_reverse_single_node_list),
-        ('multi-node reverse', test_reverse_multiple_nodes),
-        ('duplicates reverse correctly', test_reverse_with_duplicate_values),
+        ("empty list reverse", test_reverse_empty_list_returns_none),
+        ("single-node reverse", test_reverse_single_node_list),
+        ("multi-node reverse", test_reverse_multiple_nodes),
+        ("duplicates reverse correctly", test_reverse_with_duplicate_values),
     ]
     _run_all_tests(TEST_CASES)
