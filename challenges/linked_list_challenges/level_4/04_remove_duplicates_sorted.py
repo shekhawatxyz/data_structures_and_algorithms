@@ -2,6 +2,7 @@
 # Write remove_duplicates_sorted(head) for a non-decreasing sorted list
 # so that each distinct value appears only once.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,21 @@ class Node:
 
 
 def remove_duplicates_sorted(head):
-    raise NotImplementedError('Implement remove_duplicates_sorted(head).')
+    # s1 = set()
+    # s2 = set()
+    dummy = Node(1)
+    dummy.next = head
+    a = dummy
+    while a.next is not None:
+        if a.next.next is None:
+            return dummy.next
+        elif a.next.data == a.next.next.data:
+            a.next = a.next.next
+        else:
+            # s1.add(a.next.data)
+            a = a.next
+    return dummy.next
+
 
 #
 #
@@ -56,6 +71,7 @@ def remove_duplicates_sorted(head):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +98,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +116,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,9 +170,10 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_remove_duplicates_sorted_handles_empty_list():
     result = remove_duplicates_sorted(None)
-    _assert_true(result is None, 'remove_duplicates_sorted(None) should return None.')
+    _assert_true(result is None, "remove_duplicates_sorted(None) should return None.")
 
 
 def test_remove_duplicates_sorted_on_already_unique_values():
@@ -165,7 +182,7 @@ def test_remove_duplicates_sorted_on_already_unique_values():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3, 4],
-        'A list with unique sorted values should remain unchanged.',
+        "A list with unique sorted values should remain unchanged.",
     )
 
 
@@ -175,7 +192,7 @@ def test_remove_duplicates_sorted_collapses_duplicate_runs():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3, 4],
-        'Duplicate runs in a sorted list should be collapsed to one node each.',
+        "Duplicate runs in a sorted list should be collapsed to one node each.",
     )
 
 
@@ -185,15 +202,21 @@ def test_remove_duplicates_sorted_all_values_same():
     _assert_equal(
         _linked_list_to_list(result),
         [9],
-        'When all values are the same, one node should remain.',
+        "When all values are the same, one node should remain.",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('empty list stays empty', test_remove_duplicates_sorted_handles_empty_list),
-        ('already unique list unchanged', test_remove_duplicates_sorted_on_already_unique_values),
-        ('duplicate runs collapsed', test_remove_duplicates_sorted_collapses_duplicate_runs),
-        ('all values identical', test_remove_duplicates_sorted_all_values_same),
+        ("empty list stays empty", test_remove_duplicates_sorted_handles_empty_list),
+        (
+            "already unique list unchanged",
+            test_remove_duplicates_sorted_on_already_unique_values,
+        ),
+        (
+            "duplicate runs collapsed",
+            test_remove_duplicates_sorted_collapses_duplicate_runs,
+        ),
+        ("all values identical", test_remove_duplicates_sorted_all_values_same),
     ]
     _run_all_tests(TEST_CASES)
