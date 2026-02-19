@@ -2,6 +2,7 @@
 # Write reverse_recursive(head) that reverses a linked list recursively
 # and returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,16 @@ class Node:
 
 
 def reverse_recursive(head):
-    raise NotImplementedError('Implement reverse_recursive(head).')
+    if head is None:
+        return None
+    elif head.next is None:
+        return head
+    else:
+        new_head = reverse_recursive(head.next)
+        head.next.next = head
+        head.next = None
+        return new_head
+
 
 #
 #
@@ -56,6 +66,7 @@ def reverse_recursive(head):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +93,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +111,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,15 +165,20 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_reverse_recursive_empty_list_returns_none():
     result = reverse_recursive(None)
-    _assert_true(result is None, 'reverse_recursive(None) should return None.')
+    _assert_true(result is None, "reverse_recursive(None) should return None.")
 
 
 def test_reverse_recursive_single_node_list():
     head = _make_linked_list([11])
     result = reverse_recursive(head)
-    _assert_equal(_linked_list_to_list(result), [11], 'Single-node recursive reverse should stay [11].')
+    _assert_equal(
+        _linked_list_to_list(result),
+        [11],
+        "Single-node recursive reverse should stay [11].",
+    )
 
 
 def test_reverse_recursive_multiple_nodes():
@@ -171,7 +187,7 @@ def test_reverse_recursive_multiple_nodes():
     _assert_equal(
         _linked_list_to_list(result),
         [5, 4, 3, 2, 1],
-        'reverse_recursive should invert all nodes in the list.',
+        "reverse_recursive should invert all nodes in the list.",
     )
 
 
@@ -181,15 +197,15 @@ def test_reverse_recursive_with_duplicates():
     _assert_equal(
         _linked_list_to_list(result),
         [8, 9, 9],
-        'reverse_recursive should handle repeated values correctly.',
+        "reverse_recursive should handle repeated values correctly.",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('empty recursive reverse', test_reverse_recursive_empty_list_returns_none),
-        ('single-node recursive reverse', test_reverse_recursive_single_node_list),
-        ('multi-node recursive reverse', test_reverse_recursive_multiple_nodes),
-        ('duplicates recursive reverse', test_reverse_recursive_with_duplicates),
+        ("empty recursive reverse", test_reverse_recursive_empty_list_returns_none),
+        ("single-node recursive reverse", test_reverse_recursive_single_node_list),
+        ("multi-node recursive reverse", test_reverse_recursive_multiple_nodes),
+        ("duplicates recursive reverse", test_reverse_recursive_with_duplicates),
     ]
     _run_all_tests(TEST_CASES)
