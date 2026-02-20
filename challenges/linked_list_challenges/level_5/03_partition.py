@@ -2,6 +2,7 @@
 # Write partition(head, x) that places all values < x before values >= x,
 # while preserving relative order within each partition.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,22 @@ class Node:
 
 
 def partition(head, x):
-    raise NotImplementedError('Implement partition(head, x).')
+    small_dummy = Node(0)
+    big_dummy = Node(0)
+    small_tail = small_dummy
+    big_tail = big_dummy
+    while head is not None:
+        if head.data < x:
+            small_tail.next = head
+            small_tail = small_tail.next
+        else:
+            big_tail.next = head
+            big_tail = big_tail.next
+        head = head.next
+    big_tail.next = None
+    small_tail.next = big_dummy.next
+    return small_dummy.next
+
 
 #
 #
@@ -56,6 +72,7 @@ def partition(head, x):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +99,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +117,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,13 +171,14 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_partition_mixed_values_with_stable_order():
     head = _make_linked_list([3, 5, 8, 5, 10, 2, 1])
     result = partition(head, 5)
     _assert_equal(
         _linked_list_to_list(result),
         [3, 2, 1, 5, 8, 5, 10],
-        'partition should preserve relative order in both <x and >=x groups.',
+        "partition should preserve relative order in both <x and >=x groups.",
     )
 
 
@@ -170,7 +188,7 @@ def test_partition_all_values_less_than_x():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3],
-        'If all values are < x, partition should leave the list unchanged.',
+        "If all values are < x, partition should leave the list unchanged.",
     )
 
 
@@ -180,20 +198,23 @@ def test_partition_all_values_greater_or_equal_x():
     _assert_equal(
         _linked_list_to_list(result),
         [7, 8, 9],
-        'If all values are >= x, partition should leave the list unchanged.',
+        "If all values are >= x, partition should leave the list unchanged.",
     )
 
 
 def test_partition_handles_empty_list():
     result = partition(None, 3)
-    _assert_true(result is None, 'partition(None, x) should return None.')
+    _assert_true(result is None, "partition(None, x) should return None.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('mixed values stable partition', test_partition_mixed_values_with_stable_order),
-        ('all values less than x', test_partition_all_values_less_than_x),
-        ('all values >= x', test_partition_all_values_greater_or_equal_x),
-        ('empty list partition', test_partition_handles_empty_list),
+        (
+            "mixed values stable partition",
+            test_partition_mixed_values_with_stable_order,
+        ),
+        ("all values less than x", test_partition_all_values_less_than_x),
+        ("all values >= x", test_partition_all_values_greater_or_equal_x),
+        ("empty list partition", test_partition_handles_empty_list),
     ]
     _run_all_tests(TEST_CASES)

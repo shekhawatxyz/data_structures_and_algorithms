@@ -11,7 +11,7 @@ class Node:
 
 def reverse_recursive(head):
     if head is None:
-        return None
+        return head
     elif head.next is None:
         return head
     else:
