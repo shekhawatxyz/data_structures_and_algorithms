@@ -2,6 +2,7 @@
 # Write interleave(head1, head2) that weaves two lists together.
 # If one list is longer, append the remaining nodes at the end.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,20 @@ class Node:
 
 
 def interleave(head1, head2):
-    raise NotImplementedError('Implement interleave(head1, head2).')
+    dummy = Node(0)
+    tail = dummy
+    while head1 and head2:
+        nxt1 = head1.next
+        nxt2 = head2.next
+        tail.next = head1
+        tail = tail.next
+        tail.next = head2
+        tail = tail.next
+        head1 = nxt1
+        head2 = nxt2
+    tail.next = head1 if head1 else head2
+    return dummy.next
+
 
 #
 #
@@ -56,6 +70,7 @@ def interleave(head1, head2):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +97,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +115,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,54 +169,59 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_interleave_equal_lengths():
     head1 = _make_linked_list([1, 2, 3])
-    head2 = _make_linked_list(['a', 'b', 'c'])
+    head2 = _make_linked_list(["a", "b", "c"])
     result = interleave(head1, head2)
     _assert_equal(
         _linked_list_to_list(result),
-        [1, 'a', 2, 'b', 3, 'c'],
-        'interleave should alternate nodes when list lengths are equal.',
+        [1, "a", 2, "b", 3, "c"],
+        "interleave should alternate nodes when list lengths are equal.",
     )
 
 
 def test_interleave_first_list_longer():
     head1 = _make_linked_list([1, 2, 3, 4, 5])
-    head2 = _make_linked_list(['x', 'y'])
+    head2 = _make_linked_list(["x", "y"])
     result = interleave(head1, head2)
     _assert_equal(
         _linked_list_to_list(result),
-        [1, 'x', 2, 'y', 3, 4, 5],
-        'Remaining nodes from first list should stay at the end.',
+        [1, "x", 2, "y", 3, 4, 5],
+        "Remaining nodes from first list should stay at the end.",
     )
 
 
 def test_interleave_second_list_longer():
     head1 = _make_linked_list([1, 2])
-    head2 = _make_linked_list(['x', 'y', 'z'])
+    head2 = _make_linked_list(["x", "y", "z"])
     result = interleave(head1, head2)
     _assert_equal(
         _linked_list_to_list(result),
-        [1, 'x', 2, 'y', 'z'],
-        'Remaining nodes from second list should stay at the end.',
+        [1, "x", 2, "y", "z"],
+        "Remaining nodes from second list should stay at the end.",
     )
 
 
 def test_interleave_with_empty_list_inputs():
     only_second = _make_linked_list([9, 8])
     result1 = interleave(None, only_second)
-    _assert_equal(_linked_list_to_list(result1), [9, 8], 'interleave(None, B) should return B.')
+    _assert_equal(
+        _linked_list_to_list(result1), [9, 8], "interleave(None, B) should return B."
+    )
 
     only_first = _make_linked_list([1, 2])
     result2 = interleave(only_first, None)
-    _assert_equal(_linked_list_to_list(result2), [1, 2], 'interleave(A, None) should return A.')
+    _assert_equal(
+        _linked_list_to_list(result2), [1, 2], "interleave(A, None) should return A."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('equal length interleave', test_interleave_equal_lengths),
-        ('first list longer', test_interleave_first_list_longer),
-        ('second list longer', test_interleave_second_list_longer),
-        ('handles empty inputs', test_interleave_with_empty_list_inputs),
+        ("equal length interleave", test_interleave_equal_lengths),
+        ("first list longer", test_interleave_first_list_longer),
+        ("second list longer", test_interleave_second_list_longer),
+        ("handles empty inputs", test_interleave_with_empty_list_inputs),
     ]
     _run_all_tests(TEST_CASES)

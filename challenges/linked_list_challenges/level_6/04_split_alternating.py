@@ -2,6 +2,7 @@
 # Write split_alternating(head) that splits one list into two lists
 # by alternating nodes, and returns both heads.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,30 @@ class Node:
 
 
 def split_alternating(head):
-    raise NotImplementedError('Implement split_alternating(head).')
+    dummy1 = Node(1)
+    tail1 = dummy1
+    dummy2 = Node(1)
+    tail2 = dummy2
+    if head is None:
+        return None, None
+    elif head.next is None:
+        return head, None
+    while head:
+        if head.next:
+            nxt = head.next
+            tail1.next = head
+            tail1 = tail1.next
+            tail2.next = head.next
+            tail2 = tail2.next
+            head = nxt.next
+        else:
+            tail1.next = head
+            tail1 = tail1.next
+            head = head.next
+        tail1.next = None
+        tail2.next = None
+    return dummy1.next, dummy2.next
+
 
 #
 #
@@ -56,6 +80,7 @@ def split_alternating(head):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +107,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +125,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,10 +179,11 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def _as_two_heads(result):
     _assert_true(
         isinstance(result, (tuple, list)) and len(result) == 2,
-        'split_alternating should return a pair (head_a, head_b).',
+        "split_alternating should return a pair (head_a, head_b).",
     )
     return result[0], result[1]
 
@@ -170,46 +196,58 @@ def test_split_alternating_odd_length_list():
     _assert_equal(
         _linked_list_to_list(head_a),
         [1, 3, 5],
-        'Odd-length split should place indices 0,2,4 in first list.',
+        "Odd-length split should place indices 0,2,4 in first list.",
     )
     _assert_equal(
         _linked_list_to_list(head_b),
         [2, 4],
-        'Odd-length split should place indices 1,3 in second list.',
+        "Odd-length split should place indices 1,3 in second list.",
     )
 
     result_ids = set(_node_ids(head_a) + _node_ids(head_b))
     _assert_equal(
         result_ids,
         expected_ids,
-        'split_alternating should reuse all original nodes exactly once.',
+        "split_alternating should reuse all original nodes exactly once.",
     )
 
 
 def test_split_alternating_even_length_list():
     head = _make_linked_list([10, 20, 30, 40])
     head_a, head_b = _as_two_heads(split_alternating(head))
-    _assert_equal(_linked_list_to_list(head_a), [10, 30], 'First output should be indices 0 and 2.')
-    _assert_equal(_linked_list_to_list(head_b), [20, 40], 'Second output should be indices 1 and 3.')
+    _assert_equal(
+        _linked_list_to_list(head_a),
+        [10, 30],
+        "First output should be indices 0 and 2.",
+    )
+    _assert_equal(
+        _linked_list_to_list(head_b),
+        [20, 40],
+        "Second output should be indices 1 and 3.",
+    )
 
 
 def test_split_alternating_single_node_list():
     head = _make_linked_list([99])
     head_a, head_b = _as_two_heads(split_alternating(head))
-    _assert_equal(_linked_list_to_list(head_a), [99], 'Single node should go to first list.')
-    _assert_true(head_b is None, 'Second list should be None for single-node input.')
+    _assert_equal(
+        _linked_list_to_list(head_a), [99], "Single node should go to first list."
+    )
+    _assert_true(head_b is None, "Second list should be None for single-node input.")
 
 
 def test_split_alternating_empty_list():
     head_a, head_b = _as_two_heads(split_alternating(None))
-    _assert_true(head_a is None and head_b is None, 'Empty input should return (None, None).')
+    _assert_true(
+        head_a is None and head_b is None, "Empty input should return (None, None)."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('odd length alternating split', test_split_alternating_odd_length_list),
-        ('even length alternating split', test_split_alternating_even_length_list),
-        ('single-node alternating split', test_split_alternating_single_node_list),
-        ('empty alternating split', test_split_alternating_empty_list),
+        ("odd length alternating split", test_split_alternating_odd_length_list),
+        ("even length alternating split", test_split_alternating_even_length_list),
+        ("single-node alternating split", test_split_alternating_single_node_list),
+        ("empty alternating split", test_split_alternating_empty_list),
     ]
     _run_all_tests(TEST_CASES)
