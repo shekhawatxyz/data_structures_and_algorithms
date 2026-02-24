@@ -2,6 +2,7 @@
 # Write rotate(head, k) that rotates the list to the right by k places.
 # Handle k values larger than the list length.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,29 @@ class Node:
 
 
 def rotate(head, k):
-    raise NotImplementedError('Implement rotate(head, k).')
+    if k == 0:
+        return head
+    elif head is None:
+        return None
+    elif head.next is None:
+        return head
+    length = 1
+    a = head
+    while a.next:
+        a = a.next
+        length += 1
+    b = head
+    left_shifted_length = length - (k % length)
+    if left_shifted_length == 0:
+        return head
+    for _ in range(left_shifted_length):
+        b = b.next
+
+    c = b.next
+    b.next = None
+    a.next = head
+    return c
+
 
 #
 #
@@ -56,6 +79,7 @@ def rotate(head, k):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +106,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +124,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,10 +178,15 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_rotate_by_zero_keeps_list_unchanged():
     head = _make_linked_list([1, 2, 3, 4])
     result = rotate(head, 0)
-    _assert_equal(_linked_list_to_list(result), [1, 2, 3, 4], 'rotate(..., 0) should not change the list.')
+    _assert_equal(
+        _linked_list_to_list(result),
+        [1, 2, 3, 4],
+        "rotate(..., 0) should not change the list.",
+    )
 
 
 def test_rotate_by_value_less_than_length():
@@ -166,7 +195,7 @@ def test_rotate_by_value_less_than_length():
     _assert_equal(
         _linked_list_to_list(result),
         [4, 5, 1, 2, 3],
-        'Right rotate by 2 should move the last two nodes to the front.',
+        "Right rotate by 2 should move the last two nodes to the front.",
     )
 
 
@@ -176,23 +205,27 @@ def test_rotate_by_value_greater_than_length():
     _assert_equal(
         _linked_list_to_list(result),
         [4, 5, 1, 2, 3],
-        'rotate should apply k modulo list length for large k.',
+        "rotate should apply k modulo list length for large k.",
     )
 
 
 def test_rotate_empty_and_single_node_lists():
-    _assert_true(rotate(None, 3) is None, 'Rotating an empty list should return None.')
+    _assert_true(rotate(None, 3) is None, "Rotating an empty list should return None.")
 
     single = _make_linked_list([9])
     result = rotate(single, 100)
-    _assert_equal(_linked_list_to_list(result), [9], 'Single-node list should remain unchanged for any k.')
+    _assert_equal(
+        _linked_list_to_list(result),
+        [9],
+        "Single-node list should remain unchanged for any k.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('rotate by zero', test_rotate_by_zero_keeps_list_unchanged),
-        ('rotate by k < length', test_rotate_by_value_less_than_length),
-        ('rotate by k > length', test_rotate_by_value_greater_than_length),
-        ('rotate empty/single lists', test_rotate_empty_and_single_node_lists),
+        ("rotate by zero", test_rotate_by_zero_keeps_list_unchanged),
+        ("rotate by k < length", test_rotate_by_value_less_than_length),
+        ("rotate by k > length", test_rotate_by_value_greater_than_length),
+        ("rotate empty/single lists", test_rotate_empty_and_single_node_lists),
     ]
     _run_all_tests(TEST_CASES)
