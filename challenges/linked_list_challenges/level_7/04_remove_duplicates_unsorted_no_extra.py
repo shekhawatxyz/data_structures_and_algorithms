@@ -2,6 +2,7 @@
 # Write remove_duplicates_unsorted_no_extra(head) that removes duplicates
 # from an unsorted list without extra data structures.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,20 @@ class Node:
 
 
 def remove_duplicates_unsorted_no_extra(head):
-    raise NotImplementedError('Implement remove_duplicates_unsorted_no_extra(head).')
+    if head is None:
+        return None
+    a = head
+    while a.next:
+        b = head
+        while b != a.next:
+            if b.data == a.next.data:
+                a.next = a.next.next
+                break
+            b = b.next
+        else:
+            a = a.next
+    return head
+
 
 #
 #
@@ -56,6 +70,7 @@ def remove_duplicates_unsorted_no_extra(head):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +97,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +115,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,13 +169,14 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_remove_duplicates_no_extra_preserves_first_occurrences():
     head = _make_linked_list([3, 1, 3, 2, 1, 4, 2])
     result = remove_duplicates_unsorted_no_extra(head)
     _assert_equal(
         _linked_list_to_list(result),
         [3, 1, 2, 4],
-        'remove_duplicates_unsorted_no_extra should keep first occurrences in order.',
+        "remove_duplicates_unsorted_no_extra should keep first occurrences in order.",
     )
 
 
@@ -170,7 +186,7 @@ def test_remove_duplicates_no_extra_no_duplicates_case():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3],
-        'List with no duplicates should remain unchanged.',
+        "List with no duplicates should remain unchanged.",
     )
 
 
@@ -180,20 +196,28 @@ def test_remove_duplicates_no_extra_all_duplicates_case():
     _assert_equal(
         _linked_list_to_list(result),
         [8],
-        'All-duplicate list should collapse to one node.',
+        "All-duplicate list should collapse to one node.",
     )
 
 
 def test_remove_duplicates_no_extra_empty_list():
     result = remove_duplicates_unsorted_no_extra(None)
-    _assert_true(result is None, 'remove_duplicates_unsorted_no_extra(None) should return None.')
+    _assert_true(
+        result is None, "remove_duplicates_unsorted_no_extra(None) should return None."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('preserves first occurrences', test_remove_duplicates_no_extra_preserves_first_occurrences),
-        ('no duplicates unchanged', test_remove_duplicates_no_extra_no_duplicates_case),
-        ('all duplicates collapse', test_remove_duplicates_no_extra_all_duplicates_case),
-        ('empty list returns None', test_remove_duplicates_no_extra_empty_list),
+        (
+            "preserves first occurrences",
+            test_remove_duplicates_no_extra_preserves_first_occurrences,
+        ),
+        ("no duplicates unchanged", test_remove_duplicates_no_extra_no_duplicates_case),
+        (
+            "all duplicates collapse",
+            test_remove_duplicates_no_extra_all_duplicates_case,
+        ),
+        ("empty list returns None", test_remove_duplicates_no_extra_empty_list),
     ]
     _run_all_tests(TEST_CASES)
