@@ -10,18 +10,15 @@ class Node:
 
 
 def remove_duplicates_unsorted_no_extra(head):
-    if head is None:
-        return None
     a = head
-    while a.next:
-        b = head
-        while b != a.next:
-            if b.data == a.next.data:
-                a.next = a.next.next
-                break
-            b = b.next
-        else:
-            a = a.next
+    while a:
+        b = a
+        while b.next:
+            if a.data == b.next.data:
+                b.next = b.next.next
+            else:
+                b = b.next
+        a = a.next
     return head
 
 
