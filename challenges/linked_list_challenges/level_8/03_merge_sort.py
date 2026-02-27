@@ -2,6 +2,7 @@
 # Write merge_sort(head) that sorts a linked list in O(n log n)
 # time and returns the new sorted head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,46 @@ class Node:
 
 
 def merge_sort(head):
-    raise NotImplementedError('Implement merge_sort(head).')
+    if head is None:
+        return None
+    elif head.next is None:
+        return head
+    a = head
+    b = head
+    c = Node(0)
+    while head:
+        if b.next is None:
+            c = a
+            break
+        elif b.next.next is None:
+            c = a
+            break
+        a = a.next
+        b = b.next.next
+    d = c.next
+    c.next = None
+    head1 = head
+    head2 = d
+    sorted_left = merge_sort(head1)
+    sorted_right = merge_sort(head2)
+    return merge_sorted(sorted_left, sorted_right)
+
+
+def merge_sorted(head1, head2):
+    dummy = Node(0)
+    tail = dummy
+    while head1 and head2:
+        if head1.data < head2.data:
+            tail.next = head1
+            tail = tail.next
+            head1 = head1.next
+        else:
+            tail.next = head2
+            tail = tail.next
+            head2 = head2.next
+    tail.next = head1 if head1 else head2
+    return dummy.next
+
 
 #
 #
@@ -56,6 +96,7 @@ def merge_sort(head):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +123,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +141,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,13 +195,14 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_merge_sort_unsorted_values():
     head = _make_linked_list([4, 2, 1, 3])
     result = merge_sort(head)
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3, 4],
-        'merge_sort should sort a basic unsorted list.',
+        "merge_sort should sort a basic unsorted list.",
     )
 
 
@@ -170,7 +212,7 @@ def test_merge_sort_already_sorted_values():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3, 4],
-        'merge_sort should keep an already sorted list unchanged.',
+        "merge_sort should keep an already sorted list unchanged.",
     )
 
 
@@ -180,23 +222,28 @@ def test_merge_sort_with_duplicates_and_negatives():
     _assert_equal(
         _linked_list_to_list(result),
         [-1, -1, 0, 2, 3, 3],
-        'merge_sort should correctly sort duplicates and negative values.',
+        "merge_sort should correctly sort duplicates and negative values.",
     )
 
 
 def test_merge_sort_empty_and_single_node_lists():
-    _assert_true(merge_sort(None) is None, 'merge_sort(None) should return None.')
+    _assert_true(merge_sort(None) is None, "merge_sort(None) should return None.")
 
     single = _make_linked_list([42])
     result = merge_sort(single)
-    _assert_equal(_linked_list_to_list(result), [42], 'Single-node list should remain unchanged.')
+    _assert_equal(
+        _linked_list_to_list(result), [42], "Single-node list should remain unchanged."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('sort unsorted values', test_merge_sort_unsorted_values),
-        ('already sorted unchanged', test_merge_sort_already_sorted_values),
-        ('duplicates and negatives sorted', test_merge_sort_with_duplicates_and_negatives),
-        ('empty and single lists', test_merge_sort_empty_and_single_node_lists),
+        ("sort unsorted values", test_merge_sort_unsorted_values),
+        ("already sorted unchanged", test_merge_sort_already_sorted_values),
+        (
+            "duplicates and negatives sorted",
+            test_merge_sort_with_duplicates_and_negatives,
+        ),
+        ("empty and single lists", test_merge_sort_empty_and_single_node_lists),
     ]
     _run_all_tests(TEST_CASES)

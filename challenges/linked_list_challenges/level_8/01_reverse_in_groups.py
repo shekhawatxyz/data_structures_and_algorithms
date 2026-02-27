@@ -2,6 +2,7 @@
 # Write reverse_in_groups(head, k) that reverses the list in groups of k.
 # If fewer than k nodes remain, reverse that final group as well.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -9,7 +10,22 @@ class Node:
 
 
 def reverse_in_groups(head, k):
-    raise NotImplementedError('Implement reverse_in_groups(head, k).')
+    if k < 0:
+        raise IndexError
+    prev = None
+    curr = head
+    id = 0
+    while curr:
+        nxt = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nxt
+        id += 1
+        if id % k == 0:
+            head.next = reverse_in_groups(curr, k)
+            return prev
+    return prev
+
 
 #
 #
@@ -56,6 +72,7 @@ def reverse_in_groups(head, k):
 #
 #
 #
+
 
 def _make_linked_list(values):
     head = None
@@ -82,8 +99,8 @@ def _linked_list_to_list(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Linked list traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Linked list traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return values
@@ -100,8 +117,8 @@ def _node_ids(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Node-id traversal exceeded a safety limit. '
-                'Your list might contain an unexpected cycle.'
+                "Node-id traversal exceeded a safety limit. "
+                "Your list might contain an unexpected cycle."
             )
 
     return ids
@@ -154,13 +171,14 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_reverse_in_groups_k_three():
     head = _make_linked_list([1, 2, 3, 4, 5])
     result = reverse_in_groups(head, 3)
     _assert_equal(
         _linked_list_to_list(result),
         [3, 2, 1, 5, 4],
-        'With k=3, [1,2,3,4,5] should become [3,2,1,5,4].',
+        "With k=3, [1,2,3,4,5] should become [3,2,1,5,4].",
     )
 
 
@@ -170,7 +188,7 @@ def test_reverse_in_groups_k_one_keeps_list_unchanged():
     _assert_equal(
         _linked_list_to_list(result),
         [1, 2, 3],
-        'With k=1, reverse_in_groups should not change the list.',
+        "With k=1, reverse_in_groups should not change the list.",
     )
 
 
@@ -180,7 +198,7 @@ def test_reverse_in_groups_k_larger_than_length_reverses_all():
     _assert_equal(
         _linked_list_to_list(result),
         [3, 2, 1],
-        'If k > length, the full list should be reversed as one final group.',
+        "If k > length, the full list should be reversed as one final group.",
     )
 
 
@@ -188,19 +206,22 @@ def test_reverse_in_groups_raises_for_non_positive_k():
     head = _make_linked_list([1, 2, 3])
     _assert_raises(
         lambda: reverse_in_groups(head, 0),
-        'reverse_in_groups should raise an error for k=0.',
+        "reverse_in_groups should raise an error for k=0.",
     )
     _assert_raises(
         lambda: reverse_in_groups(head, -2),
-        'reverse_in_groups should raise an error for negative k.',
+        "reverse_in_groups should raise an error for negative k.",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('k=3 group reversal', test_reverse_in_groups_k_three),
-        ('k=1 no change', test_reverse_in_groups_k_one_keeps_list_unchanged),
-        ('k>length reverses all', test_reverse_in_groups_k_larger_than_length_reverses_all),
-        ('invalid k raises errors', test_reverse_in_groups_raises_for_non_positive_k),
+        ("k=3 group reversal", test_reverse_in_groups_k_three),
+        ("k=1 no change", test_reverse_in_groups_k_one_keeps_list_unchanged),
+        (
+            "k>length reverses all",
+            test_reverse_in_groups_k_larger_than_length_reverses_all,
+        ),
+        ("invalid k raises errors", test_reverse_in_groups_raises_for_non_positive_k),
     ]
     _run_all_tests(TEST_CASES)
