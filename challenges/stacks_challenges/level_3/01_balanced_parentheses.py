@@ -1,8 +1,21 @@
 # Level 3a - Balanced Parentheses (Only () )
 # Write is_balanced_parentheses(text) for strings containing only ( and ).
 
+
 def is_balanced_parentheses(text):
-    raise NotImplementedError('Implement is_balanced_parentheses(text).')
+    counter = []
+    for t in text:
+        if t == "(":
+            counter.append(t)
+        elif t == ")":
+            if len(counter) == 0:
+                return False
+            else:
+                counter.pop()
+    if len(counter) != 0:
+        return False
+    return True
+
 
 #
 #
@@ -49,6 +62,7 @@ def is_balanced_parentheses(text):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -104,29 +118,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty string', '', True),
-    ('single pair', '()', True),
-    ('nested pair', '(())', True),
-    ('adjacent pairs', '()()', True),
-    ('nested and adjacent', '(()())', True),
+    ("empty string", "", True),
+    ("single pair", "()", True),
+    ("nested pair", "(())", True),
+    ("adjacent pairs", "()()", True),
+    ("nested and adjacent", "(()())", True),
 ]
 
 
 BOUNDARY_CASES = [
-    ('single opener', '(', False),
-    ('single closer', ')', False),
-    ('missing closer', '(()', False),
-    ('missing opener', '())', False),
-    ('crossing invalid pattern', '())(()', False),
+    ("single opener", "(", False),
+    ("single closer", ")", False),
+    ("missing closer", "(()", False),
+    ("missing opener", "())", False),
+    ("crossing invalid pattern", "())(()", False),
 ]
 
 
 INTERACTION_CASES = [
-    ('deep valid nesting', '((())())()', True),
-    ('valid mixed adjacency', '()(())(()())', True),
-    ('starts with closer', ')()(', False),
-    ('complex valid pattern', '((()()))(()())', True),
-    ('very nested valid pattern', '(()()())(()(()))', True),
+    ("deep valid nesting", "((())())()", True),
+    ("valid mixed adjacency", "()(())(()())", True),
+    ("starts with closer", ")()(", False),
+    ("complex valid pattern", "((()()))(()())", True),
+    ("very nested valid pattern", "(()()())(()(()))", True),
 ]
 
 
@@ -154,21 +168,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

@@ -127,7 +127,7 @@ INTERACTION_CASES = [
     ('odd duplicate block', 'abbba', 'aba'),
     ('staggered cascade', 'aabccba', 'a'),
     ('multi-stage cascade', 'abcddcbae', 'e'),
-    ('symmetric full collapse', 'cabbaac', ''),
+    ('symmetric full collapse', 'cabbaac', 'cac'),
 ]
 
 
