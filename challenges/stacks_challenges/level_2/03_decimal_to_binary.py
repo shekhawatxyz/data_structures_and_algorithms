@@ -1,8 +1,19 @@
 # Level 2c - Decimal to Binary Using Stack
 # Write decimal_to_binary_stack(n) for positive integers using remainder push/pop.
 
+
 def decimal_to_binary_stack(n):
-    raise NotImplementedError('Implement decimal_to_binary_stack(n).')
+    if n <= 0:
+        raise Exception("Expected number bigger than one.")
+    s = []
+    while n:
+        s.append(n % 2)
+        n = n // 2
+    st = ""
+    while s:
+        st = f"{st}{s.pop()}"
+    return st
+
 
 #
 #
@@ -48,7 +59,7 @@ def decimal_to_binary_stack(n):
 #
 #
 #
-#
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -104,29 +115,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('smallest positive', 1, '1'),
-    ('first even', 2, '10'),
-    ('first odd >1', 3, '11'),
-    ('power of two', 4, '100'),
-    ('mixed bits', 13, '1101'),
+    ("smallest positive", 1, "1"),
+    ("first even", 2, "10"),
+    ("first odd >1", 3, "11"),
+    ("power of two", 4, "100"),
+    ("mixed bits", 13, "1101"),
 ]
 
 
 BOUNDARY_CASES = [
-    ('zero should raise', 0, _CASE_EXPECTS_RAISE),
-    ('negative should raise', -1, _CASE_EXPECTS_RAISE),
-    ('byte max', 255, '11111111'),
-    ('power-of-two boundary', 256, '100000000'),
-    ('larger power-of-two', 1024, '10000000000'),
+    ("zero should raise", 0, _CASE_EXPECTS_RAISE),
+    ("negative should raise", -1, _CASE_EXPECTS_RAISE),
+    ("byte max", 255, "11111111"),
+    ("power-of-two boundary", 256, "100000000"),
+    ("larger power-of-two", 1024, "10000000000"),
 ]
 
 
 INTERACTION_CASES = [
-    ('alternating bit pattern number', 42, '101010'),
-    ('mixed binary pattern', 37, '100101'),
-    ('all ones before boundary', 511, '111111111'),
-    ('boundary after all ones', 512, '1000000000'),
-    ('larger mixed value', 999, '1111100111'),
+    ("alternating bit pattern number", 42, "101010"),
+    ("mixed binary pattern", 37, "100101"),
+    ("all ones before boundary", 511, "111111111"),
+    ("boundary after all ones", 512, "1000000000"),
+    ("larger mixed value", 999, "1111100111"),
 ]
 
 
@@ -154,21 +165,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

@@ -2,8 +2,16 @@
 # Write is_palindrome_list_stack(values) using a stack-based reverse compare.
 # Do not directly reverse the list with slicing.
 
+
 def is_palindrome_list_stack(values):
-    raise NotImplementedError('Implement is_palindrome_list_stack(values).')
+    ls = []
+    for v in values:
+        ls.append(v)
+    for _ in range(len(values)):
+        if ls.pop() != values[_]:
+            return False
+    return True
+
 
 #
 #
@@ -50,6 +58,7 @@ def is_palindrome_list_stack(values):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -105,29 +114,78 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty list', [], True),
-    ('single element', [7], True),
-    ('two equal elements', [1, 1], True),
-    ('odd palindrome', [1, 2, 1], True),
-    ('even palindrome', [1, 2, 2, 1], True),
+    ("empty list", [], True),
+    ("single element", [7], True),
+    ("two equal elements", [1, 1], True),
+    ("odd palindrome", [1, 2, 1], True),
+    ("even palindrome", [1, 2, 2, 1], True),
 ]
 
 
 BOUNDARY_CASES = [
-    ('two unequal elements', [1, 2], False),
-    ('simple non-palindrome', [1, 2, 3], False),
-    ('negative values palindrome', [-1, 0, -1], True),
-    ('all same values', [0, 0, 0, 0], True),
-    ('near-palindrome off-by-one', [1, 2, 3, 2, 1, 0], False),
+    ("two unequal elements", [1, 2], False),
+    ("simple non-palindrome", [1, 2, 3], False),
+    ("negative values palindrome", [-1, 0, -1], True),
+    ("all same values", [0, 0, 0, 0], True),
+    ("near-palindrome off-by-one", [1, 2, 3, 2, 1, 0], False),
 ]
 
 
 INTERACTION_CASES = [
-    ('long odd palindrome', [1, 2, 3, 4, 3, 2, 1], True),
-    ('long even palindrome', [1, 2, 3, 3, 2, 1], True),
-    ('structured non-palindrome', [1, 2, 3, 4, 2, 1], False),
-    ('large mirrored sequence', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], True),
-    ('large almost-mirrored sequence', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 999, 8, 7, 6, 5, 4, 3, 2, 1, 0], False),
+    ("long odd palindrome", [1, 2, 3, 4, 3, 2, 1], True),
+    ("long even palindrome", [1, 2, 3, 3, 2, 1], True),
+    ("structured non-palindrome", [1, 2, 3, 4, 2, 1], False),
+    (
+        "large mirrored sequence",
+        [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            19,
+            18,
+            17,
+            16,
+            15,
+            14,
+            13,
+            12,
+            11,
+            10,
+            9,
+            8,
+            7,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1,
+            0,
+        ],
+        True,
+    ),
+    (
+        "large almost-mirrored sequence",
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 999, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+        False,
+    ),
 ]
 
 
@@ -135,7 +193,9 @@ def _run_case_group(group_name, cases):
     for case_index, (case_label, input_value, expected) in enumerate(cases, start=1):
         if expected is _CASE_EXPECTS_RAISE:
             _assert_raises(
-                lambda value=copy.deepcopy(input_value): is_palindrome_list_stack(value),
+                lambda value=copy.deepcopy(input_value): is_palindrome_list_stack(
+                    value
+                ),
                 (
                     f"{group_name} case {case_index} ({case_label}) expected an exception "
                     f"for input {input_value!r}."
@@ -155,21 +215,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

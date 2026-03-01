@@ -1,8 +1,16 @@
 # Level 2a - Reverse String Using Stack
 # Write reverse_string_stack(text) that uses a stack to reverse the string.
 
+
 def reverse_string_stack(text):
-    raise NotImplementedError('Implement reverse_string_stack(text).')
+    l = []
+    for t in text:
+        l.append(t)
+    reversed_text = ""
+    while l:
+        reversed_text = f"{reversed_text}{l.pop()}"
+    return reversed_text
+
 
 #
 #
@@ -49,6 +57,7 @@ def reverse_string_stack(text):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -104,29 +113,33 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty string', '', ''),
-    ('single character', 'a', 'a'),
-    ('two-character swap', 'ab', 'ba'),
-    ('simple word', 'stack', 'kcats'),
-    ('embedded space', 'ab cd', 'dc ba'),
+    ("empty string", "", ""),
+    ("single character", "a", "a"),
+    ("two-character swap", "ab", "ba"),
+    ("simple word", "stack", "kcats"),
+    ("embedded space", "ab cd", "dc ba"),
 ]
 
 
 BOUNDARY_CASES = [
-    ('only spaces', '   ', '   '),
-    ('punctuation preserved', 'a!b?', '?b!a'),
-    ('numeric characters', '12345', '54321'),
-    ('mixed alphanumeric', 'a1b2', '2b1a'),
-    ('long repeated sequence', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'),
+    ("only spaces", "   ", "   "),
+    ("punctuation preserved", "a!b?", "?b!a"),
+    ("numeric characters", "12345", "54321"),
+    ("mixed alphanumeric", "a1b2", "2b1a"),
+    (
+        "long repeated sequence",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    ),
 ]
 
 
 INTERACTION_CASES = [
-    ('palindrome remains same', 'racecar', 'racecar'),
-    ('mixed casing', 'AaBbCc', 'cCbBaA'),
-    ('symbols and spaces', ' hi-there! ', ' !ereht-ih '),
-    ('repeated pattern', 'abcabc', 'cbacba'),
-    ('alternating chars', 'xyxyxy', 'yxyxyx'),
+    ("palindrome remains same", "racecar", "racecar"),
+    ("mixed casing", "AaBbCc", "cCbBaA"),
+    ("symbols and spaces", " hi-there! ", " !ereht-ih "),
+    ("repeated pattern", "abcabc", "cbacba"),
+    ("alternating chars", "xyxyxy", "yxyxyx"),
 ]
 
 
@@ -154,21 +167,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
