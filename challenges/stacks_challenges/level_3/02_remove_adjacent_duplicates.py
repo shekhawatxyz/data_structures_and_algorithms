@@ -3,7 +3,23 @@
 # if incoming char equals top, pop; else push.
 
 def remove_adjacent_duplicates(text):
-    raise NotImplementedError('Implement remove_adjacent_duplicates(text).')
+    s = []
+    if len(text) == 0:
+        return ''
+
+    for i, c in enumerate(text):
+        if len(s) > 0:
+            if c == s[-1]:
+                s.pop()
+                continue
+            s.append(c)
+            continue
+        s.append(c)
+
+    b = ''
+    for a in s:
+        b = f'{b}{a}'
+    return b
 
 #
 #
