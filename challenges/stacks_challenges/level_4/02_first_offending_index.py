@@ -3,6 +3,9 @@
 # Return -1 if valid.
 # If invalid, return first unmatched closer index, or earliest unmatched opener index.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **4b.** Write a function that takes a string of brackets like the above, and if it is *invalid*, returns the index of the *first* offending character (either the first unmatched closer or, if all closers matched but openers remain, the index of the earliest unmatched opener). If valid, return `-1`.
+
 def first_offending_bracket_index(text):
     raise NotImplementedError('Implement first_offending_bracket_index(text).')
 

@@ -3,6 +3,10 @@
 # Return suffix string to append if completable, empty string if already valid,
 # and None if invalid in a way appending cannot fix.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **4c.** Write a function that takes an incomplete bracket string and returns the *minimum* string of closing brackets to append to make it valid — or reports that it's already invalid and unfixable. For example: `"({["` → `"]})"`. But `"({]"` → invalid, can't be fixed by appending.
+#
+
 def completion_suffix(text):
     raise NotImplementedError('Implement completion_suffix(text).')
 

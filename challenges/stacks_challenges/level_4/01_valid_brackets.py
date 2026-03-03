@@ -1,8 +1,51 @@
 # Level 4a - Balanced Brackets Across Types
 # Write is_valid_brackets(text) for (), [], {} with strict type matching.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **4a.** Extend your balanced-parentheses checker from 3a to handle three types: `()`, `[]`, and `{}`. Each closer must match the most recently unmatched opener of the *correct* type. For example: `"([{}])"` is valid; `"([)]"` is not.
+
+
 def is_valid_brackets(text):
-    raise NotImplementedError('Implement is_valid_brackets(text).')
+    brackets = []
+    closers = {")": "(", "]": "[", "}": "{"}
+    for t in text:
+        if t == "(" or t == "{" or t == "[":
+            brackets.append(t)
+        else:
+            if t in closers.keys():
+                if len(brackets) == 0:
+                    return False
+                elif brackets[-1] == closers[t]:
+                    brackets.pop()
+                else:
+                    return False
+            # if t == ")":
+            #     if len(brackets) == 0:
+            #         return False
+            #     elif brackets[-1] == "(":
+            #         brackets.pop()
+            #     else:
+            #         return False
+            # elif t == "]":
+            #     if len(brackets) == 0:
+            #         return False
+            #     elif brackets[-1] == "[":
+            #         brackets.pop()
+            #     else:
+            #         return False
+            # elif t == "}":
+            #     if len(brackets) == 0:
+            #         return False
+            #     elif brackets[-1] == "{":
+            #         brackets.pop()
+            #     else:
+            #         return False
+            # if t == ")":
+    if len(brackets) == 0:
+        return True
+    else:
+        return False
+
 
 #
 #
@@ -49,6 +92,7 @@ def is_valid_brackets(text):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -104,29 +148,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty string', '', True),
-    ('single pair type', '()', True),
-    ('independent pair types', '()[]{}', True),
-    ('nested mixed pairs', '([{}])', True),
-    ('nested repeated structure', '{[()()[]]}', True),
+    ("empty string", "", True),
+    ("single pair type", "()", True),
+    ("independent pair types", "()[]{}", True),
+    ("nested mixed pairs", "([{}])", True),
+    ("nested repeated structure", "{[()()[]]}", True),
 ]
 
 
 BOUNDARY_CASES = [
-    ('single opener', '(', False),
-    ('single closer', ']', False),
-    ('type mismatch', '(]', False),
-    ('crossed nesting', '([)]', False),
-    ('unfinished nesting', '[({})', False),
+    ("single opener", "(", False),
+    ("single closer", "]", False),
+    ("type mismatch", "(]", False),
+    ("crossed nesting", "([)]", False),
+    ("unfinished nesting", "[({})", False),
 ]
 
 
 INTERACTION_CASES = [
-    ('deep valid expression', '(({{[[]]}}))', True),
-    ('valid mixed repetition', '([{}{}[]])', True),
-    ('invalid reversed order', '}{', False),
-    ('valid multi-block', '[[[[]]]](){}', True),
-    ('invalid mixed mismatch late', '{[(])}', False),
+    ("deep valid expression", "(({{[[]]}}))", True),
+    ("valid mixed repetition", "([{}{}[]])", True),
+    ("invalid reversed order", "}{", False),
+    ("valid multi-block", "[[[[]]]](){}", True),
+    ("invalid mixed mismatch late", "{[(])}", False),
 ]
 
 
@@ -154,21 +198,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
