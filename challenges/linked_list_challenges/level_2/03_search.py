@@ -10,13 +10,7 @@ class Node:
 
 
 def search(head, value):
-    # a = head
-    while head is not None:
-        if head.data == value:
-            return True
-        head = head.next
-    return False
-
+    raise NotImplementedError('Implement search(head, value).')
 
 #
 #

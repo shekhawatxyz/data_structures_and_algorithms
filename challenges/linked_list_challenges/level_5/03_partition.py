@@ -10,22 +10,7 @@ class Node:
 
 
 def partition(head, x):
-    small_dummy = Node(0)
-    big_dummy = Node(0)
-    small_tail = small_dummy
-    big_tail = big_dummy
-    while head is not None:
-        if head.data < x:
-            small_tail.next = head
-            small_tail = small_tail.next
-        else:
-            big_tail.next = head
-            big_tail = big_tail.next
-        head = head.next
-    big_tail.next = None
-    small_tail.next = big_dummy.next
-    return small_dummy.next
-
+    raise NotImplementedError('Implement partition(head, x).')
 
 #
 #

@@ -10,20 +10,7 @@ class Node:
 
 
 def interleave(head1, head2):
-    dummy = Node(0)
-    tail = dummy
-    while head1 and head2:
-        nxt1 = head1.next
-        nxt2 = head2.next
-        tail.next = head1
-        tail = tail.next
-        tail.next = head2
-        tail = tail.next
-        head1 = nxt1
-        head2 = nxt2
-    tail.next = head1 if head1 else head2
-    return dummy.next
-
+    raise NotImplementedError('Implement interleave(head1, head2).')
 
 #
 #

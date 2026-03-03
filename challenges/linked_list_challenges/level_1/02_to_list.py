@@ -10,12 +10,7 @@ class Node:
 
 
 def to_list(head):
-    y = []
-    while head is not None:
-        y.append(head.data)
-        head = head.next
-    return list(y)
-
+    raise NotImplementedError('Implement to_list(head).')
 
 #
 #

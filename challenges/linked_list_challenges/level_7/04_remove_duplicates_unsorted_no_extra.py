@@ -10,17 +10,7 @@ class Node:
 
 
 def remove_duplicates_unsorted_no_extra(head):
-    a = head
-    while a:
-        b = a
-        while b.next:
-            if a.data == b.next.data:
-                b.next = b.next.next
-            else:
-                b = b.next
-        a = a.next
-    return head
-
+    raise NotImplementedError('Implement remove_duplicates_unsorted_no_extra(head).')
 
 #
 #

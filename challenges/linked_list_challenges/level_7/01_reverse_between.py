@@ -9,35 +9,8 @@ class Node:
         self.next = next
 
 
-# def reverse(head):
-#     curr = head
-#     prev = None
-#     while curr is not None:
-
-
 def reverse_between(head, left, right):
-    count = 1
-    if head is None:
-        return None
-    dummy = Node(0)
-    dummy.next = head
-    preleft = dummy
-    while count < left:
-        preleft = head
-        head = head.next
-        count += 1
-    curr = head
-    prev = None
-    while count in range(left, right + 1):
-        nxt = curr.next
-        curr.next = prev
-        prev = curr
-        curr = nxt
-        count += 1
-    preleft.next = prev
-    head.next = curr
-    return dummy.next
-
+    raise NotImplementedError('Implement reverse_between(head, left, right).')
 
 #
 #

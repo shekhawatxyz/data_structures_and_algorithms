@@ -10,21 +10,7 @@ class Node:
 
 
 def remove_duplicates_sorted(head):
-    # s1 = set()
-    # s2 = set()
-    dummy = Node(1)
-    dummy.next = head
-    a = dummy
-    while a.next is not None:
-        if a.next.next is None:
-            return dummy.next
-        elif a.next.data == a.next.next.data:
-            a.next = a.next.next
-        else:
-            # s1.add(a.next.data)
-            a = a.next
-    return dummy.next
-
+    raise NotImplementedError('Implement remove_duplicates_sorted(head).')
 
 #
 #

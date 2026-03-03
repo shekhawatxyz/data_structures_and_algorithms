@@ -10,16 +10,7 @@ class Node:
 
 
 def insert_back(head, value):
-    v = Node(value)
-    a = head
-    if a is None:
-        a = v
-        return a
-    while a.next is not None:
-        a = a.next
-    a.next = v
-    return head
-
+    raise NotImplementedError('Implement insert_back(head, value).')
 
 #
 #

@@ -10,20 +10,7 @@ class Node:
 
 
 def delete_first(head, value):
-    a = head
-    if a is None:
-        return None
-    if a.data == value:
-        return a.next
-    while a is not None:
-        if a.next == None:
-            return head
-        if a.next.data == value:
-            a.next = a.next.next
-            return head
-        a = a.next
-    return head
-
+    raise NotImplementedError('Implement delete_first(head, value).')
 
 #
 #

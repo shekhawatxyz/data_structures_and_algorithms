@@ -10,42 +10,7 @@ class Node:
 
 
 def reorder(head):
-    a = head
-    b = head
-    c = Node(0)
-    e = head
-    while head:
-        if b.next is None:
-            c = a
-            break
-        elif b.next.next is None:
-            c = a.next
-            break
-        a = a.next
-        b = b.next.next
-    d = c.next
-    c.next = None
-    prev = None
-    curr = d
-    while curr:
-        nxt = curr.next
-        curr.next = prev
-        prev = curr
-        curr = nxt
-    dummy = Node(0)
-    tail = dummy
-    while e and prev:
-        nxt1 = e.next
-        nxt2 = prev.next
-        tail.next = e
-        tail = tail.next
-        tail.next = prev
-        tail = tail.next
-        e = nxt1
-        prev = nxt2
-    tail.next = e if e else prev
-    return dummy.next
-
+    raise NotImplementedError('Implement reorder(head).')
 
 #
 #

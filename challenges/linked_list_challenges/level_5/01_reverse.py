@@ -10,15 +10,7 @@ class Node:
 
 
 def reverse(head):
-    prev = None
-    curr = head
-    while curr is not None:
-        nxt = curr.next
-        curr.next = prev
-        prev = curr
-        curr = nxt
-    return prev
-
+    raise NotImplementedError('Implement reverse(head).')
 
 #
 #

@@ -10,21 +10,7 @@ class Node:
 
 
 def delete_range(head, start, end):
-    count = -1
-    dummy = Node(1)
-    dummy.next = head
-    a = dummy
-    while a is not None:
-        # while count in range(start - 1, end):
-        while start - 1 <= count < end:
-            a.next = a.next.next
-            count += 1
-        if a.next is None:
-            return dummy.next
-        else:
-            a = a.next
-            count += 1
-
+    raise NotImplementedError('Implement delete_range(head, start, end).')
 
 #
 #

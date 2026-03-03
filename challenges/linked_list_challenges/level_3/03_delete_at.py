@@ -10,19 +10,7 @@ class Node:
 
 
 def delete_at(head, index):
-    count = 0
-    dummy = Node(1)
-    dummy.next = head
-    a = dummy
-    while a is not None:
-        if count == index:
-            a.next = a.next.next
-            return dummy.next
-        elif a.next is None:
-            raise IndexError
-        a = a.next
-        count += 1
-
+    raise NotImplementedError('Implement delete_at(head, index).')
 
 #
 #

@@ -10,11 +10,7 @@ class Node:
 
 
 def insert_front(head, value):
-    v = Node(value)
-    v.next = head
-    head = v
-    return head
-
+    raise NotImplementedError('Implement insert_front(head, value).')
 
 #
 #

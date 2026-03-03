@@ -10,37 +10,7 @@ class Node:
 
 
 def add_numbers(head1, head2):
-    dummy = Node(0)
-    sums = dummy
-    carry = 0
-    while head1 and head2:
-        num = head1.data + head2.data + carry
-        carry = num // 10
-        num = num % 10
-        sums.next = Node(num)
-        sums = sums.next
-        head1 = head1.next
-        head2 = head2.next
-    while head1:
-        num = head1.data + carry
-        carry = num // 10
-        num = num % 10
-        sums.next = Node(num)
-        sums = sums.next
-        head1 = head1.next
-    while head2:
-        num = head2.data + carry
-        carry = num // 10
-        num = num % 10
-        sums.next = Node(num)
-        sums = sums.next
-        head2 = head2.next
-    if carry:
-        # num = carry
-        sums.next = Node(carry)
-        # sums = sums.next
-    return dummy.next
-
+    raise NotImplementedError('Implement add_numbers(head1, head2).')
 
 #
 #

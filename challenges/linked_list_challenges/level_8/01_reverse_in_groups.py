@@ -10,22 +10,7 @@ class Node:
 
 
 def reverse_in_groups(head, k):
-    if k < 0:
-        raise IndexError
-    prev = None
-    curr = head
-    id = 0
-    while curr:
-        nxt = curr.next
-        curr.next = prev
-        prev = curr
-        curr = nxt
-        id += 1
-        if id % k == 0:
-            head.next = reverse_in_groups(curr, k)
-            return prev
-    return prev
-
+    raise NotImplementedError('Implement reverse_in_groups(head, k).')
 
 #
 #

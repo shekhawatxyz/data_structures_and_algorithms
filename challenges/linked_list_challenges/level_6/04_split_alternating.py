@@ -10,30 +10,7 @@ class Node:
 
 
 def split_alternating(head):
-    dummy1 = Node(1)
-    tail1 = dummy1
-    dummy2 = Node(1)
-    tail2 = dummy2
-    if head is None:
-        return None, None
-    elif head.next is None:
-        return head, None
-    while head:
-        if head.next:
-            nxt = head.next
-            tail1.next = head
-            tail1 = tail1.next
-            tail2.next = head.next
-            tail2 = tail2.next
-            head = nxt.next
-        else:
-            tail1.next = head
-            tail1 = tail1.next
-            head = head.next
-        tail1.next = None
-        tail2.next = None
-    return dummy1.next, dummy2.next
-
+    raise NotImplementedError('Implement split_alternating(head).')
 
 #
 #

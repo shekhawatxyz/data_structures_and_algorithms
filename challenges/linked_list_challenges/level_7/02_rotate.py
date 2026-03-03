@@ -10,29 +10,7 @@ class Node:
 
 
 def rotate(head, k):
-    if k == 0:
-        return head
-    elif head is None:
-        return None
-    elif head.next is None:
-        return head
-    length = 1
-    a = head
-    while a.next:
-        a = a.next
-        length += 1
-    b = head
-    left_shifted_length = length - (k % length)
-    if left_shifted_length == 0:
-        return head
-    for _ in range(left_shifted_length):
-        b = b.next
-
-    c = b.next
-    b.next = None
-    a.next = head
-    return c
-
+    raise NotImplementedError('Implement rotate(head, k).')
 
 #
 #

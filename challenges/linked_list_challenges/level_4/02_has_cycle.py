@@ -10,17 +10,7 @@ class Node:
 
 
 def has_cycle(head):
-    a = head
-    seen = set()
-    if a is None:
-        return False
-    while a is not None:
-        if a in seen:
-            return True
-        seen.add(a)
-        a = a.next
-    return False
-
+    raise NotImplementedError('Implement has_cycle(head).')
 
 #
 #

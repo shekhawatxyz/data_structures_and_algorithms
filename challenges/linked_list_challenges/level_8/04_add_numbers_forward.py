@@ -10,50 +10,7 @@ class Node:
 
 
 def add_numbers_forward(head1, head2):
-    h1 = []
-    h2 = []
-    while head1:
-        h1.append(head1)
-        head1 = head1.next
-    while head2:
-        h2.append(head2)
-        head2 = head2.next
-    dummy = Node(0)
-    sums = dummy
-    carry = 0
-    while h1 and h2:
-        a = h1.pop()
-        b = h2.pop()
-        num = a.data + b.data + carry
-        carry = num // 10
-        num = num % 10
-        sums.next = Node(num)
-        sums = sums.next
-    while h1:
-        a = h1.pop()
-        num = a.data + carry
-        carry = num // 10
-        num = num % 10
-        sums.next = Node(num)
-        sums = sums.next
-    while h2:
-        b = h2.pop()
-        num = b.data + carry
-        carry = num // 10
-        num = num % 10
-        sums.next = Node(num)
-        sums = sums.next
-    if carry:
-        sums.next = Node(carry)
-    curr = dummy.next
-    prev = None
-    while curr:
-        nxt = curr.next
-        curr.next = prev
-        prev = curr
-        curr = nxt
-    return prev
-
+    raise NotImplementedError('Implement add_numbers_forward(head1, head2).')
 
 #
 #

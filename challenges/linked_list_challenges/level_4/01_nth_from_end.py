@@ -10,15 +10,7 @@ class Node:
 
 
 def nth_from_end(head, n):
-    front = head
-    back = head
-    for _ in range(n):
-        front = front.next
-    while front is not None:
-        front = front.next
-        back = back.next
-    return back.data
-
+    raise NotImplementedError('Implement nth_from_end(head, n).')
 
 #
 #

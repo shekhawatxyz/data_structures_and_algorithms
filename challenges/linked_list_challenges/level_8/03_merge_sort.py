@@ -10,46 +10,7 @@ class Node:
 
 
 def merge_sort(head):
-    if head is None:
-        return None
-    elif head.next is None:
-        return head
-    a = head
-    b = head
-    c = Node(0)
-    while head:
-        if b.next is None:
-            c = a
-            break
-        elif b.next.next is None:
-            c = a
-            break
-        a = a.next
-        b = b.next.next
-    d = c.next
-    c.next = None
-    head1 = head
-    head2 = d
-    sorted_left = merge_sort(head1)
-    sorted_right = merge_sort(head2)
-    return merge_sorted(sorted_left, sorted_right)
-
-
-def merge_sorted(head1, head2):
-    dummy = Node(0)
-    tail = dummy
-    while head1 and head2:
-        if head1.data < head2.data:
-            tail.next = head1
-            tail = tail.next
-            head1 = head1.next
-        else:
-            tail.next = head2
-            tail = tail.next
-            head2 = head2.next
-    tail.next = head1 if head1 else head2
-    return dummy.next
-
+    raise NotImplementedError('Implement merge_sort(head).')
 
 #
 #

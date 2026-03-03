@@ -10,25 +10,7 @@ class Node:
 
 
 def insert_at(head, index, value):
-    a = head
-    count = 0
-    v = Node(value)
-    if index < 0:
-        raise IndexError
-    if index == 0:
-        v.next = a
-        a = v
-        return a
-    while a is not None:
-        if count == index - 1:
-            v.next = a.next
-            a.next = v
-            return head
-        a = a.next
-        count += 1
-    if index > count:
-        raise IndexError
-
+    raise NotImplementedError('Implement insert_at(head, index, value).')
 
 #
 #

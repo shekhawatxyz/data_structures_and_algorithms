@@ -10,18 +10,7 @@ class Node:
 
 
 def build(values):
-    head = None
-    tail = None
-    for value in values:
-        node = Node(value)
-        if head is None:
-            head = node
-            tail = node
-        else:
-            tail.next = node
-            tail = node
-    return head
-
+    raise NotImplementedError('Implement build(values).')
 
 #
 #

@@ -9,55 +9,8 @@ class Node:
         self.next = next
 
 
-def reverse(head):
-    curr = head
-    prev = None
-    while curr is not None:
-        nxt = curr.next
-        curr.next = prev
-        prev = curr
-        curr = nxt
-    return prev
-
-
 def is_palindrome(head):
-    a = head
-    b = head
-    while b is not None and b.next is not None:
-        a = a.next
-        b = b.next
-        b = b.next
-    if b is not None:
-        a = a.next
-    c = reverse(a)
-    while c is not None:
-        if c.data != head.data:
-            return False
-        c = c.next
-        head = head.next
-    return True
-
-
-# def return_copy(head):
-#     dummy = Node(1)
-#     a = dummy
-#     while head is not None:
-#         a.next = Node(head.data)
-#         a = a.next
-#         head = head.next
-#     return dummy.next
-#
-#
-# def is_palindrome(head):
-#     b = return_copy(head)
-#     a = reverse(head)
-#     while b is not None:
-#         if a.data != b.data:
-#             return False
-#         else:
-#             a = a.next
-#             b = b.next
-#     return True
+    raise NotImplementedError('Implement is_palindrome(head).')
 
 #
 #

@@ -10,16 +10,7 @@ class Node:
 
 
 def reverse_recursive(head):
-    if head is None:
-        return head
-    elif head.next is None:
-        return head
-    else:
-        new_head = reverse_recursive(head.next)
-        head.next.next = head
-        head.next = None
-        return new_head
-
+    raise NotImplementedError('Implement reverse_recursive(head).')
 
 #
 #

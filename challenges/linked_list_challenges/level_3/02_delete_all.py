@@ -10,19 +10,7 @@ class Node:
 
 
 def delete_all(head, value):
-    if head is None:
-        return None
-    dummy = Node(1)
-    dummy.next = head
-    a = dummy
-    while a is not None:
-        if a.next is None:
-            return dummy.next
-        if a.next.data == value:
-            a.next = a.next.next
-        else:
-            a = a.next
-
+    raise NotImplementedError('Implement delete_all(head, value).')
 
 #
 #

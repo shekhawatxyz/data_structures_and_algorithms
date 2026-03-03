@@ -13,14 +13,7 @@ class Node:
 
 
 def print_list(head):
-    y = []
-    while head is not None:
-        y.append(str(head.data))
-        head = head.next
-    for a in y:
-        print(f"{a} ->")
-    print(f"{None}")
-
+    raise NotImplementedError('Implement print_list(head).')
 
 #
 #

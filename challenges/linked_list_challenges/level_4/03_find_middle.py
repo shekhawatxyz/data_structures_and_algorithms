@@ -10,17 +10,7 @@ class Node:
 
 
 def find_middle(head):
-    h = head
-    tail = head
-    while head is not None:
-        if tail.next is None:
-            return h.data
-        elif tail.next.next is None:
-            return h.next.data
-        h = h.next
-        tail = tail.next.next
-    raise IndexError
-
+    raise NotImplementedError('Implement find_middle(head).')
 
 #
 #

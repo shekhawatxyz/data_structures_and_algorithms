@@ -10,21 +10,7 @@ class Node:
 
 
 def remove_duplicates_unsorted(head):
-    if head is None:
-        return None
-    elif head.next is None:
-        return head
-    a = head
-    seen = set()
-    seen.add(a.data)
-    while a.next:
-        if a.next.data not in seen:
-            seen.add(a.next.data)
-            a = a.next
-        else:
-            a.next = a.next.next
-    return head
-
+    raise NotImplementedError('Implement remove_duplicates_unsorted(head).')
 
 #
 #
