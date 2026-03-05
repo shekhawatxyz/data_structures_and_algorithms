@@ -6,8 +6,25 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **4b.** Write a function that takes a string of brackets like the above, and if it is *invalid*, returns the index of the *first* offending character (either the first unmatched closer or, if all closers matched but openers remain, the index of the earliest unmatched opener). If valid, return `-1`.
 
+
 def first_offending_bracket_index(text):
-    raise NotImplementedError('Implement first_offending_bracket_index(text).')
+    brackets = []
+    closers = {")": "(", "]": "[", "}": "{"}
+    for i, t in enumerate(text):
+        if t in "{[(":
+            brackets.append((t, i))
+        else:
+            if t in closers:
+                if not brackets:
+                    return i
+                elif brackets[-1][0] == closers[t]:
+                    brackets.pop()
+                else:
+                    return i
+    if not brackets:
+        return -1
+    return brackets[0][1]
+
 
 #
 #
@@ -54,6 +71,7 @@ def first_offending_bracket_index(text):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -109,29 +127,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('valid nested string', '([{}])', -1),
-    ('leading unmatched closer', ']{}', 0),
-    ('crossed mismatch', '([)]', 2),
-    ('earliest unmatched opener', '(()', 0),
-    ('valid mixed blocks', '()[]{}', -1),
+    ("valid nested string", "([{}])", -1),
+    ("leading unmatched closer", "]{}", 0),
+    ("crossed mismatch", "([)]", 2),
+    ("earliest unmatched opener", "(()", 0),
+    ("valid mixed blocks", "()[]{}", -1),
 ]
 
 
 BOUNDARY_CASES = [
-    ('empty string', '', -1),
-    ('single opener', '(', 0),
-    ('single closer', ')', 0),
-    ('trailing opener after valid pair', '[](', 2),
-    ('extra closer at end', '([{}]))', 6),
+    ("empty string", "", -1),
+    ("single opener", "(", 0),
+    ("single closer", ")", 0),
+    ("trailing opener after valid pair", "[](", 2),
+    ("extra closer at end", "([{}]))", 6),
 ]
 
 
 INTERACTION_CASES = [
-    ('long valid sequence', '((()))[]{}', -1),
-    ('valid then unmatched opener', '([{}])(', 6),
-    ('late mismatch closer', '([{})', 4),
-    ('many opens then extra closer', '[[[]]]]', 6),
-    ('complex mismatch', '{[(])}', 3),
+    ("long valid sequence", "((()))[]{}", -1),
+    ("valid then unmatched opener", "([{}])(", 6),
+    ("late mismatch closer", "([{})", 4),
+    ("many opens then extra closer", "[[[]]]]", 6),
+    ("complex mismatch", "{[(])}", 3),
 ]
 
 
@@ -139,7 +157,9 @@ def _run_case_group(group_name, cases):
     for case_index, (case_label, input_value, expected) in enumerate(cases, start=1):
         if expected is _CASE_EXPECTS_RAISE:
             _assert_raises(
-                lambda value=copy.deepcopy(input_value): first_offending_bracket_index(value),
+                lambda value=copy.deepcopy(input_value): first_offending_bracket_index(
+                    value
+                ),
                 (
                     f"{group_name} case {case_index} ({case_label}) expected an exception "
                     f"for input {input_value!r}."
@@ -159,21 +179,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

@@ -9,42 +9,17 @@ def is_valid_brackets(text):
     brackets = []
     closers = {")": "(", "]": "[", "}": "{"}
     for t in text:
-        if t == "(" or t == "{" or t == "[":
+        if t in "{[(":
             brackets.append(t)
         else:
-            if t in closers.keys():
-                if len(brackets) == 0:
+            if t in closers:
+                if not brackets:
                     return False
                 elif brackets[-1] == closers[t]:
                     brackets.pop()
                 else:
                     return False
-            # if t == ")":
-            #     if len(brackets) == 0:
-            #         return False
-            #     elif brackets[-1] == "(":
-            #         brackets.pop()
-            #     else:
-            #         return False
-            # elif t == "]":
-            #     if len(brackets) == 0:
-            #         return False
-            #     elif brackets[-1] == "[":
-            #         brackets.pop()
-            #     else:
-            #         return False
-            # elif t == "}":
-            #     if len(brackets) == 0:
-            #         return False
-            #     elif brackets[-1] == "{":
-            #         brackets.pop()
-            #     else:
-            #         return False
-            # if t == ")":
-    if len(brackets) == 0:
-        return True
-    else:
-        return False
+    return len(brackets) == 0
 
 
 #

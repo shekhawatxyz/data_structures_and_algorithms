@@ -7,8 +7,30 @@
 # **4c.** Write a function that takes an incomplete bracket string and returns the *minimum* string of closing brackets to append to make it valid — or reports that it's already invalid and unfixable. For example: `"({["` → `"]})"`. But `"({]"` → invalid, can't be fixed by appending.
 #
 
+
 def completion_suffix(text):
-    raise NotImplementedError('Implement completion_suffix(text).')
+    closers = {")": "(", "]": "[", "}": "{"}
+    openers = {v: k for k, v in closers.items()}
+    brackets = []
+    for t in text:
+        if t in "({[":
+            brackets.append(t)
+        else:
+            if t in closers:
+                if not brackets:
+                    return None
+                elif brackets[-1] == closers[t]:
+                    brackets.pop()
+                else:
+                    return None
+    if not brackets:
+        return ""
+    else:
+        c = []
+        for a in reversed(brackets):
+            c.append(openers[a])
+        return "".join(c)
+
 
 #
 #
@@ -55,6 +77,7 @@ def completion_suffix(text):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -110,29 +133,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty string already valid', '', ''),
-    ('single opener', '(', ')'),
-    ('two openers different types', '[{', '}]'),
-    ('example incomplete chain', '({[', ']})'),
-    ('already valid mixed', '([]{})', ''),
+    ("empty string already valid", "", ""),
+    ("single opener", "(", ")"),
+    ("two openers different types", "[{", "}]"),
+    ("example incomplete chain", "({[", "]})"),
+    ("already valid mixed", "([]{})", ""),
 ]
 
 
 BOUNDARY_CASES = [
-    ('only closers unfixable', ')))', None),
-    ('all openers same type', '(((', ')))'),
-    ('mismatch unfixable', '({]', None),
-    ('valid then one opener', '{[()]}[', ']'),
-    ('unfinished mixed suffix', '(([]){', '})'),
+    ("only closers unfixable", ")))", None),
+    ("all openers same type", "(((", ")))"),
+    ("mismatch unfixable", "({]", None),
+    ("valid then one opener", "{[()]}[", "]"),
+    ("unfinished mixed suffix", "(([]){", "})"),
 ]
 
 
 INTERACTION_CASES = [
-    ('deep unfinished nesting', '{{[[((', '))]]}}'),
-    ('fully valid independent groups', '()[]{}', ''),
-    ('partial valid then unfinished', '([{}', '])'),
-    ('starts with closer then opener', ')(', None),
-    ('late mismatch cannot be fixed by append', '{[()]]', None),
+    ("deep unfinished nesting", "{{[[((", "))]]}}"),
+    ("fully valid independent groups", "()[]{}", ""),
+    ("partial valid then unfinished", "([{}", "])"),
+    ("starts with closer then opener", ")(", None),
+    ("late mismatch cannot be fixed by append", "{[()]]", None),
 ]
 
 
@@ -160,21 +183,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
