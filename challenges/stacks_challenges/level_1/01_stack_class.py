@@ -3,6 +3,8 @@
 # Support push(item), pop(), peek(), is_empty(), and size().
 # Raise an appropriate error when popping or peeking an empty stack.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **1a.** Write a `Stack` class from scratch using a Python list internally. Support `push(item)`, `pop()`, `peek()`, `is_empty()`, and `size()`. Raise an appropriate error when popping or peeking an empty stack.
 
 class Stack:
     def __init__(self):

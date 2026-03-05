@@ -2,6 +2,9 @@
 # Write largest_rectangle_stack(heights) using one monotonic stack pass
 # and area computation when popping.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **9c.** Put it all together: solve the largest rectangle in a histogram in O(n) using a single stack pass. The classic approach processes bars left to right, maintaining a stack of bars in increasing height order. When you encounter a bar shorter than the stack top, you pop and compute the area for the popped bar (using the current index and the new stack top to determine width). Handle the end-of-array case (flush the remaining stack). Test on `[2, 1, 5, 6, 2, 3]` → `10`.
+
 def largest_rectangle_stack(heights):
     raise NotImplementedError('Implement largest_rectangle_stack(heights).')
 

@@ -2,6 +2,9 @@
 # Write decode_nested(text) handling fully nested patterns like 3[a2[c]].
 # Use stack to save and restore both partial string and repeat count.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **10c.** Now handle full nesting: `"3[a2[c]]"` → `"accaccacc"` and `"2[abc]3[cd]ef"` → `"abcabccdcdcdef"`. The stack must save and restore the *entire state* of your in-progress computation (the string built so far *and* the repeat count) when entering/exiting a nesting level. You are essentially using the stack to simulate a call stack.
+
 def decode_nested(text):
     raise NotImplementedError('Implement decode_nested(text).')
 

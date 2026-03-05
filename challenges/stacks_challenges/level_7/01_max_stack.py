@@ -2,6 +2,9 @@
 # Implement MaxStack with push, pop, peek, get_max all in O(1).
 # Use only stacks internally (no other data structures).
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **7a.** Design a `MaxStack` class that supports `push`, `pop`, `peek`, and `get_max` (returns the current maximum element), all in O(1) time. You may use additional stacks but no other data structures. (Hint: think about what information you need to preserve when you push, and what you need to restore when you pop.)
+
 class MaxStack:
     def __init__(self):
         raise NotImplementedError('Implement MaxStack.__init__.')

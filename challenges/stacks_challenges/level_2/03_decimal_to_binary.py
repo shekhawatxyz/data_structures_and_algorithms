@@ -1,6 +1,9 @@
 # Level 2c - Decimal to Binary Using Stack
 # Write decimal_to_binary_stack(n) for positive integers using remainder push/pop.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **2c.** Write a function that takes a positive integer and returns its binary representation as a string, using a stack. (Repeatedly divide by 2, push the remainders, then pop them all to form the binary string.)
+#
 
 def decimal_to_binary_stack(n):
     if n <= 0:

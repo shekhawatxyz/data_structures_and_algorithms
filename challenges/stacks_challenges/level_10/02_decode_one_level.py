@@ -2,6 +2,9 @@
 # Write decode_one_level(text) for non-nested patterns like 3[ab]2[c].
 # No nested brackets in this challenge.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **10b.** Write a function that "flattens" nested brackets with multipliers, but *only one level deep* (no nesting). Format: `"3[ab]2[c]"` → `"ababababcc"`. Use a stack to handle the boundary between "outside" characters and "inside a bracket group" — when you see a digit followed by `[`, push your current string onto the stack and start a fresh one; when you see `]`, pop and combine.
+
 def decode_one_level(text):
     raise NotImplementedError('Implement decode_one_level(text).')
 

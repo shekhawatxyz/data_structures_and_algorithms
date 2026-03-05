@@ -2,6 +2,9 @@
 # Write infix_to_postfix(tokens) for +,-,*,/ and parentheses.
 # Tokens are given as a list of strings.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **6b.** Now implement the full shunting-yard algorithm: convert an infix expression (with the standard operators `+`, `-`, `*`, `/` and parentheses, but *not* necessarily fully parenthesised) to postfix. You will need a precedence table and a rule for left-associativity. Tokens are given as a list of strings.
+
 def infix_to_postfix(tokens):
     raise NotImplementedError('Implement infix_to_postfix(tokens).')
 

@@ -2,6 +2,10 @@
 # Write maximal_rectangle_binary_matrix(matrix) using row-wise histogram
 # reduction plus largest-rectangle-in-histogram logic.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **9d.** Extension: given a binary matrix (0s and 1s) of size m × n, find the largest rectangle containing only 1s. (Hint: build a histogram for each row — treating consecutive 1s going upward as bar heights — then run your 9c solution on each row's histogram. The answer is the maximum across all rows.)
+#
+
 def maximal_rectangle_binary_matrix(matrix):
     raise NotImplementedError('Implement maximal_rectangle_binary_matrix(matrix).')
 

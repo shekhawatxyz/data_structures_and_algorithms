@@ -1,6 +1,8 @@
 # Level 3a - Balanced Parentheses (Only () )
 # Write is_balanced_parentheses(text) for strings containing only ( and ).
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **3a.** Write a function that takes a string of parentheses — only `(` and `)` — and returns whether they are balanced. Think carefully about what "balanced" means: every opener has a corresponding closer *in the right order*, and there are no unmatched closers or openers.
 
 def is_balanced_parentheses(text):
     counter = []

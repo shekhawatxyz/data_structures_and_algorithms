@@ -2,6 +2,8 @@
 # Write is_palindrome_list_stack(values) using a stack-based reverse compare.
 # Do not directly reverse the list with slicing.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **2b.** Write a function that takes a list of integers and checks whether it is a palindrome, using only a stack. Do *not* reverse the list directly — use the stack to produce the reversed sequence and compare element by element.
 
 def is_palindrome_list_stack(values):
     ls = []

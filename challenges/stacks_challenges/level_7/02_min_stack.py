@@ -2,6 +2,9 @@
 # Implement MinStack with push, pop, peek, get_min all in O(1).
 # You may use one auxiliary stack and optimize its space usage.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **7b.** Now design a `MinStack` with the same interface but for `get_min`. If you did 7a, this is almost identical — but do it from scratch to reinforce the pattern. Then think: can you reduce the space used by the auxiliary stack? (Hint: you don't need to push onto the auxiliary stack on *every* push.)
+
 class MinStack:
     def __init__(self):
         raise NotImplementedError('Implement MinStack.__init__.')

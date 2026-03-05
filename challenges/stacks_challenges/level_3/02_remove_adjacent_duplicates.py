@@ -2,6 +2,9 @@
 # Write remove_adjacent_duplicates(text) using stack logic:
 # if incoming char equals top, pop; else push.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **3b.** Write a function that takes a string (of any characters, not just parentheses) and removes all adjacent duplicates, using a stack. For example: `"abbaca"` → `"ca"`. (Process each character: if it matches the top of the stack, pop; otherwise push. Whatever remains in the stack is the result.)
+
 def remove_adjacent_duplicates(text):
     s = []
     if len(text) == 0:

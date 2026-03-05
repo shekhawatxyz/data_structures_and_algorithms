@@ -2,6 +2,10 @@
 # Write infix_to_postfix_with_exponent(tokens) supporting +,-,*,/,^ and parentheses.
 # ^ must be right-associative.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **6d.** Extend your shunting-yard to handle right-associative exponentiation `^`. For example, `"2 ^ 3 ^ 2"` should be treated as `2 ^ (3 ^ 2) = 512`, not `(2 ^ 3) ^ 2 = 64`. The key: the only thing that changes is the comparison — for right-associative operators, you pop only when the stack-top has *strictly greater* precedence, not greater-or-equal.
+#
+
 def infix_to_postfix_with_exponent(tokens):
     raise NotImplementedError('Implement infix_to_postfix_with_exponent(tokens).')
 

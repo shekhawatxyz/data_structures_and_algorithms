@@ -3,6 +3,10 @@
 # Then implement an interleaved script: push 1, push 2, pop, push 3, pop, pop,
 # printing the stack after each operation.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **1c.** Add a `__str__` method to your `Stack` class that prints the stack contents from top to bottom (so you can see what's in it at any point). Then write a script that interleaves pushes and pops — e.g., push 1, push 2, pop, push 3, pop, pop — printing the stack after each operation. Predict the full output before running.
+#
+
 import io
 from contextlib import redirect_stdout
 

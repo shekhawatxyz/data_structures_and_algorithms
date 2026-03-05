@@ -2,6 +2,9 @@
 # Write a function that creates a stack, pushes 1 through 5,
 # then pops and prints all values in order of popping.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **1b.** Write a small test script that creates a stack, pushes the integers 1 through 5, then pops and prints them all. Predict the output before running it. Verify your prediction.
+
 import io
 from contextlib import redirect_stdout
 

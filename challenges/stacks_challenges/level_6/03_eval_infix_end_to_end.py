@@ -2,6 +2,9 @@
 # Write evaluate_infix(expression) that converts infix to postfix
 # and evaluates it using integer division truncating toward zero.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **6c.** Chain your 6b converter with your 5a evaluator to evaluate infix expressions end-to-end. Test on: `"3 + 4 * 2 / ( 1 - 5 )"` → should give `1` (with integer division).
+
 def evaluate_infix(expression):
     raise NotImplementedError('Implement evaluate_infix(expression).')
 

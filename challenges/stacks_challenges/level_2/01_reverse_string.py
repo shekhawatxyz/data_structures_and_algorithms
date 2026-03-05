@@ -1,6 +1,8 @@
 # Level 2a - Reverse String Using Stack
 # Write reverse_string_stack(text) that uses a stack to reverse the string.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **2a.** Write a function that takes a string and returns it reversed, using only a stack. (Push every character, then pop them all.)
 
 def reverse_string_stack(text):
     l = []

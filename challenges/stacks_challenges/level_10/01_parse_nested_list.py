@@ -2,6 +2,9 @@
 # Write parse_nested_list(text) for inputs like [1,[2,3],[4,[5,6]]].
 # Return actual nested Python list using stack-based list assembly.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **10a.** Write a function that takes a nested list represented as a string like `"[1,[2,3],[4,[5,6]]]"` and returns the actual nested Python list. Use a stack: when you see `[`, push a new empty list; when you see `]`, pop the completed list and append it to whatever is now on top. Numbers between commas get appended to the current top-of-stack list.
+
 def parse_nested_list(text):
     raise NotImplementedError('Implement parse_nested_list(text).')
 

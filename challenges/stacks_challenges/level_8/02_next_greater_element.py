@@ -2,6 +2,9 @@
 # Write next_greater_elements(values) in O(n).
 # Return first strictly greater value to the right for each position, else -1.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **8b.** Given an array of integers, for each element, find the *next greater element* — i.e., the first element to its right that is strictly larger. If none exists, output `-1`. Example: `[4, 2, 6, 1, 3]` → `[6, 6, -1, 3, -1]`. Do this in O(n).
+
 def next_greater_elements(values):
     raise NotImplementedError('Implement next_greater_elements(values).')
 
