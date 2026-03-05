@@ -2,8 +2,30 @@
 # Write eval_postfix(tokens) supporting +, -, *, / with integer division
 # truncating toward zero.
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **5a.** Write a function that evaluates a postfix (reverse Polish notation) expression. Input is a list of tokens like `["3", "4", "+", "2", "*"]` → `14`. Support `+`, `-`, `*`, `/` (integer division, truncating toward zero).
+
+
 def eval_postfix(tokens):
-    raise NotImplementedError('Implement eval_postfix(tokens).')
+    nums = []
+    operators = {
+        "+": lambda a, b: a + b,
+        "-": lambda a, b: a - b,
+        "*": lambda a, b: a * b,
+        "/": lambda a, b: int(a / b),
+    }
+    for t in tokens:
+        if t not in operators:
+            nums.append(t)
+        else:
+            n = operators[t](int(nums[-2]), int(nums[-1]))
+            nums.pop()
+            nums.pop()
+            nums.append(n)
+    if len(nums) > 1:
+        raise Exception
+    return int(nums[0])
+
 
 #
 #
@@ -50,6 +72,7 @@ def eval_postfix(tokens):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -105,29 +128,33 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('single operand', ['2'], 2),
-    ('simple addition', ['3', '4', '+'], 7),
-    ('simple subtraction order', ['10', '3', '-'], 7),
-    ('simple multiplication', ['6', '7', '*'], 42),
-    ('given expression', ['3', '4', '+', '2', '*'], 14),
+    ("single operand", ["2"], 2),
+    ("simple addition", ["3", "4", "+"], 7),
+    ("simple subtraction order", ["10", "3", "-"], 7),
+    ("simple multiplication", ["6", "7", "*"], 42),
+    ("given expression", ["3", "4", "+", "2", "*"], 14),
 ]
 
 
 BOUNDARY_CASES = [
-    ('integer division truncates positive', ['7', '3', '/'], 2),
-    ('integer division truncates toward zero negative', ['-7', '3', '/'], -2),
-    ('missing operands', ['+'], _CASE_EXPECTS_RAISE),
-    ('leftover operands', ['1', '2'], _CASE_EXPECTS_RAISE),
-    ('division by zero should raise', ['4', '0', '/'], _CASE_EXPECTS_RAISE),
+    ("integer division truncates positive", ["7", "3", "/"], 2),
+    ("integer division truncates toward zero negative", ["-7", "3", "/"], -2),
+    ("missing operands", ["+"], _CASE_EXPECTS_RAISE),
+    ("leftover operands", ["1", "2"], _CASE_EXPECTS_RAISE),
+    ("division by zero should raise", ["4", "0", "/"], _CASE_EXPECTS_RAISE),
 ]
 
 
 INTERACTION_CASES = [
-    ('classic long postfix expression', ['5', '1', '2', '+', '4', '*', '+', '3', '-'], 14),
-    ('mixed operations chain', ['4', '13', '5', '/', '+'], 6),
-    ('nested-like stack interaction', ['2', '3', '11', '+', '5', '-', '*'], 18),
-    ('negative intermediate result', ['2', '3', '-', '4', '*'], -4),
-    ('multiple divisions and adds', ['20', '3', '/', '2', '/', '1', '+'], 4),
+    (
+        "classic long postfix expression",
+        ["5", "1", "2", "+", "4", "*", "+", "3", "-"],
+        14,
+    ),
+    ("mixed operations chain", ["4", "13", "5", "/", "+"], 6),
+    ("nested-like stack interaction", ["2", "3", "11", "+", "5", "-", "*"], 18),
+    ("negative intermediate result", ["2", "3", "-", "4", "*"], -4),
+    ("multiple divisions and adds", ["20", "3", "/", "2", "/", "1", "+"], 4),
 ]
 
 
@@ -155,21 +182,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

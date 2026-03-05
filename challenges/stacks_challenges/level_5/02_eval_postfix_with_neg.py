@@ -2,8 +2,37 @@
 # Write eval_postfix_with_neg(tokens) extending postfix evaluation
 # with unary operator "neg".
 
+# Complete Exact Problem Statement (from stack-challenges.md):
+# **5b.** Extend your evaluator to support a unary negation token, say `"neg"`, which pops the top value and pushes its negation. For example: `["5", "neg", "3", "+"]` → `-2`. This forces you to handle operators with different arities.
+
+
 def eval_postfix_with_neg(tokens):
-    raise NotImplementedError('Implement eval_postfix_with_neg(tokens).')
+    nums = []
+    binary_operators = {
+        "+": lambda a, b: a + b,
+        "-": lambda a, b: a - b,
+        "*": lambda a, b: a * b,
+        "/": lambda a, b: int(a / b),
+    }
+    unary_operators = {"neg": lambda a: -a}
+    for t in tokens:
+        if t in unary_operators:
+            if not nums:
+                raise Exception
+            nv = unary_operators[t](int(nums[-1]))
+            nums.pop()
+            nums.append(nv)
+        elif t in binary_operators:
+            n = binary_operators[t](int(nums[-2]), int(nums[-1]))
+            nums.pop()
+            nums.pop()
+            nums.append(n)
+        else:
+            nums.append(t)
+    if len(nums) > 1:
+        raise Exception
+    return int(nums[0])
+
 
 #
 #
@@ -50,6 +79,7 @@ def eval_postfix_with_neg(tokens):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -105,29 +135,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('single negation', ['5', 'neg'], -5),
-    ('example with neg and plus', ['5', 'neg', '3', '+'], -2),
-    ('double negation', ['4', 'neg', 'neg'], 4),
-    ('neg after binary op', ['2', '3', '+', 'neg'], -5),
-    ('neg with subtraction', ['10', '3', '-', 'neg'], -7),
+    ("single negation", ["5", "neg"], -5),
+    ("example with neg and plus", ["5", "neg", "3", "+"], -2),
+    ("double negation", ["4", "neg", "neg"], 4),
+    ("neg after binary op", ["2", "3", "+", "neg"], -5),
+    ("neg with subtraction", ["10", "3", "-", "neg"], -7),
 ]
 
 
 BOUNDARY_CASES = [
-    ('neg on empty stack', ['neg'], _CASE_EXPECTS_RAISE),
-    ('leftover operand invalid', ['1', 'neg', '2'], _CASE_EXPECTS_RAISE),
-    ('neg applied to zero', ['0', 'neg'], 0),
-    ('neg then division truncation', ['8', 'neg', '3', '/'], -2),
-    ('missing operand for binary op', ['1', '+'], _CASE_EXPECTS_RAISE),
+    ("neg on empty stack", ["neg"], _CASE_EXPECTS_RAISE),
+    ("leftover operand invalid", ["1", "neg", "2"], _CASE_EXPECTS_RAISE),
+    ("neg applied to zero", ["0", "neg"], 0),
+    ("neg then division truncation", ["8", "neg", "3", "/"], -2),
+    ("missing operand for binary op", ["1", "+"], _CASE_EXPECTS_RAISE),
 ]
 
 
 INTERACTION_CASES = [
-    ('mix neg with multiplication', ['2', '3', '+', 'neg', '4', '*'], -20),
-    ('both operands negated', ['5', 'neg', '3', 'neg', '+'], -8),
-    ('neg interleaved with binary ops', ['6', '2', '/', 'neg', '3', '*'], -9),
-    ('nested neg pattern', ['9', 'neg', 'neg', 'neg'], -9),
-    ('complex chain with neg', ['7', '2', '-', '3', 'neg', '*'], -15),
+    ("mix neg with multiplication", ["2", "3", "+", "neg", "4", "*"], -20),
+    ("both operands negated", ["5", "neg", "3", "neg", "+"], -8),
+    ("neg interleaved with binary ops", ["6", "2", "/", "neg", "3", "*"], -9),
+    ("nested neg pattern", ["9", "neg", "neg", "neg"], -9),
+    ("complex chain with neg", ["7", "2", "-", "3", "neg", "*"], -15),
 ]
 
 
@@ -155,21 +185,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
