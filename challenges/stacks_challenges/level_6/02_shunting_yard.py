@@ -5,8 +5,49 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **6b.** Now implement the full shunting-yard algorithm: convert an infix expression (with the standard operators `+`, `-`, `*`, `/` and parentheses, but *not* necessarily fully parenthesised) to postfix. You will need a precedence table and a rule for left-associativity. Tokens are given as a list of strings.
 
+
 def infix_to_postfix(tokens):
-    raise NotImplementedError('Implement infix_to_postfix(tokens).')
+    operators = ["+", "-", "/", "*"]
+    st = []
+    output = []
+    count = 0
+    prec = {"*": 2, "/": 2, "+": 1, "-": 1}
+    if len(tokens) == 0:
+        raise Exception
+    for i, e in enumerate(tokens):
+        if e == "(":
+            count += 1
+            st.append("(")
+        elif e == ")":
+            while st and st[-1] != "(":
+                output.append(st.pop())
+            st.pop()
+            count -= 1
+        elif e in prec:
+            if i == 0:
+                raise Exception
+            elif i == len(tokens) - 1:
+                raise Exception
+            while st:
+                if st[-1] == "(":
+                    break
+                if prec[st[-1]] >= prec[e]:
+                    s = st.pop()
+                    output.append(s)
+                else:
+                    break
+            st.append(e)
+        else:
+            output.append(e)
+    if count != 0:
+        raise Exception
+    while st:
+        output.append(st.pop())
+    return output
+
+
+# expression_list = tokens.split()
+
 
 #
 #
@@ -53,6 +94,7 @@ def infix_to_postfix(tokens):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -108,29 +150,61 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('single number token', ['42'], ['42']),
-    ('simple addition', ['3', '+', '4'], ['3', '4', '+']),
-    ('precedence with multiplication', ['3', '+', '4', '*', '2'], ['3', '4', '2', '*', '+']),
-    ('parenthesized subgroup', ['(', '3', '+', '4', ')', '*', '2'], ['3', '4', '+', '2', '*']),
-    ('left associativity subtraction', ['10', '-', '3', '-', '2'], ['10', '3', '-', '2', '-']),
+    ("single number token", ["42"], ["42"]),
+    ("simple addition", ["3", "+", "4"], ["3", "4", "+"]),
+    (
+        "precedence with multiplication",
+        ["3", "+", "4", "*", "2"],
+        ["3", "4", "2", "*", "+"],
+    ),
+    (
+        "parenthesized subgroup",
+        ["(", "3", "+", "4", ")", "*", "2"],
+        ["3", "4", "+", "2", "*"],
+    ),
+    (
+        "left associativity subtraction",
+        ["10", "-", "3", "-", "2"],
+        ["10", "3", "-", "2", "-"],
+    ),
 ]
 
 
 BOUNDARY_CASES = [
-    ('missing closing parenthesis', ['(', '1', '+', '2'], _CASE_EXPECTS_RAISE),
-    ('extra closing parenthesis', ['1', '+', '2', ')'], _CASE_EXPECTS_RAISE),
-    ('operator starts expression', ['+', '1'], _CASE_EXPECTS_RAISE),
-    ('operator ends expression', ['1', '+'], _CASE_EXPECTS_RAISE),
-    ('empty token list', [], _CASE_EXPECTS_RAISE),
+    ("missing closing parenthesis", ["(", "1", "+", "2"], _CASE_EXPECTS_RAISE),
+    ("extra closing parenthesis", ["1", "+", "2", ")"], _CASE_EXPECTS_RAISE),
+    ("operator starts expression", ["+", "1"], _CASE_EXPECTS_RAISE),
+    ("operator ends expression", ["1", "+"], _CASE_EXPECTS_RAISE),
+    ("empty token list", [], _CASE_EXPECTS_RAISE),
 ]
 
 
 INTERACTION_CASES = [
-    ('classic shunting-yard expression', ['3', '+', '4', '*', '2', '/', '(', '1', '-', '5', ')'], ['3', '4', '2', '*', '1', '5', '-', '/', '+']),
-    ('nested groups with multiple operators', ['(', '2', '+', '3', ')', '*', '(', '4', '+', '5', ')'], ['2', '3', '+', '4', '5', '+', '*']),
-    ('division and multiplication chain', ['8', '/', '2', '*', '3', '+', '1'], ['8', '2', '/', '3', '*', '1', '+']),
-    ('multiple nested parentheses', ['(', '1', '+', '(', '2', '*', '3', ')', ')', '-', '4'], ['1', '2', '3', '*', '+', '4', '-']),
-    ('adjacent parenthesized groups', ['(', '1', '+', '2', ')', '*', '(', '3', '-', '4', ')', '/', '5'], ['1', '2', '+', '3', '4', '-', '*', '5', '/']),
+    (
+        "classic shunting-yard expression",
+        ["3", "+", "4", "*", "2", "/", "(", "1", "-", "5", ")"],
+        ["3", "4", "2", "*", "1", "5", "-", "/", "+"],
+    ),
+    (
+        "nested groups with multiple operators",
+        ["(", "2", "+", "3", ")", "*", "(", "4", "+", "5", ")"],
+        ["2", "3", "+", "4", "5", "+", "*"],
+    ),
+    (
+        "division and multiplication chain",
+        ["8", "/", "2", "*", "3", "+", "1"],
+        ["8", "2", "/", "3", "*", "1", "+"],
+    ),
+    (
+        "multiple nested parentheses",
+        ["(", "1", "+", "(", "2", "*", "3", ")", ")", "-", "4"],
+        ["1", "2", "3", "*", "+", "4", "-"],
+    ),
+    (
+        "adjacent parenthesized groups",
+        ["(", "1", "+", "2", ")", "*", "(", "3", "-", "4", ")", "/", "5"],
+        ["1", "2", "+", "3", "4", "-", "*", "5", "/"],
+    ),
 ]
 
 
@@ -158,21 +232,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
