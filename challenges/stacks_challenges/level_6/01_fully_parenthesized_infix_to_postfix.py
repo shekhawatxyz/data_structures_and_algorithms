@@ -8,7 +8,7 @@
 
 
 def fully_parenthesized_infix_to_postfix(expression):
-    operators = ["+", "-", "/", "*"]
+    operators = {"+": 1, "-": 1, "/": 2, "*": 2}
     expression_list = expression.split()
     st = []
     output = []
@@ -18,8 +18,6 @@ def fully_parenthesized_infix_to_postfix(expression):
         if e == "(":
             count += 1
         elif e == ")":
-            if count < 0:
-                raise Exception
             if len(st) == 0:
                 raise Exception
             o = st.pop()
@@ -27,9 +25,11 @@ def fully_parenthesized_infix_to_postfix(expression):
                 raise Exception
             output.append(o)
             count -= 1
+            if count < 0:
+                raise Exception
             num_count -= 1
         elif e in operators:
-            if expression_list[i - 1] == "(":
+            if expression_list[i - 1] == "(" or i == 0:
                 raise Exception
             st.append(e)
         else:

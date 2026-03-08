@@ -6,8 +6,51 @@
 # **6d.** Extend your shunting-yard to handle right-associative exponentiation `^`. For example, `"2 ^ 3 ^ 2"` should be treated as `2 ^ (3 ^ 2) = 512`, not `(2 ^ 3) ^ 2 = 64`. The key: the only thing that changes is the comparison — for right-associative operators, you pop only when the stack-top has *strictly greater* precedence, not greater-or-equal.
 #
 
+
 def infix_to_postfix_with_exponent(tokens):
-    raise NotImplementedError('Implement infix_to_postfix_with_exponent(tokens).')
+    st = []
+    output = []
+    prec = {"^": 3, "*": 2, "/": 2, "+": 1, "-": 1}
+    if len(tokens) == 0:
+        raise Exception
+    for i, e in enumerate(tokens):
+        if e == "(":
+            st.append("(")
+        elif e == ")":
+            if "(" not in st:
+                raise Exception
+            while st and st[-1] != "(":
+                output.append(st.pop())
+            st.pop()
+        elif e in prec:
+            if i == 0:
+                raise Exception
+            elif i == len(tokens) - 1:
+                raise Exception
+            if tokens[i - 1] in prec:
+                raise Exception
+            while st:
+                if st[-1] == "(":
+                    break
+                if e == "^":
+                    if prec[st[-1]] > prec[e]:
+                        output.append(st.pop())
+                    else:
+                        break
+                elif prec[st[-1]] >= prec[e]:
+                    s = st.pop()
+                    output.append(s)
+                else:
+                    break
+            st.append(e)
+        else:
+            output.append(e)
+    if "(" in st:
+        raise Exception
+    while st:
+        output.append(st.pop())
+    return output
+
 
 #
 #
@@ -54,6 +97,7 @@ def infix_to_postfix_with_exponent(tokens):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -109,29 +153,57 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('simple exponent', ['2', '^', '3'], ['2', '3', '^']),
-    ('right associativity core case', ['2', '^', '3', '^', '2'], ['2', '3', '2', '^', '^']),
-    ('parenthesized exponent grouping', ['(', '2', '^', '3', ')', '^', '2'], ['2', '3', '^', '2', '^']),
-    ('exponent with multiplication', ['2', '*', '3', '^', '2'], ['2', '3', '2', '^', '*']),
-    ('addition around exponents', ['1', '+', '2', '^', '3'], ['1', '2', '3', '^', '+']),
+    ("simple exponent", ["2", "^", "3"], ["2", "3", "^"]),
+    (
+        "right associativity core case",
+        ["2", "^", "3", "^", "2"],
+        ["2", "3", "2", "^", "^"],
+    ),
+    (
+        "parenthesized exponent grouping",
+        ["(", "2", "^", "3", ")", "^", "2"],
+        ["2", "3", "^", "2", "^"],
+    ),
+    (
+        "exponent with multiplication",
+        ["2", "*", "3", "^", "2"],
+        ["2", "3", "2", "^", "*"],
+    ),
+    ("addition around exponents", ["1", "+", "2", "^", "3"], ["1", "2", "3", "^", "+"]),
 ]
 
 
 BOUNDARY_CASES = [
-    ('missing right operand', ['2', '^'], _CASE_EXPECTS_RAISE),
-    ('leading operator', ['^', '2', '3'], _CASE_EXPECTS_RAISE),
-    ('mismatched parentheses', ['(', '2', '^', '3'], _CASE_EXPECTS_RAISE),
-    ('extra closing parenthesis', ['2', '^', '3', ')'], _CASE_EXPECTS_RAISE),
-    ('empty tokens', [], _CASE_EXPECTS_RAISE),
+    ("missing right operand", ["2", "^"], _CASE_EXPECTS_RAISE),
+    ("leading operator", ["^", "2", "3"], _CASE_EXPECTS_RAISE),
+    ("mismatched parentheses", ["(", "2", "^", "3"], _CASE_EXPECTS_RAISE),
+    ("extra closing parenthesis", ["2", "^", "3", ")"], _CASE_EXPECTS_RAISE),
+    ("empty tokens", [], _CASE_EXPECTS_RAISE),
 ]
 
 
 INTERACTION_CASES = [
-    ('mixed operators and exponent chain', ['3', '+', '2', '^', '3', '*', '2'], ['3', '2', '3', '^', '2', '*', '+']),
-    ('nested exponent group with subtraction', ['(', '2', '^', '3', '^', '2', ')', '-', '1'], ['2', '3', '2', '^', '^', '1', '-']),
-    ('multiple exponent groups', ['2', '^', '2', '+', '3', '^', '2'], ['2', '2', '^', '3', '2', '^', '+']),
-    ('exponent then division', ['2', '^', '4', '/', '4'], ['2', '4', '^', '4', '/']),
-    ('parenthesized base and exponent', ['(', '1', '+', '1', ')', '^', '(', '2', '+', '1', ')'], ['1', '1', '+', '2', '1', '+', '^']),
+    (
+        "mixed operators and exponent chain",
+        ["3", "+", "2", "^", "3", "*", "2"],
+        ["3", "2", "3", "^", "2", "*", "+"],
+    ),
+    (
+        "nested exponent group with subtraction",
+        ["(", "2", "^", "3", "^", "2", ")", "-", "1"],
+        ["2", "3", "2", "^", "^", "1", "-"],
+    ),
+    (
+        "multiple exponent groups",
+        ["2", "^", "2", "+", "3", "^", "2"],
+        ["2", "2", "^", "3", "2", "^", "+"],
+    ),
+    ("exponent then division", ["2", "^", "4", "/", "4"], ["2", "4", "^", "4", "/"]),
+    (
+        "parenthesized base and exponent",
+        ["(", "1", "+", "1", ")", "^", "(", "2", "+", "1", ")"],
+        ["1", "1", "+", "2", "1", "+", "^"],
+    ),
 ]
 
 
@@ -139,7 +211,9 @@ def _run_case_group(group_name, cases):
     for case_index, (case_label, input_value, expected) in enumerate(cases, start=1):
         if expected is _CASE_EXPECTS_RAISE:
             _assert_raises(
-                lambda value=copy.deepcopy(input_value): infix_to_postfix_with_exponent(value),
+                lambda value=copy.deepcopy(input_value): infix_to_postfix_with_exponent(
+                    value
+                ),
                 (
                     f"{group_name} case {case_index} ({case_label}) expected an exception "
                     f"for input {input_value!r}."
@@ -159,21 +233,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

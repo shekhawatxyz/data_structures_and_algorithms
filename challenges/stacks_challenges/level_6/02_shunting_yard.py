@@ -7,26 +7,24 @@
 
 
 def infix_to_postfix(tokens):
-    operators = ["+", "-", "/", "*"]
     st = []
     output = []
-    count = 0
     prec = {"*": 2, "/": 2, "+": 1, "-": 1}
     if len(tokens) == 0:
         raise Exception
     for i, e in enumerate(tokens):
         if e == "(":
-            count += 1
             st.append("(")
         elif e == ")":
             while st and st[-1] != "(":
                 output.append(st.pop())
             st.pop()
-            count -= 1
         elif e in prec:
             if i == 0:
                 raise Exception
             elif i == len(tokens) - 1:
+                raise Exception
+            if tokens[i - 1] in prec:
                 raise Exception
             while st:
                 if st[-1] == "(":
@@ -39,7 +37,7 @@ def infix_to_postfix(tokens):
             st.append(e)
         else:
             output.append(e)
-    if count != 0:
+    if "(" in st:
         raise Exception
     while st:
         output.append(st.pop())
