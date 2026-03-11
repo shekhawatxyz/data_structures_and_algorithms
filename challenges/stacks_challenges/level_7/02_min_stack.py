@@ -5,21 +5,41 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **7b.** Now design a `MinStack` with the same interface but for `get_min`. If you did 7a, this is almost identical — but do it from scratch to reinforce the pattern. Then think: can you reduce the space used by the auxiliary stack? (Hint: you don't need to push onto the auxiliary stack on *every* push.)
 
+
 class MinStack:
     def __init__(self):
-        raise NotImplementedError('Implement MinStack.__init__.')
+        self._items = []
+        self._min = []
 
     def push(self, item):
-        raise NotImplementedError('Implement MinStack.push(item).')
+        if not self._items:
+            self._items.append(item)
+            self._min.append(item)
+        elif item <= self._min[-1]:
+            self._min.append(item)
+            self._items.append(item)
+        else:
+            self._items.append(item)
 
     def pop(self):
-        raise NotImplementedError('Implement MinStack.pop().')
+        if not self._items:
+            raise IndexError
+        elif self._min[-1] == self._items[-1]:
+            self._min.pop()
+        return self._items.pop()
 
     def peek(self):
-        raise NotImplementedError('Implement MinStack.peek().')
+        if not self._items:
+            raise IndexError
+        else:
+            return self._items[-1]
 
     def get_min(self):
-        raise NotImplementedError('Implement MinStack.get_min().')
+        if not self._min:
+            raise IndexError
+        else:
+            return self._min[-1]
+
 
 #
 #
@@ -66,6 +86,7 @@ class MinStack:
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -120,12 +141,14 @@ def test_01_pedagogy_get_min_progression_while_pushing():
     sequence = [5, 2, 7, 1, 1]
     expected_mins = [5, 2, 2, 1, 1]
 
-    for index, (value, expected_min) in enumerate(zip(sequence, expected_mins), start=1):
+    for index, (value, expected_min) in enumerate(
+        zip(sequence, expected_mins), start=1
+    ):
         stack.push(value)
         _assert_equal(
             stack.get_min(),
             expected_min,
-            f'After push #{index} of value {value}, get_min() should be {expected_min}.',
+            f"After push #{index} of value {value}, get_min() should be {expected_min}.",
         )
 
 
@@ -134,19 +157,25 @@ def test_02_pedagogy_lifo_and_min_update_while_popping():
     for value in [3, 2, 2, 4]:
         stack.push(value)
 
-    _assert_equal(stack.pop(), 4, 'First pop should remove top value 4.')
-    _assert_equal(stack.get_min(), 2, 'Min should remain 2 after popping non-min value 4.')
-    _assert_equal(stack.pop(), 2, 'Second pop should remove top-most minimum 2.')
-    _assert_equal(stack.get_min(), 2, 'Min should remain 2 due to duplicate minimum.')
-    _assert_equal(stack.pop(), 2, 'Third pop removes second minimum.')
-    _assert_equal(stack.get_min(), 3, 'Min should update to 3 after removing all minimum duplicates.')
+    _assert_equal(stack.pop(), 4, "First pop should remove top value 4.")
+    _assert_equal(
+        stack.get_min(), 2, "Min should remain 2 after popping non-min value 4."
+    )
+    _assert_equal(stack.pop(), 2, "Second pop should remove top-most minimum 2.")
+    _assert_equal(stack.get_min(), 2, "Min should remain 2 due to duplicate minimum.")
+    _assert_equal(stack.pop(), 2, "Third pop removes second minimum.")
+    _assert_equal(
+        stack.get_min(),
+        3,
+        "Min should update to 3 after removing all minimum duplicates.",
+    )
 
 
 def test_03_boundaries_empty_stack_operations_raise():
     stack = MinStack()
-    _assert_raises(lambda: stack.pop(), 'pop() on empty MinStack should raise.')
-    _assert_raises(lambda: stack.peek(), 'peek() on empty MinStack should raise.')
-    _assert_raises(lambda: stack.get_min(), 'get_min() on empty MinStack should raise.')
+    _assert_raises(lambda: stack.pop(), "pop() on empty MinStack should raise.")
+    _assert_raises(lambda: stack.peek(), "peek() on empty MinStack should raise.")
+    _assert_raises(lambda: stack.get_min(), "get_min() on empty MinStack should raise.")
 
 
 def test_04_boundaries_duplicate_min_values_are_tracked_correctly():
@@ -154,11 +183,15 @@ def test_04_boundaries_duplicate_min_values_are_tracked_correctly():
     for value in [1, 1, 1]:
         stack.push(value)
 
-    _assert_equal(stack.get_min(), 1, 'Min should be 1 after pushing duplicate minima.')
+    _assert_equal(stack.get_min(), 1, "Min should be 1 after pushing duplicate minima.")
     stack.pop()
-    _assert_equal(stack.get_min(), 1, 'Min should remain 1 after popping one minimum.')
+    _assert_equal(stack.get_min(), 1, "Min should remain 1 after popping one minimum.")
     stack.pop()
-    _assert_equal(stack.get_min(), 1, 'Min should remain 1 until all minimum duplicates are removed.')
+    _assert_equal(
+        stack.get_min(),
+        1,
+        "Min should remain 1 until all minimum duplicates are removed.",
+    )
 
 
 def test_05_interactions_negative_and_positive_mix():
@@ -166,37 +199,61 @@ def test_05_interactions_negative_and_positive_mix():
     for value in [10, -3, 5, -7, 0]:
         stack.push(value)
 
-    _assert_equal(stack.get_min(), -7, 'Min should become -7 after pushing -7.')
-    _assert_equal(stack.pop(), 0, 'Top should pop in LIFO order for mixed sign values.')
-    _assert_equal(stack.get_min(), -7, 'Min should remain -7 after popping non-min value 0.')
-    _assert_equal(stack.pop(), -7, 'Popping -7 should remove current minimum.')
-    _assert_equal(stack.get_min(), -3, 'Min should update to next minimum -3 after removing -7.')
+    _assert_equal(stack.get_min(), -7, "Min should become -7 after pushing -7.")
+    _assert_equal(stack.pop(), 0, "Top should pop in LIFO order for mixed sign values.")
+    _assert_equal(
+        stack.get_min(), -7, "Min should remain -7 after popping non-min value 0."
+    )
+    _assert_equal(stack.pop(), -7, "Popping -7 should remove current minimum.")
+    _assert_equal(
+        stack.get_min(), -3, "Min should update to next minimum -3 after removing -7."
+    )
 
 
 def test_06_interactions_interleaved_push_pop_peek_get_min():
     stack = MinStack()
     stack.push(4)
-    _assert_equal(stack.peek(), 4, 'peek should show top 4 after first push.')
-    _assert_equal(stack.get_min(), 4, 'min should be 4 after first push.')
+    _assert_equal(stack.peek(), 4, "peek should show top 4 after first push.")
+    _assert_equal(stack.get_min(), 4, "min should be 4 after first push.")
 
     stack.push(6)
-    _assert_equal(stack.peek(), 6, 'peek should update to 6 after pushing 6.')
-    _assert_equal(stack.get_min(), 4, 'min should remain 4 after pushing larger value 6.')
+    _assert_equal(stack.peek(), 6, "peek should update to 6 after pushing 6.")
+    _assert_equal(
+        stack.get_min(), 4, "min should remain 4 after pushing larger value 6."
+    )
 
     stack.push(1)
-    _assert_equal(stack.get_min(), 1, 'min should update to 1 after pushing 1.')
-    _assert_equal(stack.pop(), 1, 'pop should remove top 1 first.')
-    _assert_equal(stack.peek(), 6, 'peek should revert to 6 after popping 1.')
-    _assert_equal(stack.get_min(), 4, 'min should revert to 4 after popping 1.')
+    _assert_equal(stack.get_min(), 1, "min should update to 1 after pushing 1.")
+    _assert_equal(stack.pop(), 1, "pop should remove top 1 first.")
+    _assert_equal(stack.peek(), 6, "peek should revert to 6 after popping 1.")
+    _assert_equal(stack.get_min(), 4, "min should revert to 4 after popping 1.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogy: min progression on push', test_01_pedagogy_get_min_progression_while_pushing),
-        ('pedagogy: lifo + min updates on pop', test_02_pedagogy_lifo_and_min_update_while_popping),
-        ('boundaries: empty operations raise', test_03_boundaries_empty_stack_operations_raise),
-        ('boundaries: duplicate minima', test_04_boundaries_duplicate_min_values_are_tracked_correctly),
-        ('interactions: mixed sign values', test_05_interactions_negative_and_positive_mix),
-        ('interactions: interleaved ops', test_06_interactions_interleaved_push_pop_peek_get_min),
+        (
+            "pedagogy: min progression on push",
+            test_01_pedagogy_get_min_progression_while_pushing,
+        ),
+        (
+            "pedagogy: lifo + min updates on pop",
+            test_02_pedagogy_lifo_and_min_update_while_popping,
+        ),
+        (
+            "boundaries: empty operations raise",
+            test_03_boundaries_empty_stack_operations_raise,
+        ),
+        (
+            "boundaries: duplicate minima",
+            test_04_boundaries_duplicate_min_values_are_tracked_correctly,
+        ),
+        (
+            "interactions: mixed sign values",
+            test_05_interactions_negative_and_positive_mix,
+        ),
+        (
+            "interactions: interleaved ops",
+            test_06_interactions_interleaved_push_pop_peek_get_min,
+        ),
     ]
     _run_all_tests(TEST_CASES)
