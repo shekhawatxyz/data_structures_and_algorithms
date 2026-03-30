@@ -6,8 +6,22 @@
 # **8d.** Given a circular array (the element after the last is the first), find the next greater element for each position. Example: `[1, 2, 1]` → `[2, -1, 2]` (the `1` at index 2 wraps around to find `2` at index 0). (Hint: a standard trick for circular arrays — iterate through the array twice.)
 #
 
+
 def next_greater_elements_circular(values):
-    raise NotImplementedError('Implement next_greater_elements_circular(values).')
+    stack = []
+    modified_values = values + values
+    result = [-1 for _ in values]
+    for i in range(len(modified_values)):
+        # if i == len(values):
+        #     break
+        while stack and modified_values[i] > modified_values[stack[-1]]:
+            idx = stack.pop()
+            if idx < len(values):
+                result[idx] = modified_values[i]
+        else:
+            stack.append(i)
+    return result
+
 
 #
 #
@@ -54,6 +68,7 @@ def next_greater_elements_circular(values):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -109,29 +124,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty input', [], []),
-    ('single element', [1], [-1]),
-    ('given example', [1, 2, 1], [2, -1, 2]),
-    ('strictly increasing', [1, 2, 3], [2, 3, -1]),
-    ('strictly decreasing', [3, 2, 1], [-1, 3, 3]),
+    ("empty input", [], []),
+    ("single element", [1], [-1]),
+    ("given example", [1, 2, 1], [2, -1, 2]),
+    ("strictly increasing", [1, 2, 3], [2, 3, -1]),
+    ("strictly decreasing", [3, 2, 1], [-1, 3, 3]),
 ]
 
 
 BOUNDARY_CASES = [
-    ('all equal values', [5, 5, 5], [-1, -1, -1]),
-    ('two elements increasing', [1, 9], [9, -1]),
-    ('two elements decreasing wrap', [9, 1], [-1, 9]),
-    ('duplicates with one greater', [2, 2, 3], [3, 3, -1]),
-    ('wraparound required at end', [3, 1, 2], [-1, 2, 3]),
+    ("all equal values", [5, 5, 5], [-1, -1, -1]),
+    ("two elements increasing", [1, 9], [9, -1]),
+    ("two elements decreasing wrap", [9, 1], [-1, 9]),
+    ("duplicates with one greater", [2, 2, 3], [3, 3, -1]),
+    ("wraparound required at end", [3, 1, 2], [-1, 2, 3]),
 ]
 
 
 INTERACTION_CASES = [
-    ('alternating highs and lows', [2, 5, 1, 4], [5, -1, 4, 5]),
-    ('multiple wraparound hits', [4, 1, 2, 3], [-1, 2, 3, 4]),
-    ('plateau with single max', [1, 1, 2, 1], [2, 2, -1, 2]),
-    ('complex mixed pattern', [6, 3, 8, 2, 7], [8, 8, -1, 7, 8]),
-    ('descending then spike', [5, 4, 3, 6], [6, 6, 6, -1]),
+    ("alternating highs and lows", [2, 5, 1, 4], [5, -1, 4, 5]),
+    ("multiple wraparound hits", [4, 1, 2, 3], [-1, 2, 3, 4]),
+    ("plateau with single max", [1, 1, 2, 1], [2, 2, -1, 2]),
+    ("complex mixed pattern", [6, 3, 8, 2, 7], [8, 8, -1, 7, 8]),
+    ("descending then spike", [5, 4, 3, 6], [6, 6, 6, -1]),
 ]
 
 
@@ -139,7 +154,9 @@ def _run_case_group(group_name, cases):
     for case_index, (case_label, input_value, expected) in enumerate(cases, start=1):
         if expected is _CASE_EXPECTS_RAISE:
             _assert_raises(
-                lambda value=copy.deepcopy(input_value): next_greater_elements_circular(value),
+                lambda value=copy.deepcopy(input_value): next_greater_elements_circular(
+                    value
+                ),
                 (
                     f"{group_name} case {case_index} ({case_label}) expected an exception "
                     f"for input {input_value!r}."
@@ -159,21 +176,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

@@ -5,8 +5,19 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **8b.** Given an array of integers, for each element, find the *next greater element* — i.e., the first element to its right that is strictly larger. If none exists, output `-1`. Example: `[4, 2, 6, 1, 3]` → `[6, 6, -1, 3, -1]`. Do this in O(n).
 
+
 def next_greater_elements(values):
-    raise NotImplementedError('Implement next_greater_elements(values).')
+    stack = []
+    result = [-1 for _ in values]
+    i = 0
+    while i < len(values):
+        while stack and values[i] > values[stack[-1]]:
+            idx = stack.pop()
+            result[idx] = values[i]
+        stack.append(i)
+        i += 1
+    return result
+
 
 #
 #
@@ -53,6 +64,7 @@ def next_greater_elements(values):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -108,29 +120,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty input', [], []),
-    ('single element', [5], [-1]),
-    ('given example', [4, 2, 6, 1, 3], [6, 6, -1, 3, -1]),
-    ('strictly increasing', [1, 2, 3, 4], [2, 3, 4, -1]),
-    ('strictly decreasing', [5, 4, 3, 2], [-1, -1, -1, -1]),
+    ("empty input", [], []),
+    ("single element", [5], [-1]),
+    ("given example", [4, 2, 6, 1, 3], [6, 6, -1, 3, -1]),
+    ("strictly increasing", [1, 2, 3, 4], [2, 3, 4, -1]),
+    ("strictly decreasing", [5, 4, 3, 2], [-1, -1, -1, -1]),
 ]
 
 
 BOUNDARY_CASES = [
-    ('all equal values', [2, 2, 2], [-1, -1, -1]),
-    ('two elements increasing', [1, 9], [9, -1]),
-    ('two elements decreasing', [9, 1], [-1, -1]),
-    ('includes negatives', [-3, -2, -1], [-2, -1, -1]),
-    ('duplicate then greater', [2, 2, 3], [3, 3, -1]),
+    ("all equal values", [2, 2, 2], [-1, -1, -1]),
+    ("two elements increasing", [1, 9], [9, -1]),
+    ("two elements decreasing", [9, 1], [-1, -1]),
+    ("includes negatives", [-3, -2, -1], [-2, -1, -1]),
+    ("duplicate then greater", [2, 2, 3], [3, 3, -1]),
 ]
 
 
 INTERACTION_CASES = [
-    ('alternating peaks', [3, 1, 4, 2, 5], [4, 4, 5, 5, -1]),
-    ('late greater value', [8, 1, 2, 3, 9], [9, 2, 3, 9, -1]),
-    ('multiple equal maxima', [1, 3, 3, 2], [3, -1, -1, -1]),
-    ('zig-zag pattern', [2, 5, 1, 6, 0, 7], [5, 6, 6, 7, 7, -1]),
-    ('complex with plateaus', [4, 4, 2, 4, 5], [5, 5, 4, 5, -1]),
+    ("alternating peaks", [3, 1, 4, 2, 5], [4, 4, 5, 5, -1]),
+    ("late greater value", [8, 1, 2, 3, 9], [9, 2, 3, 9, -1]),
+    ("multiple equal maxima", [1, 3, 3, 2], [3, -1, -1, -1]),
+    ("zig-zag pattern", [2, 5, 1, 6, 0, 7], [5, 6, 6, 7, 7, -1]),
+    ("complex with plateaus", [4, 4, 2, 4, 5], [5, 5, 4, 5, -1]),
 ]
 
 
@@ -158,21 +170,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

@@ -5,8 +5,18 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **8c.** Variation: for each element, find the *previous greater element* — the nearest element to its *left* that is strictly larger. Output `-1` if none. Example: `[4, 2, 6, 1, 3]` → `[-1, 4, -1, 6, 6]`. Same O(n) constraint. Notice how the direction change affects when you process elements vs. when you read answers off the stack.
 
+
 def previous_greater_elements(values):
-    raise NotImplementedError('Implement previous_greater_elements(values).')
+    stacks = []
+    results = [-1 for _ in values]
+    for j in range(len(values)):
+        while stacks and values[j] >= values[stacks[-1]]:
+            stacks.pop()
+        if stacks and values[j] < values[stacks[-1]]:
+            results[j] = values[stacks[-1]]
+        stacks.append(j)
+    return results
+
 
 #
 #
@@ -53,6 +63,7 @@ def previous_greater_elements(values):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -108,29 +119,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty input', [], []),
-    ('single element', [5], [-1]),
-    ('given example', [4, 2, 6, 1, 3], [-1, 4, -1, 6, 6]),
-    ('strictly increasing', [1, 2, 3, 4], [-1, -1, -1, -1]),
-    ('strictly decreasing', [4, 3, 2, 1], [-1, 4, 3, 2]),
+    ("empty input", [], []),
+    ("single element", [5], [-1]),
+    ("given example", [4, 2, 6, 1, 3], [-1, 4, -1, 6, 6]),
+    ("strictly increasing", [1, 2, 3, 4], [-1, -1, -1, -1]),
+    ("strictly decreasing", [4, 3, 2, 1], [-1, 4, 3, 2]),
 ]
 
 
 BOUNDARY_CASES = [
-    ('all equal values', [2, 2, 2], [-1, -1, -1]),
-    ('two elements increasing', [1, 9], [-1, -1]),
-    ('two elements decreasing', [9, 1], [-1, 9]),
-    ('includes negatives', [-1, -2, -3], [-1, -1, -2]),
-    ('duplicate then greater', [3, 3, 1], [-1, -1, 3]),
+    ("all equal values", [2, 2, 2], [-1, -1, -1]),
+    ("two elements increasing", [1, 9], [-1, -1]),
+    ("two elements decreasing", [9, 1], [-1, 9]),
+    ("includes negatives", [-1, -2, -3], [-1, -1, -2]),
+    ("duplicate then greater", [3, 3, 1], [-1, -1, 3]),
 ]
 
 
 INTERACTION_CASES = [
-    ('alternating peaks', [3, 1, 4, 2, 5], [-1, 3, -1, 4, -1]),
-    ('late high value', [1, 2, 3, 0, 4], [-1, -1, -1, 3, -1]),
-    ('multiple local highs', [6, 2, 5, 4, 3], [-1, 6, 6, 5, 4]),
-    ('zig-zag pattern', [2, 5, 1, 6, 0, 7], [-1, -1, 5, -1, 6, -1]),
-    ('plateau and decline', [5, 5, 4, 4, 3], [-1, -1, 5, 5, 4]),
+    ("alternating peaks", [3, 1, 4, 2, 5], [-1, 3, -1, 4, -1]),
+    ("late high value", [1, 2, 3, 0, 4], [-1, -1, -1, 3, -1]),
+    ("multiple local highs", [6, 2, 5, 4, 3], [-1, 6, 6, 5, 4]),
+    ("zig-zag pattern", [2, 5, 1, 6, 0, 7], [-1, -1, 5, -1, 6, -1]),
+    ("plateau and decline", [5, 5, 4, 4, 3], [-1, -1, 5, 5, 4]),
 ]
 
 
@@ -138,7 +149,9 @@ def _run_case_group(group_name, cases):
     for case_index, (case_label, input_value, expected) in enumerate(cases, start=1):
         if expected is _CASE_EXPECTS_RAISE:
             _assert_raises(
-                lambda value=copy.deepcopy(input_value): previous_greater_elements(value),
+                lambda value=copy.deepcopy(input_value): previous_greater_elements(
+                    value
+                ),
                 (
                     f"{group_name} case {case_index} ({case_label}) expected an exception "
                     f"for input {input_value!r}."
@@ -158,21 +171,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
