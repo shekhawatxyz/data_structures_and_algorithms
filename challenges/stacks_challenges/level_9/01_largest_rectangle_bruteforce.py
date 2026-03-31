@@ -5,8 +5,24 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **9a.** Warm-up: given an array of non-negative integers representing heights, and a fixed width of 1 per bar, find the area of the largest rectangle of height `min(array)` spanning the *entire* array. This is trivial (just `min * len`) — but phrase it to yourself as: "the rectangle constrained to use all bars." Now: what if you could pick any *contiguous* subarray? The rectangle's height is the minimum in that subarray, and its width is the subarray's length. Write a brute-force O(n²) solution for this (for each bar, expand left and right to find how far it can extend as the minimum). Verify on `[2, 1, 5, 6, 2, 3]` → `10`.
 
+
 def largest_rectangle_bruteforce(heights):
-    raise NotImplementedError('Implement largest_rectangle_bruteforce(heights).')
+    max_area = 0
+    for i in range(len(heights)):
+        h = heights[i]
+        left = right = i
+        width = 1
+        while left > 0 and heights[left - 1] >= h:
+            left -= 1
+            width += 1
+        while right < len(heights) - 1 and heights[right + 1] >= h:
+            right += 1
+            width += 1
+        new_area = width * h
+        if new_area > max_area:
+            max_area = new_area
+    return max_area
+
 
 #
 #
@@ -53,6 +69,7 @@ def largest_rectangle_bruteforce(heights):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -108,29 +125,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty histogram', [], 0),
-    ('single bar', [5], 5),
-    ('two bars', [2, 4], 4),
-    ('uniform bars', [2, 2, 2], 6),
-    ('given example', [2, 1, 5, 6, 2, 3], 10),
+    ("empty histogram", [], 0),
+    ("single bar", [5], 5),
+    ("two bars", [2, 4], 4),
+    ("uniform bars", [2, 2, 2], 6),
+    ("given example", [2, 1, 5, 6, 2, 3], 10),
 ]
 
 
 BOUNDARY_CASES = [
-    ('includes zero-height bar', [0, 1, 0], 1),
-    ('all zeros', [0, 0, 0], 0),
-    ('strictly increasing', [1, 2, 3, 4], 6),
-    ('strictly decreasing', [4, 3, 2, 1], 6),
-    ('single zero bar', [0], 0),
+    ("includes zero-height bar", [0, 1, 0], 1),
+    ("all zeros", [0, 0, 0], 0),
+    ("strictly increasing", [1, 2, 3, 4], 6),
+    ("strictly decreasing", [4, 3, 2, 1], 6),
+    ("single zero bar", [0], 0),
 ]
 
 
 INTERACTION_CASES = [
-    ('classic second benchmark', [6, 2, 5, 4, 5, 1, 6], 12),
-    ('valley in middle', [5, 4, 1, 2], 8),
-    ('plateau then dip', [3, 3, 3, 1, 3], 9),
-    ('multiple local maxima', [2, 4, 2, 1], 6),
-    ('wide low bar dominates', [1, 1, 1, 1, 5], 5),
+    ("classic second benchmark", [6, 2, 5, 4, 5, 1, 6], 12),
+    ("valley in middle", [5, 4, 1, 2], 8),
+    ("plateau then dip", [3, 3, 3, 1, 3], 9),
+    ("multiple local maxima", [2, 4, 2, 1], 6),
+    ("wide low bar dominates", [1, 1, 1, 1, 5], 5),
 ]
 
 
@@ -138,7 +155,9 @@ def _run_case_group(group_name, cases):
     for case_index, (case_label, input_value, expected) in enumerate(cases, start=1):
         if expected is _CASE_EXPECTS_RAISE:
             _assert_raises(
-                lambda value=copy.deepcopy(input_value): largest_rectangle_bruteforce(value),
+                lambda value=copy.deepcopy(input_value): largest_rectangle_bruteforce(
+                    value
+                ),
                 (
                     f"{group_name} case {case_index} ({case_label}) expected an exception "
                     f"for input {input_value!r}."
@@ -158,21 +177,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

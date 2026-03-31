@@ -6,8 +6,37 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **9b.** Now think about what information you'd need to compute each bar's "extent" (how far left and right it can go as the minimum) in O(n). This is exactly what a monotonic stack gives you. For each element, use a stack to find the index of the *nearest smaller element to the left* and the *nearest smaller element to the right*. These two arrays, combined, give you each bar's maximal rectangle. Implement this.
 
+
 def nearest_smaller_indices(heights):
-    raise NotImplementedError('Implement nearest_smaller_indices(heights).')
+    right = next_smaller_elements(heights)
+    left = previous_smaller_elements(heights)
+    return left, right
+
+
+def next_smaller_elements(values):
+    stack = []
+    result = [len(values) for _ in values]
+    i = 0
+    while i < len(values):
+        while stack and values[i] < values[stack[-1]]:
+            idx = stack.pop()
+            result[idx] = i
+        stack.append(i)
+        i += 1
+    return result
+
+
+def previous_smaller_elements(values):
+    stacks = []
+    results = [-1 for _ in values]
+    for j in range(len(values)):
+        while stacks and values[j] <= values[stacks[-1]]:
+            stacks.pop()
+        if stacks and values[j] > values[stacks[-1]]:
+            results[j] = stacks[-1]
+        stacks.append(j)
+    return results
+
 
 #
 #
@@ -54,6 +83,7 @@ def nearest_smaller_indices(heights):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -109,29 +139,33 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty input', [], ([], [])),
-    ('single bar', [5], ([-1], [1])),
-    ('given example', [2, 1, 5, 6, 2, 3], ([-1, -1, 1, 2, 1, 4], [1, 6, 4, 4, 6, 6])),
-    ('strictly increasing', [1, 2, 3, 4], ([-1, 0, 1, 2], [4, 4, 4, 4])),
-    ('strictly decreasing', [4, 3, 2, 1], ([-1, -1, -1, -1], [1, 2, 3, 4])),
+    ("empty input", [], ([], [])),
+    ("single bar", [5], ([-1], [1])),
+    ("given example", [2, 1, 5, 6, 2, 3], ([-1, -1, 1, 2, 1, 4], [1, 6, 4, 4, 6, 6])),
+    ("strictly increasing", [1, 2, 3, 4], ([-1, 0, 1, 2], [4, 4, 4, 4])),
+    ("strictly decreasing", [4, 3, 2, 1], ([-1, -1, -1, -1], [1, 2, 3, 4])),
 ]
 
 
 BOUNDARY_CASES = [
-    ('all equal heights', [2, 2, 2], ([-1, -1, -1], [3, 3, 3])),
-    ('includes zero', [0, 2, 0], ([-1, 0, -1], [3, 2, 3])),
-    ('two bars increasing', [1, 3], ([-1, 0], [2, 2])),
-    ('two bars decreasing', [3, 1], ([-1, -1], [1, 2])),
-    ('symmetric pattern', [3, 1, 3], ([-1, -1, 1], [1, 3, 3])),
+    ("all equal heights", [2, 2, 2], ([-1, -1, -1], [3, 3, 3])),
+    ("includes zero", [0, 2, 0], ([-1, 0, -1], [3, 2, 3])),
+    ("two bars increasing", [1, 3], ([-1, 0], [2, 2])),
+    ("two bars decreasing", [3, 1], ([-1, -1], [1, 2])),
+    ("symmetric pattern", [3, 1, 3], ([-1, -1, 1], [1, 3, 3])),
 ]
 
 
 INTERACTION_CASES = [
-    ('mixed valley pattern', [4, 2, 0, 3, 2, 5], ([-1, -1, -1, 2, 2, 4], [1, 2, 6, 4, 6, 6])),
-    ('peak middle symmetry', [5, 4, 3, 4, 5], ([-1, -1, -1, 2, 3], [1, 2, 5, 5, 5])),
-    ('plateau with dips', [2, 1, 2, 1, 2], ([-1, -1, 1, -1, 3], [1, 5, 3, 5, 5])),
-    ('late minimum', [3, 3, 3, 1], ([-1, -1, -1, -1], [3, 3, 3, 4])),
-    ('complex mixed heights', [1, 3, 2, 4, 2], ([-1, 0, 0, 2, 0], [5, 2, 5, 4, 5])),
+    (
+        "mixed valley pattern",
+        [4, 2, 0, 3, 2, 5],
+        ([-1, -1, -1, 2, 2, 4], [1, 2, 6, 4, 6, 6]),
+    ),
+    ("peak middle symmetry", [5, 4, 3, 4, 5], ([-1, -1, -1, 2, 3], [1, 2, 5, 5, 5])),
+    ("plateau with dips", [2, 1, 2, 1, 2], ([-1, -1, 1, -1, 3], [1, 5, 3, 5, 5])),
+    ("late minimum", [3, 3, 3, 1], ([-1, -1, -1, -1], [3, 3, 3, 4])),
+    ("complex mixed heights", [1, 3, 2, 4, 2], ([-1, 0, 0, 2, 0], [5, 2, 5, 4, 5])),
 ]
 
 
@@ -159,21 +193,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
