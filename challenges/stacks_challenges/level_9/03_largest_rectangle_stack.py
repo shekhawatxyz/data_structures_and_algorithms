@@ -5,8 +5,24 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **9c.** Put it all together: solve the largest rectangle in a histogram in O(n) using a single stack pass. The classic approach processes bars left to right, maintaining a stack of bars in increasing height order. When you encounter a bar shorter than the stack top, you pop and compute the area for the popped bar (using the current index and the new stack top to determine width). Handle the end-of-array case (flush the remaining stack). Test on `[2, 1, 5, 6, 2, 3]` → `10`.
 
+
 def largest_rectangle_stack(heights):
-    raise NotImplementedError('Implement largest_rectangle_stack(heights).')
+    max_area = 0
+    height_stack = []
+    left = -1
+    heights.append(0)
+    for i, h in enumerate(heights):
+        while height_stack and h < heights[height_stack[-1]]:
+            popped_index = height_stack.pop()
+            if not height_stack:
+                area = heights[popped_index] * (i - left - 1)
+            else:
+                area = heights[popped_index] * (i - height_stack[-1] - 1)
+            if area > max_area:
+                max_area = area
+        height_stack.append(i)
+    return max_area
+
 
 #
 #
@@ -53,6 +69,7 @@ def largest_rectangle_stack(heights):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -108,29 +125,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty histogram', [], 0),
-    ('single bar', [5], 5),
-    ('two bars', [2, 4], 4),
-    ('uniform bars', [2, 2, 2], 6),
-    ('given example', [2, 1, 5, 6, 2, 3], 10),
+    ("empty histogram", [], 0),
+    ("single bar", [5], 5),
+    ("two bars", [2, 4], 4),
+    ("uniform bars", [2, 2, 2], 6),
+    ("given example", [2, 1, 5, 6, 2, 3], 10),
 ]
 
 
 BOUNDARY_CASES = [
-    ('includes zero-height bar', [0, 1, 0], 1),
-    ('all zeros', [0, 0, 0], 0),
-    ('strictly increasing', [1, 2, 3, 4], 6),
-    ('strictly decreasing', [4, 3, 2, 1], 6),
-    ('single zero bar', [0], 0),
+    ("includes zero-height bar", [0, 1, 0], 1),
+    ("all zeros", [0, 0, 0], 0),
+    ("strictly increasing", [1, 2, 3, 4], 6),
+    ("strictly decreasing", [4, 3, 2, 1], 6),
+    ("single zero bar", [0], 0),
 ]
 
 
 INTERACTION_CASES = [
-    ('classic second benchmark', [6, 2, 5, 4, 5, 1, 6], 12),
-    ('valley in middle', [5, 4, 1, 2], 8),
-    ('plateau then dip', [3, 3, 3, 1, 3], 9),
-    ('multiple local maxima', [2, 4, 2, 1], 6),
-    ('wide low bar dominates', [1, 1, 1, 1, 5], 5),
+    ("classic second benchmark", [6, 2, 5, 4, 5, 1, 6], 12),
+    ("valley in middle", [5, 4, 1, 2], 8),
+    ("plateau then dip", [3, 3, 3, 1, 3], 9),
+    ("multiple local maxima", [2, 4, 2, 1], 6),
+    ("wide low bar dominates", [1, 1, 1, 1, 5], 5),
 ]
 
 
@@ -158,21 +175,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
