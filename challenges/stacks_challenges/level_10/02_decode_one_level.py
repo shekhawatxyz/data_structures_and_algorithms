@@ -3,10 +3,34 @@
 # No nested brackets in this challenge.
 
 # Complete Exact Problem Statement (from stack-challenges.md):
-# **10b.** Write a function that "flattens" nested brackets with multipliers, but *only one level deep* (no nesting). Format: `"3[ab]2[c]"` → `"ababababcc"`. Use a stack to handle the boundary between "outside" characters and "inside a bracket group" — when you see a digit followed by `[`, push your current string onto the stack and start a fresh one; when you see `]`, pop and combine.
+# **10b.** Write a function that "flattens" nested brackets with multipliers, but *only one level deep* (no nesting). Format: `"3[ab]2[c]"` → `"abababcc"`. Use a stack to handle the boundary between "outside" characters and "inside a bracket group" — when you see a digit followed by `[`, push your current string onto the stack and start a fresh one; when you see `]`, pop and combine.
+
 
 def decode_one_level(text):
-    raise NotImplementedError('Implement decode_one_level(text).')
+    s = []
+    ns = ""
+    b = ""
+    # prev = None
+    for t in text:
+        if t == "[":
+            s.append((ns, int(b)))
+            b = ""
+            ns = ""
+            # prev = "open"
+        elif t == "]":
+            if not s:
+                raise Exception
+            new_str, mult = s.pop()
+            ns = new_str + (ns * mult)
+            # prev = "closed"
+        elif t.isdigit():
+            b = b + t
+        else:
+            ns = ns + t
+    if s:
+        raise Exception
+    return ns
+
 
 #
 #
@@ -53,6 +77,7 @@ def decode_one_level(text):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -108,29 +133,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('single group decode', '2[a]', 'aa'),
-    ('given-style decode', '3[ab]2[c]', 'abababcc'),
-    ('literal prefix/suffix', 'z2[ab]y', 'zababy'),
-    ('multi-digit count', '10[a]', 'aaaaaaaaaa'),
-    ('zero count allowed', '0[a]', ''),
+    ("single group decode", "2[a]", "aa"),
+    ("given-style decode", "3[ab]2[c]", "abababcc"),
+    ("literal prefix/suffix", "z2[ab]y", "zababy"),
+    ("multi-digit count", "10[a]", "aaaaaaaaaa"),
+    ("zero count allowed", "0[a]", ""),
 ]
 
 
 BOUNDARY_CASES = [
-    ('empty string input', '', ''),
-    ('no brackets plain text', 'plain', 'plain'),
-    ('missing closing bracket', '3[ab', _CASE_EXPECTS_RAISE),
-    ('missing opening bracket', '3ab]', _CASE_EXPECTS_RAISE),
-    ('invalid missing count', '[ab]', _CASE_EXPECTS_RAISE),
+    ("empty string input", "", ""),
+    ("no brackets plain text", "plain", "plain"),
+    ("missing closing bracket", "3[ab", _CASE_EXPECTS_RAISE),
+    ("missing opening bracket", "3ab]", _CASE_EXPECTS_RAISE),
+    ("invalid missing count", "[ab]", _CASE_EXPECTS_RAISE),
 ]
 
 
 INTERACTION_CASES = [
-    ('multiple groups and literals', '2[ab]3[cd]ef', 'ababcdcdcdef'),
-    ('alternating groups with literals', 'x3[yz]2[p]q', 'xyzyzyzppq'),
-    ('large count plus extra group', '10[a]b2[c]', 'aaaaaaaaaabcc'),
-    ('single-count groups', '1[z]1[y]', 'zy'),
-    ('empty group inside expression', '2[]a', 'a'),
+    ("multiple groups and literals", "2[ab]3[cd]ef", "ababcdcdcdef"),
+    ("alternating groups with literals", "x3[yz]2[p]q", "xyzyzyzppq"),
+    ("large count plus extra group", "10[a]b2[c]", "aaaaaaaaaabcc"),
+    ("single-count groups", "1[z]1[y]", "zy"),
+    ("empty group inside expression", "2[]a", "a"),
 ]
 
 
@@ -158,21 +183,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)

@@ -9,15 +9,17 @@
 def parse_nested_list(text):
     nested_stack = []
     buffer = ""
+    prev = None
     for t in range(len(text)):
         if text[t] == "[":
             nested_stack.append([])
+            prev = "open"
         elif text[t] == "]":
             if len(buffer) > 0:
                 nested_stack[-1].append(int(buffer))
-            elif t == 0:
+            elif prev is None:
                 raise Exception
-            elif text[t - 1] == ",":
+            elif prev == "comma":
                 raise Exception
             buffer = ""
             popped_list = nested_stack.pop()
@@ -25,16 +27,17 @@ def parse_nested_list(text):
                 return popped_list
             else:
                 nested_stack[-1].append(popped_list)
+                prev = "closed"
         elif text[t] == ",":
-            if t != 0 and text[t - 1] == ",":
-                raise Exception
-            elif t != 0 and text[t - 1] == "[":
+            if prev == "comma":
                 raise Exception
             elif len(buffer) > 0:
                 nested_stack[-1].append(int(buffer))
+            prev = "comma"
             buffer = ""
         else:
             buffer = buffer + text[t]
+            prev = "digit"
     raise Exception
 
 
