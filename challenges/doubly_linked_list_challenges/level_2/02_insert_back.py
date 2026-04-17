@@ -2,14 +2,25 @@
 # Write insert_back(head, value) that inserts a new node at the end
 # and returns the (possibly unchanged) head.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def insert_back(head, value):
-    raise NotImplementedError('Implement insert_back(head, value).')
+    v = Node(value)
+    if head is None:
+        return v
+    current = head
+    while current.next is not None:
+        current = current.next
+    current.next = v
+    v.prev = current
+    return head
+
 
 #
 #
@@ -56,6 +67,7 @@ def insert_back(head, value):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +109,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +126,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +169,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,36 +236,57 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_insert_back_on_empty_list_creates_single_node():
     result = insert_back(None, 10)
-    _assert_equal(_to_list_forward(result), [10], 'insert_back(None, 10) should create [10].')
-    _assert_true(result.prev is None and result.next is None, 'Single node should have no neighbors.')
+    _assert_equal(
+        _to_list_forward(result), [10], "insert_back(None, 10) should create [10]."
+    )
+    _assert_true(
+        result.prev is None and result.next is None,
+        "Single node should have no neighbors.",
+    )
 
 
 def test_insert_back_appends_value_to_tail():
     head = _make_doubly_linked_list([1, 2])
     result = insert_back(head, 3)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'insert_back should append to the tail.')
-    _assert_equal(_to_list_backward(result), [3, 2, 1], 'Backward order should reflect appended tail.')
+    _assert_equal(
+        _to_list_forward(result), [1, 2, 3], "insert_back should append to the tail."
+    )
+    _assert_equal(
+        _to_list_backward(result),
+        [3, 2, 1],
+        "Backward order should reflect appended tail.",
+    )
 
 
 def test_insert_back_returns_original_head_when_list_non_empty():
     head = _make_doubly_linked_list([7, 8])
     result = insert_back(head, 9)
-    _assert_true(result is head, 'insert_back should return the original head for non-empty input.')
+    _assert_true(
+        result is head,
+        "insert_back should return the original head for non-empty input.",
+    )
 
 
 def test_insert_back_keeps_links_consistent():
     head = _make_doubly_linked_list([4, 5, 6])
     result = insert_back(head, 99)
-    _assert_true(_verify_bidirectional_links(result), 'All links should be valid after insert_back.')
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should be valid after insert_back.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('empty list insert_back', test_insert_back_on_empty_list_creates_single_node),
-        ('append to tail', test_insert_back_appends_value_to_tail),
-        ('head identity preserved', test_insert_back_returns_original_head_when_list_non_empty),
-        ('bidirectional links remain valid', test_insert_back_keeps_links_consistent),
+        ("empty list insert_back", test_insert_back_on_empty_list_creates_single_node),
+        ("append to tail", test_insert_back_appends_value_to_tail),
+        (
+            "head identity preserved",
+            test_insert_back_returns_original_head_when_list_non_empty,
+        ),
+        ("bidirectional links remain valid", test_insert_back_keeps_links_consistent),
     ]
     _run_all_tests(TEST_CASES)
