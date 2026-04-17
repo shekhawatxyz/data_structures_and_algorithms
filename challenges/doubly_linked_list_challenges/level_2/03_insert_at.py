@@ -13,36 +13,28 @@ class Node:
 def insert_at(head, index, value):
     current = head
     v = Node(value)
-    i = 0
     if head is None:
         if index == 0:
             return v
         else:
             raise Exception
-    while current:
-        cp = current.prev
-        if index == i:
-            if i == 0:
-                current.prev = v
-                v.next = current
-                return v
-            cp.next = v
-            v.prev = cp
-            v.next = current
-            current.prev = v
-            return head
-        elif current.next is None:
-            i += 1
-            break
+    if index < 0:
+        raise ValueError
+    elif index == 0:
+        v.next = current
+        current.prev = v
+        return v
+    for i in range(index - 1):
+        if current.next is None:
+            raise Exception
         current = current.next
-        i += 1
-    if index == i:
-        current.next = v
-        v.prev = current
-        # v.next = None
-        return head
-    else:
-        raise Exception
+    after = current.next
+    v.prev = current
+    current.next = v
+    v.next = after
+    if after is not None:
+        after.prev = v
+    return head
 
 
 #
