@@ -2,14 +2,22 @@
 # Write to_list(head) that traverses forward and returns a Python list
 # containing node values in order.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def to_list(head):
-    raise NotImplementedError('Implement to_list(head).')
+    current = head
+    l = []
+    while current is not None:
+        l.append(current.data)
+        current = current.next
+    return l
+
 
 #
 #
@@ -56,6 +64,7 @@ def to_list(head):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +106,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +123,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +166,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,30 +233,37 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_to_list_none_returns_empty_list():
-    _assert_equal(to_list(None), [], 'to_list(None) should return an empty list.')
+    _assert_equal(to_list(None), [], "to_list(None) should return an empty list.")
 
 
 def test_to_list_single_node():
     head = _make_doubly_linked_list([9])
-    _assert_equal(to_list(head), [9], 'to_list should return [9] for a single-node list.')
+    _assert_equal(
+        to_list(head), [9], "to_list should return [9] for a single-node list."
+    )
 
 
 def test_to_list_multiple_nodes_preserves_order():
     head = _make_doubly_linked_list([1, 2, 3, 4])
-    _assert_equal(to_list(head), [1, 2, 3, 4], 'to_list should preserve traversal order.')
+    _assert_equal(
+        to_list(head), [1, 2, 3, 4], "to_list should preserve traversal order."
+    )
 
 
 def test_to_list_preserves_duplicates():
     head = _make_doubly_linked_list([5, 5, 1, 5])
-    _assert_equal(to_list(head), [5, 5, 1, 5], 'to_list should preserve duplicate values.')
+    _assert_equal(
+        to_list(head), [5, 5, 1, 5], "to_list should preserve duplicate values."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('None returns []', test_to_list_none_returns_empty_list),
-        ('single-node to_list', test_to_list_single_node),
-        ('multi-node order preserved', test_to_list_multiple_nodes_preserves_order),
-        ('duplicates preserved', test_to_list_preserves_duplicates),
+        ("None returns []", test_to_list_none_returns_empty_list),
+        ("single-node to_list", test_to_list_single_node),
+        ("multi-node order preserved", test_to_list_multiple_nodes_preserves_order),
+        ("duplicates preserved", test_to_list_preserves_duplicates),
     ]
     _run_all_tests(TEST_CASES)
