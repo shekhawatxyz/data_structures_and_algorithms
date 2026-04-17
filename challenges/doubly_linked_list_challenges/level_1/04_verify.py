@@ -2,14 +2,26 @@
 # Write verify(head) that checks full bidirectional consistency:
 # for each node, next.prev and prev.next links should agree.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def verify(head):
-    raise NotImplementedError('Implement verify(head).')
+    current = head
+    while current:
+        cp = current.prev
+        cn = current.next
+        if cn and cn.prev is not current:
+            return False
+        if cp and cp.next is not current:
+            return False
+        current = cn
+    return True
+
 
 #
 #
@@ -56,6 +68,7 @@ def verify(head):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +110,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +127,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +170,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,9 +237,12 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_verify_returns_true_for_well_formed_list():
     head = _make_doubly_linked_list([1, 2, 3, 4])
-    _assert_equal(verify(head), True, 'verify should return True for a valid doubly linked list.')
+    _assert_equal(
+        verify(head), True, "verify should return True for a valid doubly linked list."
+    )
 
 
 def test_verify_detects_broken_next_to_prev_link():
@@ -233,30 +251,39 @@ def test_verify_detects_broken_next_to_prev_link():
     _assert_equal(
         verify(head),
         False,
-        'verify should return False when node.next.prev does not point back correctly.',
+        "verify should return False when node.next.prev does not point back correctly.",
     )
 
 
 def test_verify_detects_broken_prev_to_next_link():
     head = _make_doubly_linked_list([1, 2, 3])
-    second = head.next
-    second.prev.next = None
+    bad_prev = Node(0)
+    head.prev = bad_prev
+    bad_prev.next = None
     _assert_equal(
         verify(head),
         False,
-        'verify should return False when node.prev.next does not point forward correctly.',
+        "verify should return False when node.prev.next does not point forward correctly.",
     )
 
 
 def test_verify_handles_empty_list_as_valid():
-    _assert_equal(verify(None), True, 'verify(None) should return True for an empty list.')
+    _assert_equal(
+        verify(None), True, "verify(None) should return True for an empty list."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('valid list returns True', test_verify_returns_true_for_well_formed_list),
-        ('broken next.prev link detected', test_verify_detects_broken_next_to_prev_link),
-        ('broken prev.next link detected', test_verify_detects_broken_prev_to_next_link),
-        ('empty list treated as valid', test_verify_handles_empty_list_as_valid),
+        ("valid list returns True", test_verify_returns_true_for_well_formed_list),
+        (
+            "broken next.prev link detected",
+            test_verify_detects_broken_next_to_prev_link,
+        ),
+        (
+            "broken prev.next link detected",
+            test_verify_detects_broken_prev_to_next_link,
+        ),
+        ("empty list treated as valid", test_verify_handles_empty_list_as_valid),
     ]
     _run_all_tests(TEST_CASES)
