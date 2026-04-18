@@ -2,14 +2,23 @@
 # Write insert_before_node(node, value) that inserts immediately before
 # the referenced node without needing the list head.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def insert_before_node(node, value):
-    raise NotImplementedError('Implement insert_before_node(node, value).')
+    v = Node(value)
+    before = node.prev
+    if before is not None:
+        before.next = v
+    v.prev = before
+    v.next = node
+    node.prev = v
+
 
 #
 #
@@ -56,6 +65,7 @@ def insert_before_node(node, value):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +107,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +124,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +167,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,6 +234,7 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_insert_before_middle_node():
     head = _make_doubly_linked_list([1, 2, 3])
     node2 = _find_first_node(head, 2)
@@ -230,23 +243,30 @@ def test_insert_before_middle_node():
     _assert_equal(
         _to_list_forward(result_head),
         [1, 99, 2, 3],
-        'insert_before_node should place the new value right before the given node.',
+        "insert_before_node should place the new value right before the given node.",
     )
-    _assert_true(_verify_bidirectional_links(result_head), 'Links should remain valid after insert_before_node.')
+    _assert_true(
+        _verify_bidirectional_links(result_head),
+        "Links should remain valid after insert_before_node.",
+    )
 
 
 def test_insert_before_head_node_creates_new_head():
     head = _make_doubly_linked_list([4, 5])
     insert_before_node(head, 3)
     result_head = _head_from_any(head)
-    _assert_equal(_to_list_forward(result_head), [3, 4, 5], 'Inserting before head should create a new head.')
-    _assert_true(result_head.prev is None, 'New head.prev should be None.')
+    _assert_equal(
+        _to_list_forward(result_head),
+        [3, 4, 5],
+        "Inserting before head should create a new head.",
+    )
+    _assert_true(result_head.prev is None, "New head.prev should be None.")
 
 
 def test_insert_before_node_none_raises_error():
     _assert_raises(
         lambda: insert_before_node(None, 1),
-        'insert_before_node should raise an error for node=None.',
+        "insert_before_node should raise an error for node=None.",
     )
 
 
@@ -257,17 +277,26 @@ def test_insert_before_node_preserves_neighbors():
     insert_before_node(node20, 15)
     result_head = _head_from_any(node20)
     inserted = node20.prev
-    _assert_true(inserted.data == 15, 'Inserted node should be right before the reference node.')
-    _assert_true(inserted.prev is node10, 'Inserted node.prev should point to old predecessor.')
-    _assert_true(inserted.next is node20, 'Inserted node.next should point to reference node.')
-    _assert_true(_verify_bidirectional_links(result_head), 'All links should be consistent after insertion.')
+    _assert_true(
+        inserted.data == 15, "Inserted node should be right before the reference node."
+    )
+    _assert_true(
+        inserted.prev is node10, "Inserted node.prev should point to old predecessor."
+    )
+    _assert_true(
+        inserted.next is node20, "Inserted node.next should point to reference node."
+    )
+    _assert_true(
+        _verify_bidirectional_links(result_head),
+        "All links should be consistent after insertion.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('insert before middle node', test_insert_before_middle_node),
-        ('insert before head node', test_insert_before_head_node_creates_new_head),
-        ('node=None raises error', test_insert_before_node_none_raises_error),
-        ('neighbor pointers preserved', test_insert_before_node_preserves_neighbors),
+        ("insert before middle node", test_insert_before_middle_node),
+        ("insert before head node", test_insert_before_head_node_creates_new_head),
+        ("node=None raises error", test_insert_before_node_none_raises_error),
+        ("neighbor pointers preserved", test_insert_before_node_preserves_neighbors),
     ]
     _run_all_tests(TEST_CASES)

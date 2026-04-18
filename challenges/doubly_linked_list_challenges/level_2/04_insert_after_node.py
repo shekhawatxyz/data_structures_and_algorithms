@@ -2,14 +2,23 @@
 # Write insert_after_node(node, value) that inserts immediately after
 # the referenced node without needing the list head.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def insert_after_node(node, value):
-    raise NotImplementedError('Implement insert_after_node(node, value).')
+    v = Node(value)
+    after = node.next
+    node.next = v
+    v.prev = node
+    v.next = after
+    if after is not None:
+        after.prev = v
+
 
 #
 #
@@ -56,6 +65,7 @@ def insert_after_node(node, value):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +107,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +124,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +167,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,6 +234,7 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_insert_after_middle_node():
     head = _make_doubly_linked_list([1, 2, 3])
     node = _find_first_node(head, 2)
@@ -230,9 +243,12 @@ def test_insert_after_middle_node():
     _assert_equal(
         _to_list_forward(result_head),
         [1, 2, 99, 3],
-        'insert_after_node should place the new value right after the given node.',
+        "insert_after_node should place the new value right after the given node.",
     )
-    _assert_true(_verify_bidirectional_links(result_head), 'Links should remain valid after insert_after_node.')
+    _assert_true(
+        _verify_bidirectional_links(result_head),
+        "Links should remain valid after insert_after_node.",
+    )
 
 
 def test_insert_after_tail_node_adds_new_tail():
@@ -240,14 +256,21 @@ def test_insert_after_tail_node_adds_new_tail():
     tail = _tail_from_head(head)
     insert_after_node(tail, 6)
     result_head = _head_from_any(tail)
-    _assert_equal(_to_list_forward(result_head), [4, 5, 6], 'Inserting after tail should append a new tail.')
-    _assert_true(_tail_from_head(result_head).data == 6, 'The inserted node should become the new tail.')
+    _assert_equal(
+        _to_list_forward(result_head),
+        [4, 5, 6],
+        "Inserting after tail should append a new tail.",
+    )
+    _assert_true(
+        _tail_from_head(result_head).data == 6,
+        "The inserted node should become the new tail.",
+    )
 
 
 def test_insert_after_node_none_raises_error():
     _assert_raises(
         lambda: insert_after_node(None, 1),
-        'insert_after_node should raise an error for node=None.',
+        "insert_after_node should raise an error for node=None.",
     )
 
 
@@ -258,16 +281,23 @@ def test_insert_after_node_preserves_neighbors():
     insert_after_node(node20, 25)
     result_head = _head_from_any(node20)
     inserted = node20.next
-    _assert_true(inserted.data == 25, 'The new node should be inserted after the reference node.')
-    _assert_true(inserted.prev is node20, 'Inserted node.prev should point to the reference node.')
-    _assert_true(inserted.next is node30, 'Inserted node.next should point to the old successor.')
+    _assert_true(
+        inserted.data == 25, "The new node should be inserted after the reference node."
+    )
+    _assert_true(
+        inserted.prev is node20,
+        "Inserted node.prev should point to the reference node.",
+    )
+    _assert_true(
+        inserted.next is node30, "Inserted node.next should point to the old successor."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('insert after middle node', test_insert_after_middle_node),
-        ('insert after tail node', test_insert_after_tail_node_adds_new_tail),
-        ('node=None raises error', test_insert_after_node_none_raises_error),
-        ('neighbor pointers preserved', test_insert_after_node_preserves_neighbors),
+        ("insert after middle node", test_insert_after_middle_node),
+        ("insert after tail node", test_insert_after_tail_node_adds_new_tail),
+        ("node=None raises error", test_insert_after_node_none_raises_error),
+        ("neighbor pointers preserved", test_insert_after_node_preserves_neighbors),
     ]
     _run_all_tests(TEST_CASES)
