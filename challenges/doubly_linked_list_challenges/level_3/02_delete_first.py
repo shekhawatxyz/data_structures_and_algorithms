@@ -2,14 +2,38 @@
 # Write delete_first(head, value) that removes the first matching value
 # and returns the new head.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
+def delete_node(head, node):
+    if node is None or head is None:
+        raise ValueError
+    after = node.next
+    before = node.prev
+    if before:
+        before.next = after
+    if after:
+        after.prev = before
+    if head is node:
+        return after
+    return head
+
+
 def delete_first(head, value):
-    raise NotImplementedError('Implement delete_first(head, value).')
+    if head is None:
+        return None
+    current = head
+    while current:
+        if current.data == value:
+            return delete_node(head, current)
+        current = current.next
+    return head
+
 
 #
 #
@@ -56,6 +80,7 @@ def delete_first(head, value):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +122,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +139,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +182,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,35 +249,61 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_delete_first_removes_first_matching_occurrence_only():
     head = _make_doubly_linked_list([1, 2, 2, 3])
     result = delete_first(head, 2)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'delete_first should remove only the first matching node.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3],
+        "delete_first should remove only the first matching node.",
+    )
 
 
 def test_delete_first_removes_head_if_it_matches():
     head = _make_doubly_linked_list([5, 6, 7])
     result = delete_first(head, 5)
-    _assert_equal(_to_list_forward(result), [6, 7], 'delete_first should remove the head when it matches.')
-    _assert_true(result.prev is None, 'New head.prev should be None after deleting old head.')
+    _assert_equal(
+        _to_list_forward(result),
+        [6, 7],
+        "delete_first should remove the head when it matches.",
+    )
+    _assert_true(
+        result.prev is None, "New head.prev should be None after deleting old head."
+    )
 
 
 def test_delete_first_no_match_leaves_list_unchanged():
     head = _make_doubly_linked_list([1, 2, 3])
     result = delete_first(head, 99)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'List should remain unchanged when value is absent.')
-    _assert_true(_verify_bidirectional_links(result), 'Links should remain valid when no node is deleted.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3],
+        "List should remain unchanged when value is absent.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "Links should remain valid when no node is deleted.",
+    )
 
 
 def test_delete_first_on_empty_list_returns_none():
-    _assert_true(delete_first(None, 1) is None, 'delete_first(None, value) should return None.')
+    _assert_true(
+        delete_first(None, 1) is None, "delete_first(None, value) should return None."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('remove first matching occurrence', test_delete_first_removes_first_matching_occurrence_only),
-        ('remove matching head', test_delete_first_removes_head_if_it_matches),
-        ('no match keeps list unchanged', test_delete_first_no_match_leaves_list_unchanged),
-        ('empty list returns None', test_delete_first_on_empty_list_returns_none),
+        (
+            "remove first matching occurrence",
+            test_delete_first_removes_first_matching_occurrence_only,
+        ),
+        ("remove matching head", test_delete_first_removes_head_if_it_matches),
+        (
+            "no match keeps list unchanged",
+            test_delete_first_no_match_leaves_list_unchanged,
+        ),
+        ("empty list returns None", test_delete_first_on_empty_list_returns_none),
     ]
     _run_all_tests(TEST_CASES)
