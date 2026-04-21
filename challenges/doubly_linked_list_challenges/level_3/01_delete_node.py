@@ -2,14 +2,27 @@
 # Write delete_node(head, node) that deletes the given node reference
 # and returns the (possibly new) head.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def delete_node(head, node):
-    raise NotImplementedError('Implement delete_node(head, node).')
+    if node is None or head is None:
+        raise ValueError("head and node must not be None")
+    after = node.next
+    before = node.prev
+    if before:
+        before.next = after
+    if after:
+        after.prev = before
+    if head is node:
+        return after
+    return head
+
 
 #
 #
@@ -56,6 +69,7 @@ def delete_node(head, node):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +111,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +128,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +171,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,40 +238,61 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_delete_node_removes_middle_node_in_o1_style():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     node3 = _find_first_node(head, 3)
     result = delete_node(head, node3)
-    _assert_equal(_to_list_forward(result), [1, 2, 4], 'delete_node should remove the referenced middle node.')
-    _assert_true(_verify_bidirectional_links(result), 'Links should remain valid after deleting a middle node.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 4],
+        "delete_node should remove the referenced middle node.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "Links should remain valid after deleting a middle node.",
+    )
 
 
 def test_delete_node_removes_head_and_returns_new_head():
     head = _make_doubly_linked_list([5, 6, 7])
     result = delete_node(head, head)
-    _assert_equal(_to_list_forward(result), [6, 7], 'Deleting the head should return the next node as new head.')
-    _assert_true(result.prev is None, 'New head.prev should be None after deleting old head.')
+    _assert_equal(
+        _to_list_forward(result),
+        [6, 7],
+        "Deleting the head should return the next node as new head.",
+    )
+    _assert_true(
+        result.prev is None, "New head.prev should be None after deleting old head."
+    )
 
 
 def test_delete_node_removes_tail_node():
     head = _make_doubly_linked_list([8, 9, 10])
     tail = _tail_from_head(head)
     result = delete_node(head, tail)
-    _assert_equal(_to_list_forward(result), [8, 9], 'Deleting tail should remove only the last node.')
-    _assert_true(_tail_from_head(result).next is None, 'New tail.next should be None after tail deletion.')
+    _assert_equal(
+        _to_list_forward(result),
+        [8, 9],
+        "Deleting tail should remove only the last node.",
+    )
+    _assert_true(
+        _tail_from_head(result).next is None,
+        "New tail.next should be None after tail deletion.",
+    )
 
 
 def test_delete_node_singleton_list_returns_none():
     head = _make_doubly_linked_list([42])
     result = delete_node(head, head)
-    _assert_true(result is None, 'Deleting the only node should return None.')
+    _assert_true(result is None, "Deleting the only node should return None.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('delete middle node', test_delete_node_removes_middle_node_in_o1_style),
-        ('delete head node', test_delete_node_removes_head_and_returns_new_head),
-        ('delete tail node', test_delete_node_removes_tail_node),
-        ('delete singleton node', test_delete_node_singleton_list_returns_none),
+        ("delete middle node", test_delete_node_removes_middle_node_in_o1_style),
+        ("delete head node", test_delete_node_removes_head_and_returns_new_head),
+        ("delete tail node", test_delete_node_removes_tail_node),
+        ("delete singleton node", test_delete_node_singleton_list_returns_none),
     ]
     _run_all_tests(TEST_CASES)
