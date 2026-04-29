@@ -5,14 +5,31 @@
 import io
 from contextlib import redirect_stdout
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def reverse_traversal(head, start, end):
-    raise NotImplementedError('Implement reverse_traversal(head, start, end).')
+    if head is None:
+        return None
+    if start is None or end is None or start > end or start < 0 or end < 0:
+        raise ValueError
+    counter = 0
+    current = head
+    while counter < end:
+        if current is None:
+            raise ValueError
+        current = current.next
+        counter += 1
+    while counter >= start:
+        print(current.data)
+        current = current.prev
+        counter -= 1
+
 
 #
 #
@@ -59,6 +76,7 @@ def reverse_traversal(head, start, end):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +118,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +135,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +178,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,6 +245,7 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def _extract_output_values(head, start, end):
     buffer = io.StringIO()
     with redirect_stdout(buffer):
@@ -234,19 +255,19 @@ def _extract_output_values(head, start, end):
         if isinstance(result, (list, tuple)):
             values = []
             for item in result:
-                values.append(item.data if hasattr(item, 'data') else item)
+                values.append(item.data if hasattr(item, "data") else item)
             return values
-        return [result.data] if hasattr(result, 'data') else [result]
+        return [result.data] if hasattr(result, "data") else [result]
 
     raw = buffer.getvalue().strip()
     if not raw:
         return []
 
     tokens = []
-    cleaned = raw.replace('->', ' ').replace(',', ' ')
+    cleaned = raw.replace("->", " ").replace(",", " ")
     for token in cleaned.split():
-        token = token.strip('[]()')
-        if token == '' or token == 'None':
+        token = token.strip("[]()")
+        if token == "" or token == "None":
             continue
         try:
             tokens.append(int(token))
@@ -259,32 +280,50 @@ def _extract_output_values(head, start, end):
 def test_reverse_traversal_middle_segment():
     head = _make_doubly_linked_list([10, 20, 30, 40, 50])
     values = _extract_output_values(head, 1, 3)
-    _assert_equal(values, [40, 30, 20], 'reverse_traversal should output values from end to start indices.')
+    _assert_equal(
+        values,
+        [40, 30, 20],
+        "reverse_traversal should output values from end to start indices.",
+    )
 
 
 def test_reverse_traversal_single_index_range():
     head = _make_doubly_linked_list([1, 2, 3])
     values = _extract_output_values(head, 2, 2)
-    _assert_equal(values, [3], 'When start==end, reverse_traversal should output exactly one value.')
+    _assert_equal(
+        values,
+        [3],
+        "When start==end, reverse_traversal should output exactly one value.",
+    )
 
 
 def test_reverse_traversal_full_range():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     values = _extract_output_values(head, 0, 3)
-    _assert_equal(values, [4, 3, 2, 1], 'Full-range reverse_traversal should output the full reverse order.')
+    _assert_equal(
+        values,
+        [4, 3, 2, 1],
+        "Full-range reverse_traversal should output the full reverse order.",
+    )
 
 
 def test_reverse_traversal_raises_for_invalid_ranges():
     head = _make_doubly_linked_list([1, 2, 3])
-    _assert_raises(lambda: reverse_traversal(head, -1, 2), 'reverse_traversal should raise for negative start index.')
-    _assert_raises(lambda: reverse_traversal(head, 2, 1), 'reverse_traversal should raise when start > end.')
+    _assert_raises(
+        lambda: reverse_traversal(head, -1, 2),
+        "reverse_traversal should raise for negative start index.",
+    )
+    _assert_raises(
+        lambda: reverse_traversal(head, 2, 1),
+        "reverse_traversal should raise when start > end.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('middle segment reverse traversal', test_reverse_traversal_middle_segment),
-        ('single index range', test_reverse_traversal_single_index_range),
-        ('full range reverse traversal', test_reverse_traversal_full_range),
-        ('invalid ranges raise', test_reverse_traversal_raises_for_invalid_ranges),
+        ("middle segment reverse traversal", test_reverse_traversal_middle_segment),
+        ("single index range", test_reverse_traversal_single_index_range),
+        ("full range reverse traversal", test_reverse_traversal_full_range),
+        ("invalid ranges raise", test_reverse_traversal_raises_for_invalid_ranges),
     ]
     _run_all_tests(TEST_CASES)
