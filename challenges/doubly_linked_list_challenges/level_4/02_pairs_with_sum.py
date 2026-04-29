@@ -2,14 +2,34 @@
 # Write pairs_with_sum(head, target) for a sorted list using a head/tail
 # two-pointer approach and return all matching value pairs.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def pairs_with_sum(head, target):
-    raise NotImplementedError('Implement pairs_with_sum(head, target).')
+    if head is None:
+        return []
+    left = head
+    dummy = head
+    while dummy.next:
+        dummy = dummy.next
+    right = dummy
+    masterlist = []
+    while left is not right and left.prev is not right:
+        if left.data + right.data == target:
+            masterlist.append((left.data, right.data))
+            left = left.next
+            right = right.prev
+        elif left.data + right.data > target:
+            right = right.prev
+        elif left.data + right.data < target:
+            left = left.next
+    return masterlist
+
 
 #
 #
@@ -56,6 +76,7 @@ def pairs_with_sum(head, target):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +118,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +135,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +178,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,6 +245,7 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def _normalize_pairs(result):
     if result is None:
         return []
@@ -229,10 +253,12 @@ def _normalize_pairs(result):
     normalized = []
     for pair in result:
         items = list(pair)
-        _assert_equal(len(items), 2, 'Each pair output should contain exactly two elements.')
+        _assert_equal(
+            len(items), 2, "Each pair output should contain exactly two elements."
+        )
 
-        left = items[0].data if hasattr(items[0], 'data') else items[0]
-        right = items[1].data if hasattr(items[1], 'data') else items[1]
+        left = items[0].data if hasattr(items[0], "data") else items[0]
+        right = items[1].data if hasattr(items[1], "data") else items[1]
 
         normalized.append((left, right))
 
@@ -245,32 +271,47 @@ def test_pairs_with_sum_finds_all_expected_pairs():
     _assert_equal(
         result,
         [(1, 6), (2, 5), (3, 4)],
-        'pairs_with_sum should find all valid head/tail inward pairs summing to target.',
+        "pairs_with_sum should find all valid head/tail inward pairs summing to target.",
     )
 
 
 def test_pairs_with_sum_returns_empty_when_no_pairs_exist():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     result = _normalize_pairs(pairs_with_sum(head, 100))
-    _assert_equal(result, [], 'pairs_with_sum should return no pairs when target is impossible.')
+    _assert_equal(
+        result, [], "pairs_with_sum should return no pairs when target is impossible."
+    )
 
 
 def test_pairs_with_sum_handles_two_node_list():
     head = _make_doubly_linked_list([4, 9])
-    _assert_equal(_normalize_pairs(pairs_with_sum(head, 13)), [(4, 9)], 'Two-node exact match should be found.')
-    _assert_equal(_normalize_pairs(pairs_with_sum(head, 7)), [], 'Two-node non-match should return empty result.')
+    _assert_equal(
+        _normalize_pairs(pairs_with_sum(head, 13)),
+        [(4, 9)],
+        "Two-node exact match should be found.",
+    )
+    _assert_equal(
+        _normalize_pairs(pairs_with_sum(head, 7)),
+        [],
+        "Two-node non-match should return empty result.",
+    )
 
 
 def test_pairs_with_sum_handles_empty_list():
     result = _normalize_pairs(pairs_with_sum(None, 5))
-    _assert_equal(result, [], 'pairs_with_sum(None, target) should return empty output.')
+    _assert_equal(
+        result, [], "pairs_with_sum(None, target) should return empty output."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('finds all expected pairs', test_pairs_with_sum_finds_all_expected_pairs),
-        ('no-pair target returns empty', test_pairs_with_sum_returns_empty_when_no_pairs_exist),
-        ('two-node list behavior', test_pairs_with_sum_handles_two_node_list),
-        ('empty list behavior', test_pairs_with_sum_handles_empty_list),
+        ("finds all expected pairs", test_pairs_with_sum_finds_all_expected_pairs),
+        (
+            "no-pair target returns empty",
+            test_pairs_with_sum_returns_empty_when_no_pairs_exist,
+        ),
+        ("two-node list behavior", test_pairs_with_sum_handles_two_node_list),
+        ("empty list behavior", test_pairs_with_sum_handles_empty_list),
     ]
     _run_all_tests(TEST_CASES)
