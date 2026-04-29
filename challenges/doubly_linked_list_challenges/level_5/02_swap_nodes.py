@@ -2,14 +2,60 @@
 # Write swap_nodes(head, val1, val2) to re-link actual nodes (not just
 # their data values), handling adjacency and head/tail cases.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def swap_nodes(head, val1, val2):
-    raise NotImplementedError('Implement swap_nodes(head, val1, val2).')
+    if head is None:
+        return None
+    if val1 is None or val2 is None:
+        raise ValueError
+
+    pointer = head
+    node1 = None
+    node2 = None
+
+    while pointer:
+        if val1 == pointer.data:
+            node1 = pointer
+        if val2 == pointer.data:
+            node2 = pointer
+        pointer = pointer.next
+
+    if node1 is None or node2 is None:
+        raise ValueError("value not in the doubly linked list")
+    if node1 is node2:
+        return head
+
+    temp = node1.next
+    node1.next = node2.next
+    node2.next = temp
+
+    if node1.next:
+        node1.next.prev = node1
+    if node2.next:
+        node2.next.prev = node2
+
+    temp = node1.prev
+    node1.prev = node2.prev
+    node2.prev = temp
+
+    if node1.prev:
+        node1.prev.next = node1
+    if node2.prev:
+        node2.prev.next = node2
+
+    if node1 is head:
+        return node2
+    if node2 is head:
+        return node1
+    return head
+
 
 #
 #
@@ -56,6 +102,7 @@ def swap_nodes(head, val1, val2):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +144,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +161,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +204,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,47 +271,71 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_swap_nodes_non_adjacent_values():
     head = _make_doubly_linked_list([1, 2, 3, 4, 5])
     result = swap_nodes(head, 2, 4)
-    _assert_equal(_to_list_forward(result), [1, 4, 3, 2, 5], 'Non-adjacent values should swap node positions.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should remain valid after non-adjacent swap.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 4, 3, 2, 5],
+        "Non-adjacent values should swap node positions.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should remain valid after non-adjacent swap.",
+    )
 
 
 def test_swap_nodes_adjacent_values():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     result = swap_nodes(head, 2, 3)
-    _assert_equal(_to_list_forward(result), [1, 3, 2, 4], 'Adjacent nodes should swap correctly.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should remain valid after adjacent swap.')
+    _assert_equal(
+        _to_list_forward(result), [1, 3, 2, 4], "Adjacent nodes should swap correctly."
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should remain valid after adjacent swap.",
+    )
 
 
 def test_swap_nodes_head_and_tail():
     head = _make_doubly_linked_list([1, 2, 3])
     result = swap_nodes(head, 1, 3)
-    _assert_equal(_to_list_forward(result), [3, 2, 1], 'Swapping head and tail should update head correctly.')
-    _assert_true(result.prev is None, 'Returned head.prev should be None after swap.')
+    _assert_equal(
+        _to_list_forward(result),
+        [3, 2, 1],
+        "Swapping head and tail should update head correctly.",
+    )
+    _assert_true(result.prev is None, "Returned head.prev should be None after swap.")
 
 
 def test_swap_nodes_must_swap_nodes_not_only_data_fields():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     n1, n2, n3, n4 = _list_nodes(head)
     result = swap_nodes(head, 2, 4)
-    _assert_equal(_to_list_forward(result), [1, 4, 3, 2], 'swap_nodes output order should reflect a node swap.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 4, 3, 2],
+        "swap_nodes output order should reflect a node swap.",
+    )
     _assert_true(
         n4.prev is n1 and n4.next is n3,
-        'Node that originally held value 4 should move between original nodes 1 and 3.',
+        "Node that originally held value 4 should move between original nodes 1 and 3.",
     )
     _assert_true(
         n2.prev is n3 and n2.next is None,
-        'Node that originally held value 2 should move to the tail after swapping with 4.',
+        "Node that originally held value 2 should move to the tail after swapping with 4.",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('non-adjacent node swap', test_swap_nodes_non_adjacent_values),
-        ('adjacent node swap', test_swap_nodes_adjacent_values),
-        ('head/tail node swap', test_swap_nodes_head_and_tail),
-        ('verifies real node swap', test_swap_nodes_must_swap_nodes_not_only_data_fields),
+        ("non-adjacent node swap", test_swap_nodes_non_adjacent_values),
+        ("adjacent node swap", test_swap_nodes_adjacent_values),
+        ("head/tail node swap", test_swap_nodes_head_and_tail),
+        (
+            "verifies real node swap",
+            test_swap_nodes_must_swap_nodes_not_only_data_fields,
+        ),
     ]
     _run_all_tests(TEST_CASES)
