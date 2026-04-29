@@ -2,14 +2,30 @@
 # Write nth_from_end(head, n) that returns the value of the nth node
 # from the end (1-indexed).
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def nth_from_end(head, n):
-    raise NotImplementedError('Implement nth_from_end(head, n).')
+    if head is None or n < 1:
+        raise ValueError
+    front = head
+    back = head
+    c = 0
+    while c < n - 1:
+        if front.next is None:
+            raise ValueError
+        front = front.next
+        c += 1
+    while front.next:
+        back = back.next
+        front = front.next
+    return back.data
+
 
 #
 #
@@ -56,6 +72,7 @@ def nth_from_end(head, n):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +114,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +131,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +174,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,32 +241,42 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_nth_from_end_last_node_with_n_1():
     head = _make_doubly_linked_list([10, 20, 30, 40])
-    _assert_equal(nth_from_end(head, 1), 40, 'n=1 should return the last node value.')
+    _assert_equal(nth_from_end(head, 1), 40, "n=1 should return the last node value.")
 
 
 def test_nth_from_end_first_node_with_n_equals_length():
     head = _make_doubly_linked_list([10, 20, 30, 40])
-    _assert_equal(nth_from_end(head, 4), 10, 'n==length should return the head node value.')
+    _assert_equal(
+        nth_from_end(head, 4), 10, "n==length should return the head node value."
+    )
 
 
 def test_nth_from_end_middle_node_value():
     head = _make_doubly_linked_list([5, 6, 7, 8, 9])
-    _assert_equal(nth_from_end(head, 3), 7, 'n=3 should return the third node from the end.')
+    _assert_equal(
+        nth_from_end(head, 3), 7, "n=3 should return the third node from the end."
+    )
 
 
 def test_nth_from_end_raises_for_invalid_n_values():
     head = _make_doubly_linked_list([1, 2, 3])
-    _assert_raises(lambda: nth_from_end(head, 0), 'nth_from_end should raise for n=0.')
-    _assert_raises(lambda: nth_from_end(head, 5), 'nth_from_end should raise when n > length.')
+    _assert_raises(lambda: nth_from_end(head, 0), "nth_from_end should raise for n=0.")
+    _assert_raises(
+        lambda: nth_from_end(head, 5), "nth_from_end should raise when n > length."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('n=1 returns last value', test_nth_from_end_last_node_with_n_1),
-        ('n=length returns first value', test_nth_from_end_first_node_with_n_equals_length),
-        ('middle nth-from-end value', test_nth_from_end_middle_node_value),
-        ('invalid n values raise', test_nth_from_end_raises_for_invalid_n_values),
+        ("n=1 returns last value", test_nth_from_end_last_node_with_n_1),
+        (
+            "n=length returns first value",
+            test_nth_from_end_first_node_with_n_equals_length,
+        ),
+        ("middle nth-from-end value", test_nth_from_end_middle_node_value),
+        ("invalid n values raise", test_nth_from_end_raises_for_invalid_n_values),
     ]
     _run_all_tests(TEST_CASES)
