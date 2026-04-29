@@ -13,18 +13,30 @@ class Node:
 def nth_from_end(head, n):
     if head is None or n < 1:
         raise ValueError
-    front = head
-    back = head
-    c = 0
-    while c < n - 1:
-        if front.next is None:
+    # front = head
+    # back = head
+    # c = 0
+    # while c < n - 1:
+    #     if front.next is None:
+    #         raise ValueError
+    #     front = front.next
+    #     c += 1
+    # while front.next:
+    #     back = back.next
+    #     front = front.next
+    # return back.data
+    #
+    tail = head
+    while tail.next:
+        tail = tail.next
+    tail = tail
+    c = 1
+    while c < n:
+        if tail is None:
             raise ValueError
-        front = front.next
         c += 1
-    while front.next:
-        back = back.next
-        front = front.next
-    return back.data
+        tail = tail.prev
+    return tail.data
 
 
 #
