@@ -1,0 +1,90 @@
+name: Challenge Integrity
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify prompt blocks stay in sync
+        run: python3 challenges/sync_full_problem_statements.py --check linked_list_challenges stacks_challenges
+      - name: Verify stacks stay in unsolved state
+        run: python3 challenges/reset_challenge_solutions.py --check stacks_challenges
+      - name: Verify linked-list reset and restore round trip on a temp copy
+        run: |
+          python3 - <<'PY'
+          import filecmp
+          import shutil
+          import subprocess
+          import tempfile
+          from pathlib import Path
+
+          repo = Path.cwd()
+          source = repo / "challenges" / "linked_list_challenges"
+          temp_root = Path(tempfile.mkdtemp(prefix="linked-list-roundtrip-"))
+          original = temp_root / "original"
+          work = temp_root / "linked_list_challenges"
+          backup = temp_root / "backup.json"
+
+          shutil.copytree(source, original)
+          shutil.copytree(source, work)
+
+          subprocess.run(
+              [
+                  "python3",
+                  str(repo / "challenges" / "reset_challenge_solutions.py"),
+                  "--backup-to",
+                  str(backup),
+                  str(work),
+              ],
+              check=True,
+          )
+          subprocess.run(
+              [
+                  "python3",
+                  str(repo / "challenges" / "restore_challenge_solutions.py"),
+                  str(backup),
+                  str(work),
+              ],
+              check=True,
+          )
+
+          diff = filecmp.dircmp(original, work)
+          failures = list(diff.left_only) + list(diff.right_only) + list(diff.diff_files)
+          if failures:
+              raise SystemExit(f"Round-trip mismatch: {failures}")
+
+          for left in sorted(original.glob("level_*/*.py")):
+              right = work / left.relative_to(original)
+              if left.read_bytes() != right.read_bytes():
+                  raise SystemExit(f"Round-trip byte mismatch: {left.relative_to(original)}")
+          PY
+      - name: Verify prompt blocks and tests exist
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          roots = [
+              Path("challenges/linked_list_challenges"),
+              Path("challenges/stacks_challenges"),
+          ]
+
+          failures = []
+          for root in roots:
+              for path in sorted(root.glob("level_*/*.py")):
+                  text = path.read_text(encoding="utf-8")
+                  if "Complete Exact Problem Statement" not in text:
+                      failures.append(f"{path}: missing full question block")
+                  if "def test_" not in text:
+                      failures.append(f"{path}: missing tests")
+
+          if failures:
+              print("\n".join(failures))
+              raise SystemExit(1)
+          PY
