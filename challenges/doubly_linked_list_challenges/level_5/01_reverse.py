@@ -2,6 +2,8 @@
 # Write reverse(head) that reverses a doubly linked list iteratively
 # while maintaining all prev and next links.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **5.1** Write `reverse(head)` — reverse the doubly linked list iteratively. (Hint: what if you just swap `prev` and `next` for every node?)
 
 class Node:
     def __init__(self, data, prev=None, next=None):

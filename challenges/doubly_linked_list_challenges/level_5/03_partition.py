@@ -2,6 +2,8 @@
 # Write partition(head, x) that stably places values < x before values
 # >= x while preserving order within each partition.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **5.3** Write `partition(head, x)` — rearrange so all values less than `x` come before all values ≥ `x`, preserving relative order within each group. Return the new head.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

@@ -2,14 +2,31 @@
 # Write move_node_to_front(head, node) that unlinks the given node and
 # moves it to the front, returning the new head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **5.4** Write `move_node_to_front(head, node)` — given a reference to a node anywhere in the list, unlink it and re-link it at the front. Return the new head. (This is a building block for LRU-style operations.)
+
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def move_node_to_front(head, node):
-    raise NotImplementedError('Implement move_node_to_front(head, node).')
+    if head is None or node is None:
+        return None
+    if node is head:
+        return head
+    if node.prev:
+        node.prev.next = node.next
+    if node.next:
+        node.next.prev = node.prev
+    node.next = head
+    node.prev = None
+    head.prev = node
+    return node
+
 
 #
 #
@@ -56,6 +73,7 @@ def move_node_to_front(head, node):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -97,7 +115,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -114,7 +132,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -157,7 +175,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -222,40 +242,57 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_move_middle_node_to_front():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     node3 = _find_first_node(head, 3)
     result = move_node_to_front(head, node3)
-    _assert_equal(_to_list_forward(result), [3, 1, 2, 4], 'Middle node should move to the front.')
-    _assert_true(result is node3, 'Returned head should be the moved node.')
+    _assert_equal(
+        _to_list_forward(result), [3, 1, 2, 4], "Middle node should move to the front."
+    )
+    _assert_true(result is node3, "Returned head should be the moved node.")
 
 
 def test_move_tail_node_to_front():
     head = _make_doubly_linked_list([5, 6, 7])
     tail = _tail_from_head(head)
     result = move_node_to_front(head, tail)
-    _assert_equal(_to_list_forward(result), [7, 5, 6], 'Tail node should move to front correctly.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should stay valid after moving tail to front.')
+    _assert_equal(
+        _to_list_forward(result), [7, 5, 6], "Tail node should move to front correctly."
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should stay valid after moving tail to front.",
+    )
 
 
 def test_move_head_node_to_front_is_noop():
     head = _make_doubly_linked_list([9, 8, 7])
     result = move_node_to_front(head, head)
-    _assert_equal(_to_list_forward(result), [9, 8, 7], 'Moving head to front should keep list unchanged.')
+    _assert_equal(
+        _to_list_forward(result),
+        [9, 8, 7],
+        "Moving head to front should keep list unchanged.",
+    )
 
 
 def test_move_node_to_front_on_single_node_list():
     head = _make_doubly_linked_list([42])
     result = move_node_to_front(head, head)
-    _assert_equal(_to_list_forward(result), [42], 'Single-node list should remain unchanged.')
-    _assert_true(result.prev is None and result.next is None, 'Single-node links should remain None/None.')
+    _assert_equal(
+        _to_list_forward(result), [42], "Single-node list should remain unchanged."
+    )
+    _assert_true(
+        result.prev is None and result.next is None,
+        "Single-node links should remain None/None.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('move middle node to front', test_move_middle_node_to_front),
-        ('move tail node to front', test_move_tail_node_to_front),
-        ('moving head is noop', test_move_head_node_to_front_is_noop),
-        ('single-node move is stable', test_move_node_to_front_on_single_node_list),
+        ("move middle node to front", test_move_middle_node_to_front),
+        ("move tail node to front", test_move_tail_node_to_front),
+        ("moving head is noop", test_move_head_node_to_front_is_noop),
+        ("single-node move is stable", test_move_node_to_front_on_single_node_list),
     ]
     _run_all_tests(TEST_CASES)

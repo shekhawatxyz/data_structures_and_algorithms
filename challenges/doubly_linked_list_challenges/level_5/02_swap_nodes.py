@@ -2,6 +2,8 @@
 # Write swap_nodes(head, val1, val2) to re-link actual nodes (not just
 # their data values), handling adjacency and head/tail cases.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **5.2** Write `swap_nodes(head, val1, val2)` — swap the two nodes containing `val1` and `val2`. Do not just swap their data fields — actually re-link the nodes. This is pointer surgery at its most demanding: you must handle adjacent nodes, head/tail nodes, and keep all `prev`/`next` links consistent. (Draw this out before coding.)
 
 class Node:
     def __init__(self, data, prev=None, next=None):
