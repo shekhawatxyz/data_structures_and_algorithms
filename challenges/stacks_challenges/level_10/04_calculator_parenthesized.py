@@ -3,64 +3,13 @@
 # Use a stack-based state save/restore strategy across nesting levels.
 
 # Complete Exact Problem Statement (from stack-challenges.md):
-# **10d.** Write a simple calculator that handles nested parenthesised expressions with `+` and `*` (no precedence needed since parentheses are explicit), e.g., `"2*(3+(4*(2+1)))"` → `30`. Use a stack to save the current accumulated value and pending operator when you enter a `(`, and restore and combine when you hit `)`. This is the same state-save/restore pattern as 10c, but applied to arithmetic instead of string building.
-
+# **10d.** Write a simple calculator that handles nested parenthesised expressions with `+` and `*` (no precedence needed since parentheses are explicit), e.g., `"2*(3+4*(2+1))"` → `30`. Use a stack to save the current accumulated value and pending operator when you enter a `(`, and restore and combine when you hit `)`. This is the same state-save/restore pattern as 10c, but applied to arithmetic instead of string building.
 
 def combine(pending_op, b, result):
-    if pending_op == "+":
-        result = result + b
-    else:
-        result = result * b
-    return result
-
+    raise NotImplementedError('Implement combine(pending_op, b, result).')
 
 def evaluate_nested_expression(text):
-    if not text:
-        raise ValueError
-    s = []
-    result = 0
-    b = ""
-    pending_op = "+"
-    prev = None
-    for t in text:
-        if t == "(":
-            if prev == "closed":
-                raise ValueError
-            s.append((result, pending_op))
-            b = ""
-            pending_op = "+"
-            result = 0
-            prev = "open"
-        elif t == ")":
-            if not s:
-                raise ValueError
-            if prev in ("sign", "open", None):
-                raise ValueError
-            if b:
-                result = combine(pending_op, int(b), result)
-            b = ""
-            prev_result, sign = s.pop()
-            result = combine(sign, prev_result, result)
-            prev = "closed"
-        elif t.isdigit():
-            b = b + t
-            prev = "number"
-        elif t in ["+", "*"]:
-            if prev == "sign":
-                raise ValueError
-            if b:
-                result = combine(pending_op, int(b), result)
-            pending_op = t
-            b = ""
-            prev = "sign"
-    if s:
-        raise ValueError
-    if b:
-        result = combine(pending_op, int(b), result)
-        b = ""
-    return result
-
-
+    raise NotImplementedError('Implement evaluate_nested_expression(text).')
 #
 #
 #

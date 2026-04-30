@@ -2,6 +2,8 @@
 # Write remove_duplicates_sorted(head) for a non-decreasing sorted list
 # so that each distinct value appears only once.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **4.4** Write `remove_duplicates_sorted(head)` — given a list whose values are in non-decreasing order, remove all duplicate values so each value appears only once.
 
 class Node:
     def __init__(self, data, next=None):

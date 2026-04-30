@@ -2,6 +2,8 @@
 # Write a function to_list(head) that takes the head of a linked list
 # and returns a Python list of its values.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **1.2** Write a function `to_list(head)` that takes the head of a linked list and returns a Python list of its values.
 
 class Node:
     def __init__(self, data, next=None):

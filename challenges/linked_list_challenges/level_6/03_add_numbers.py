@@ -2,6 +2,8 @@
 # Each list stores a non-negative integer in reverse digit order.
 # Write add_numbers(head1, head2) and return the sum as a new list.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **6.3** Write `add_numbers(head1, head2)` — each list represents a non-negative integer with digits stored in *reverse* order (so `2 -> 4 -> 3` represents 342). Return a new linked list representing their sum. Handle carries correctly.
 
 class Node:
     def __init__(self, data, next=None):

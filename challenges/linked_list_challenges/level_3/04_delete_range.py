@@ -2,6 +2,8 @@
 # Write delete_range(head, start, end) that removes all nodes from
 # index start to index end (inclusive), then returns the new head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **3.4** Write `delete_range(head, start, end)` — removes all nodes from index `start` to index `end` (inclusive). Returns the new head.
 
 class Node:
     def __init__(self, data, next=None):

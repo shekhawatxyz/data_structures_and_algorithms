@@ -2,6 +2,8 @@
 # Write insert_front(head, value) that inserts at the front of the list
 # and returns the new head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **2.1** Write `insert_front(head, value)` — returns the new head.
 
 class Node:
     def __init__(self, data, next=None):

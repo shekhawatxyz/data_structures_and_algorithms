@@ -2,6 +2,8 @@
 # Write insert_before_node(node, value) that inserts immediately before
 # the referenced node without needing the list head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **2.5** Write `insert_before_node(node, value)` — same, but insert before the given node. Again, no head needed. Think about why this is trivial with a doubly linked list and awkward with a singly linked one.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

@@ -2,6 +2,9 @@
 # Write interleave(head1, head2) that alternates nodes from two lists
 # while keeping all prev/next links correct.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **6.2** Write `interleave(head1, head2)` — weave two lists together, alternating nodes. All `prev` and `next` pointers must be correct.
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

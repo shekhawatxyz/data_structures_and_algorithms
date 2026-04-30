@@ -2,6 +2,8 @@
 # Write nth_from_end(head, n) that returns the value of the nth node
 # from the end (1-indexed).
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **4.3** Write `nth_from_end(head, n)` — return the value of the nth node from the end. You did this with singly linked lists using a two-pointer trick. Here you have a simpler option. Implement both ways and compare.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

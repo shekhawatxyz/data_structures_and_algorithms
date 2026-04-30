@@ -4,41 +4,9 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **3c.** Write a function that takes a string containing `(` and `)` among other characters and returns the string with the minimum number of parentheses removed to make it valid. For example: `"a(b(c)d"` → `"ab(c)d"` (one possible answer). Use a stack to identify which parentheses are unmatched, then build the output string excluding them.
-#
 
 def min_remove_to_make_valid(text):
-    textn1 = []
-    counter = 0
-    i = 0
-
-    while i < len(text):
-        if text[i] == "(":
-            textn1.append(text[i])
-            counter += 1
-        elif text[i] == ")":
-            counter -= 1
-            if counter == -1:
-                counter = 0
-            else:
-                textn1.append(text[i])
-        else:
-            textn1.append(text[i])
-        i += 1
-    j = len(textn1) - 1
-    textn2 = []
-    while j >= 0:
-        if counter == 0:
-            textn2.append(textn1[j])
-        else:
-            if textn1[j] == "(":
-                counter -= 1
-            else:
-                textn2.append(textn1[j])
-        j -= 1
-    text2 = "".join(reversed(textn2))
-    return text2
-
-
+    raise NotImplementedError('Implement min_remove_to_make_valid(text).')
 #
 #
 #

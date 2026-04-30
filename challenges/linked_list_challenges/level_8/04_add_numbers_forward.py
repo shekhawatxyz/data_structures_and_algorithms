@@ -2,6 +2,8 @@
 # Each list stores a non-negative integer in forward digit order.
 # Write add_numbers_forward(head1, head2) and return the sum as a new list.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **8.4** Write `add_numbers_forward(head1, head2)` — same as 6.3, but now the digits are stored in *forward* order (`3 -> 4 -> 2` represents 342). You may not reverse the input lists. (Think about what makes this harder than the reversed case, and what tool you need.)
 
 class Node:
     def __init__(self, data, next=None):

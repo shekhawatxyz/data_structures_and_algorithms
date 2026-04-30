@@ -4,24 +4,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **4a.** Extend your balanced-parentheses checker from 3a to handle three types: `()`, `[]`, and `{}`. Each closer must match the most recently unmatched opener of the *correct* type. For example: `"([{}])"` is valid; `"([)]"` is not.
 
-
 def is_valid_brackets(text):
-    brackets = []
-    closers = {")": "(", "]": "[", "}": "{"}
-    for t in text:
-        if t in "{[(":
-            brackets.append(t)
-        else:
-            if t in closers:
-                if not brackets:
-                    return False
-                elif brackets[-1] == closers[t]:
-                    brackets.pop()
-                else:
-                    return False
-    return len(brackets) == 0
-
-
+    raise NotImplementedError('Implement is_valid_brackets(text).')
 #
 #
 #

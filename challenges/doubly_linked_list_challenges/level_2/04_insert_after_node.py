@@ -2,6 +2,8 @@
 # Write insert_after_node(node, value) that inserts immediately after
 # the referenced node without needing the list head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **2.4** Write `insert_after_node(node, value)` — given a direct reference to a node (not the head, not an index), insert a new node immediately after it. Notice that you don't need the head at all. This is something you *couldn't* do as cleanly with singly linked lists.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

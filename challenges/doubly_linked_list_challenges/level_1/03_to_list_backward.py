@@ -2,6 +2,8 @@
 # Write to_list_backward(head) that finds the tail from head and then
 # traverses backward to produce reversed values.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **1.3** Write `to_list_backward(head)` — given the *head*, first find the tail, then traverse backward to produce the list in reverse. (This verifies your `prev` pointers are correct: `to_list_backward(head)` should equal `to_list(head)[::-1]`.)
 
 class Node:
     def __init__(self, data, prev=None, next=None):

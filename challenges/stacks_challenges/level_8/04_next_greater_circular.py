@@ -4,25 +4,9 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **8d.** Given a circular array (the element after the last is the first), find the next greater element for each position. Example: `[1, 2, 1]` → `[2, -1, 2]` (the `1` at index 2 wraps around to find `2` at index 0). (Hint: a standard trick for circular arrays — iterate through the array twice.)
-#
-
 
 def next_greater_elements_circular(values):
-    stack = []
-    modified_values = values + values
-    result = [-1 for _ in values]
-    for i in range(len(modified_values)):
-        # if i == len(values):
-        #     break
-        while stack and modified_values[i] > modified_values[stack[-1]]:
-            idx = stack.pop()
-            if idx < len(values):
-                result[idx] = modified_values[i]
-        else:
-            stack.append(i)
-    return result
-
-
+    raise NotImplementedError('Implement next_greater_elements_circular(values).')
 #
 #
 #

@@ -2,6 +2,8 @@
 # Write rotate(head, k) that rotates the list to the right by k places.
 # Handle k values larger than the list length.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **7.2** Write `rotate(head, k)` — rotate the list to the right by `k` places. So `1 -> 2 -> 3 -> 4 -> 5` rotated by 2 becomes `4 -> 5 -> 1 -> 2 -> 3`. Handle `k` greater than the list length.
 
 class Node:
     def __init__(self, data, next=None):

@@ -2,6 +2,19 @@
 # Write clone_with_random(head) that deep-copies a doubly linked list with
 # next/prev/random pointers so clone pointers only target cloned nodes.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **8.4** Write `clone_with_random(head)` — each node has an additional `random` attribute that points to any node in the list (or `None`). Deep-copy the entire list, including both `next`/`prev` links and `random` pointers. The cloned nodes must point to their cloned counterparts, not to the original nodes.
+#
+# Use this extended node:
+# ```python
+# class Node:
+#     def __init__(self, data, prev=None, next=None, random=None):
+#         self.data = data
+#         self.prev = prev
+#         self.next = next
+#         self.random = random
+# ```
+
 class Node:
     def __init__(self, data, prev=None, next=None, random=None):
         self.data = data

@@ -2,6 +2,8 @@
 # Write delete_at(head, index) that removes the node at the given
 # 0-indexed position and returns the new head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **3.3** Write `delete_at(head, index)` — removes the node at position `index`. Returns the new head.
 
 class Node:
     def __init__(self, data, next=None):

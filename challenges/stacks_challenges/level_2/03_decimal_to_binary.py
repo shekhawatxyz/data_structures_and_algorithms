@@ -3,21 +3,9 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **2c.** Write a function that takes a positive integer and returns its binary representation as a string, using a stack. (Repeatedly divide by 2, push the remainders, then pop them all to form the binary string.)
-#
 
 def decimal_to_binary_stack(n):
-    if n <= 0:
-        raise Exception("Expected number bigger than one.")
-    s = []
-    while n:
-        s.append(n % 2)
-        n = n // 2
-    st = ""
-    while s:
-        st = f"{st}{s.pop()}"
-    return st
-
-
+    raise NotImplementedError('Implement decimal_to_binary_stack(n).')
 #
 #
 #

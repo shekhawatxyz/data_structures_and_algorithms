@@ -5,38 +5,21 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **7a.** Design a `MaxStack` class that supports `push`, `pop`, `peek`, and `get_max` (returns the current maximum element), all in O(1) time. You may use additional stacks but no other data structures. (Hint: think about what information you need to preserve when you push, and what you need to restore when you pop.)
 
-
 class MaxStack:
     def __init__(self):
-        self._items = []
-        self._max = []
+        raise NotImplementedError('Implement MaxStack.__init__().')
 
     def push(self, item):
-        if not self._items:
-            self._max.append(item)
-            self._items.append(item)
-        elif item >= self._max[-1]:
-            self._max.append(item)
-            self._items.append(item)
-        else:
-            self._items.append(item)
+        raise NotImplementedError('Implement MaxStack.push(item).')
 
     def pop(self):
-        if not self._items:
-            raise IndexError
-        elif self._max[-1] == self._items[-1]:
-            self._max.pop()
-        return self._items.pop()
+        raise NotImplementedError('Implement MaxStack.pop().')
 
     def peek(self):
-        if not self._items:
-            raise IndexError
-        return self._items[-1]
+        raise NotImplementedError('Implement MaxStack.peek().')
 
     def get_max(self):
-        return self._max[-1]
-
-
+        raise NotImplementedError('Implement MaxStack.get_max().')
 #
 #
 #

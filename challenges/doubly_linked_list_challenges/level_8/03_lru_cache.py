@@ -2,6 +2,20 @@
 # Write an LRUCache class with O(1) get/put using a dictionary plus
 # a doubly linked list. get misses return -1.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **8.3** Write a simple **LRU Cache** backed by a doubly linked list and a Python dictionary:
+# ```python
+# class LRUCache:
+#     def __init__(self, capacity): ...
+#     def get(self, key): ...
+#     def put(self, key, value): ...
+# ```
+# - `get` returns the value if present (and marks it as recently used), or -1 if not.
+# - `put` inserts or updates. If the cache is at capacity, evict the least recently used item.
+# - Both operations must be O(1).
+#
+# This is the classic application of doubly linked lists: the dict gives O(1) lookup, and the doubly linked list gives O(1) insertion, deletion, and move-to-front — together they give you an O(1) LRU cache.
+
 class LRUCache:
     def __init__(self, capacity):
         raise NotImplementedError('Implement LRUCache.__init__(capacity).')

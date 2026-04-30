@@ -6,40 +6,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **6a.** Start simple: write a function that converts a *fully parenthesised* infix expression to postfix. By "fully parenthesised" I mean every operation is wrapped: `"( ( 3 + 4 ) * 2 )"`. This is easier because the parentheses already tell you the structure — you don't need precedence rules yet. Tokens are space-separated. Use a stack.
 
-
 def fully_parenthesized_infix_to_postfix(expression):
-    operators = {"+": 1, "-": 1, "/": 2, "*": 2}
-    expression_list = expression.split()
-    st = []
-    output = []
-    count = 0
-    num_count = 0
-    for i, e in enumerate(expression_list):
-        if e == "(":
-            count += 1
-        elif e == ")":
-            if len(st) == 0:
-                raise Exception
-            o = st.pop()
-            if num_count < 2:
-                raise Exception
-            output.append(o)
-            count -= 1
-            if count < 0:
-                raise Exception
-            num_count -= 1
-        elif e in operators:
-            if expression_list[i - 1] == "(" or i == 0:
-                raise Exception
-            st.append(e)
-        else:
-            output.append(e)
-            num_count += 1
-    if count != 0:
-        raise Exception
-    return output
-
-
+    raise NotImplementedError('Implement fully_parenthesized_infix_to_postfix(expression).')
 #
 #
 #

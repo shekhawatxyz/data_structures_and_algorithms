@@ -2,6 +2,8 @@
 # Write find_middle(head) that returns the middle node value.
 # For even-length lists, return the second middle value.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **4.3** Write `find_middle(head)` — returns the middle node's value. (For even-length lists, return the second of the two middle nodes.) Do this in a single pass.
 
 class Node:
     def __init__(self, data, next=None):

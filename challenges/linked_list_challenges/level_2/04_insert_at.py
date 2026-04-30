@@ -2,6 +2,8 @@
 # Write insert_at(head, index, value) to insert at the 0-indexed position.
 # Return the new head, and raise an error if index is out of range.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **2.4** Write `insert_at(head, index, value)` — inserts a new node at position `index` (0-indexed). Returns the new head. Raise an error if the index is out of range.
 
 class Node:
     def __init__(self, data, next=None):

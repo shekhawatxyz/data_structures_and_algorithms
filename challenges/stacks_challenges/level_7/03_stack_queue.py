@@ -4,22 +4,16 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **7c.** Using only stacks, implement a queue. That is, build a class `StackQueue` supporting `enqueue(item)` and `dequeue()` (FIFO order), using two stacks internally. Each individual `enqueue` and `dequeue` should be O(1) *amortised*. Think about when to transfer elements from one stack to the other.
-#
-
-# Will do this after I have done queues and dequeues
-
 
 class StackQueue:
     def __init__(self):
-        raise NotImplementedError("Implement StackQueue.__init__.")
+        raise NotImplementedError('Implement StackQueue.__init__().')
 
     def enqueue(self, item):
-        raise NotImplementedError("Implement StackQueue.enqueue(item).")
+        raise NotImplementedError('Implement StackQueue.enqueue(item).')
 
     def dequeue(self):
-        raise NotImplementedError("Implement StackQueue.dequeue().")
-
-
+        raise NotImplementedError('Implement StackQueue.dequeue().')
 #
 #
 #

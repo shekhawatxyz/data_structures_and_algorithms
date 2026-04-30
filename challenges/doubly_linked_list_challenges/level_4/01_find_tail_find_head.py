@@ -2,6 +2,8 @@
 # Write find_tail(head) and find_head(tail) so either end of the list
 # can recover access to the full structure.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **4.1** Write `find_tail(head)` and `find_head(tail)`. Simple, but clarify for yourself that either end of a doubly linked list gives you access to the whole structure.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

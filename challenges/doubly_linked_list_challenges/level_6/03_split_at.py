@@ -2,6 +2,9 @@
 # Write split_at(head, index) that splits one doubly linked list into
 # two independent lists and returns both heads.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **6.3** Write `split_at(head, index)` — split a doubly linked list into two independent doubly linked lists at the given index. Return both heads. Make sure the `prev` of the second list's head is `None` and the `next` of the first list's tail is `None`.
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

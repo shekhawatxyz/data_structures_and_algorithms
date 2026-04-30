@@ -2,6 +2,8 @@
 # Write delete_node(head, node) that deletes the given node reference
 # and returns the (possibly new) head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **3.1** Write `delete_node(head, node)` — given a reference to a node, remove it. Returns the (possibly new) head.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

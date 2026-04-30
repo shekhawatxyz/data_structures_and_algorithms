@@ -3,35 +3,10 @@
 # No nested brackets in this challenge.
 
 # Complete Exact Problem Statement (from stack-challenges.md):
-# **10b.** Write a function that "flattens" nested brackets with multipliers, but *only one level deep* (no nesting). Format: `"3[ab]2[c]"` → `"abababcc"`. Use a stack to handle the boundary between "outside" characters and "inside a bracket group" — when you see a digit followed by `[`, push your current string onto the stack and start a fresh one; when you see `]`, pop and combine.
-
+# **10b.** Write a function that "flattens" nested brackets with multipliers, but *only one level deep* (no nesting). Format: `"3[ab]2[c]"` → `"ababababcc"`. Use a stack to handle the boundary between "outside" characters and "inside a bracket group" — when you see a digit followed by `[`, push your current string onto the stack and start a fresh one; when you see `]`, pop and combine.
 
 def decode_one_level(text):
-    s = []
-    ns = ""
-    b = ""
-    # prev = None
-    for t in text:
-        if t == "[":
-            s.append((ns, int(b)))
-            b = ""
-            ns = ""
-            # prev = "open"
-        elif t == "]":
-            if not s:
-                raise Exception
-            new_str, mult = s.pop()
-            ns = new_str + (ns * mult)
-            # prev = "closed"
-        elif t.isdigit():
-            b = b + t
-        else:
-            ns = ns + t
-    if s:
-        raise Exception
-    return ns
-
-
+    raise NotImplementedError('Implement decode_one_level(text).')
 #
 #
 #

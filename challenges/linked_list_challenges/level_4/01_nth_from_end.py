@@ -2,6 +2,8 @@
 # Write nth_from_end(head, n) that returns the value of the nth node
 # from the end (1-indexed; n=1 means the last node).
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **4.1** Write `nth_from_end(head, n)` — returns the value of the nth node from the end (1-indexed, so `n=1` gives the last node). Do this in a single pass.
 
 class Node:
     def __init__(self, data, next=None):

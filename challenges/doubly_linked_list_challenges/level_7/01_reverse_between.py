@@ -2,6 +2,9 @@
 # Write reverse_between(head, left, right) for 1-indexed boundaries,
 # keeping all prev/next links valid across the full list.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **7.1** Write `reverse_between(head, left, right)` — reverse only the sublist from position `left` to `right` (1-indexed). All `prev` and `next` pointers in the entire list must remain consistent. This is the doubly linked version of the singly linked list challenge, and it's harder because there are more links to get right at the boundaries.
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

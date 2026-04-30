@@ -5,33 +5,9 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **4c.** Write a function that takes an incomplete bracket string and returns the *minimum* string of closing brackets to append to make it valid — or reports that it's already invalid and unfixable. For example: `"({["` → `"]})"`. But `"({]"` → invalid, can't be fixed by appending.
-#
-
 
 def completion_suffix(text):
-    closers = {")": "(", "]": "[", "}": "{"}
-    openers = {v: k for k, v in closers.items()}
-    brackets = []
-    for t in text:
-        if t in "({[":
-            brackets.append(t)
-        else:
-            if t in closers:
-                if not brackets:
-                    return None
-                elif brackets[-1] == closers[t]:
-                    brackets.pop()
-                else:
-                    return None
-    if not brackets:
-        return ""
-    else:
-        c = []
-        for a in reversed(brackets):
-            c.append(openers[a])
-        return "".join(c)
-
-
+    raise NotImplementedError('Implement completion_suffix(text).')
 #
 #
 #

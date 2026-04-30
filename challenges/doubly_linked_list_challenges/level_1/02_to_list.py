@@ -2,6 +2,8 @@
 # Write to_list(head) that traverses forward and returns a Python list
 # containing node values in order.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **1.2** Write `to_list(head)` — returns a Python list of values by traversing forward.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

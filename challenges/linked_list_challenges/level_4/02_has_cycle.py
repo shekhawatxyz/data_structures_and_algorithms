@@ -2,6 +2,8 @@
 # Write has_cycle(head) that returns True if the linked list contains
 # a cycle, and False otherwise.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **4.2** Write `has_cycle(head)` — returns `True` if the linked list contains a cycle. (Construct a test case by manually pointing a node's `next` to an earlier node.)
 
 class Node:
     def __init__(self, data, next=None):

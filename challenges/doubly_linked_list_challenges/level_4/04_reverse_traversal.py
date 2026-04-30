@@ -2,6 +2,9 @@
 # Write reverse_traversal(head, start, end) that prints values from index
 # end back to start without auxiliary data structures.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **4.4** Write `reverse_traversal(head, start, end)` — given indices `start` and `end`, print the values from index `end` back to index `start`. Do this without building any auxiliary data structure.
+
 import io
 from contextlib import redirect_stdout
 

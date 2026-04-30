@@ -2,6 +2,9 @@
 # Write remove_duplicates_unsorted(head) for unsorted doubly linked lists,
 # keeping the first occurrence of each value.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **7.4** Write `remove_duplicates_unsorted(head)` — remove duplicate values from an unsorted doubly linked list, keeping the first occurrence. The `prev` pointer makes the unlinking easier than in the singly linked version — notice the difference.
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

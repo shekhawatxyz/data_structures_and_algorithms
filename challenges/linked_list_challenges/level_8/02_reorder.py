@@ -2,6 +2,8 @@
 # Write reorder(head) to transform L0 -> L1 -> ... -> Ln into
 # L0 -> Ln -> L1 -> Ln-1 -> L2 -> ... in-place.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **8.2** Write `reorder(head)` — rearrange `L₀ -> L₁ -> ... -> Lₙ` into `L₀ -> Lₙ -> L₁ -> Lₙ₋₁ -> L₂ -> Lₙ₋₂ -> ...`. Do this in O(n) time and O(1) space. (Hint: this combines several ideas you've already implemented.)
 
 class Node:
     def __init__(self, data, next=None):

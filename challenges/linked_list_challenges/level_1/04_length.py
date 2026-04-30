@@ -1,6 +1,8 @@
 # Level 1.4 - length(head)
 # Write a function length(head) that returns the number of nodes in the list.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **1.4** Write a function `length(head)` that returns the number of nodes in the list.
 
 class Node:
     def __init__(self, data, next=None):

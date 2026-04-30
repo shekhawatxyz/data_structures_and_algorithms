@@ -2,6 +2,8 @@
 # Write delete_range(head, start, end) that removes all nodes from
 # index start to index end (inclusive).
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **3.4** Write `delete_range(head, start, end)` — removes all nodes from index `start` to index `end` (inclusive). Think about how many pointer updates you actually need, regardless of how many nodes you're removing.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

@@ -2,6 +2,8 @@
 # Write merge_sorted(head1, head2) to merge two sorted linked lists
 # without creating new nodes, and return the merged head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **6.1** Write `merge_sorted(head1, head2)` — given two sorted linked lists, merge them into a single sorted linked list (without creating new nodes — re-link the existing ones). Returns the head of the merged list.
 
 class Node:
     def __init__(self, data, next=None):

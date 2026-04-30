@@ -2,6 +2,8 @@
 # Write interleave(head1, head2) that weaves two lists together.
 # If one list is longer, append the remaining nodes at the end.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **6.2** Write `interleave(head1, head2)` — weave two lists together: if list A is `1 -> 2 -> 3` and list B is `a -> b -> c`, the result is `1 -> a -> 2 -> b -> 3 -> c`. If one list is longer, the remaining elements go at the end.
 
 class Node:
     def __init__(self, data, next=None):

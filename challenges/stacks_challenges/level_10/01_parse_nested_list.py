@@ -5,42 +5,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **10a.** Write a function that takes a nested list represented as a string like `"[1,[2,3],[4,[5,6]]]"` and returns the actual nested Python list. Use a stack: when you see `[`, push a new empty list; when you see `]`, pop the completed list and append it to whatever is now on top. Numbers between commas get appended to the current top-of-stack list.
 
-
 def parse_nested_list(text):
-    nested_stack = []
-    buffer = ""
-    prev = None
-    for t in range(len(text)):
-        if text[t] == "[":
-            nested_stack.append([])
-            prev = "open"
-        elif text[t] == "]":
-            if len(buffer) > 0:
-                nested_stack[-1].append(int(buffer))
-            elif prev is None:
-                raise Exception
-            elif prev == "comma":
-                raise Exception
-            buffer = ""
-            popped_list = nested_stack.pop()
-            if not nested_stack:
-                return popped_list
-            else:
-                nested_stack[-1].append(popped_list)
-                prev = "closed"
-        elif text[t] == ",":
-            if prev == "comma":
-                raise Exception
-            elif len(buffer) > 0:
-                nested_stack[-1].append(int(buffer))
-            prev = "comma"
-            buffer = ""
-        else:
-            buffer = buffer + text[t]
-            prev = "digit"
-    raise Exception
-
-
+    raise NotImplementedError('Implement parse_nested_list(text).')
 #
 #
 #

@@ -2,6 +2,9 @@
 # Write reverse_in_groups(head, k) that reverses each k-sized group
 # while preserving correct prev links between groups.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **8.1** Write `reverse_in_groups(head, k)` — reverse in groups of `k`, maintaining all `prev` pointers. The boundary stitching between groups is the hard part: each reversed group's new tail must connect forward to the next group's new head, and all `prev` links must point back correctly.
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

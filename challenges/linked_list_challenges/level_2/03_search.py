@@ -2,6 +2,8 @@
 # Write search(head, value) that returns True if value is present,
 # and False otherwise.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **2.3** Write `search(head, value)` — returns `True` if the value is in the list, `False` otherwise.
 
 class Node:
     def __init__(self, data, next=None):

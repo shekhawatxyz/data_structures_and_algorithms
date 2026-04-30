@@ -2,6 +2,8 @@
 # Write remove_duplicates_unsorted(head) that removes duplicates from
 # an unsorted list while preserving first occurrences.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **7.3** Write `remove_duplicates_unsorted(head)` — remove duplicates from an *unsorted* list, preserving the first occurrence of each value. You may use a Python `set`.
 
 class Node:
     def __init__(self, data, next=None):

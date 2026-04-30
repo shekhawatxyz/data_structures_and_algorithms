@@ -5,20 +5,7 @@
 # **3a.** Write a function that takes a string of parentheses — only `(` and `)` — and returns whether they are balanced. Think carefully about what "balanced" means: every opener has a corresponding closer *in the right order*, and there are no unmatched closers or openers.
 
 def is_balanced_parentheses(text):
-    counter = []
-    for t in text:
-        if t == "(":
-            counter.append(t)
-        elif t == ")":
-            if len(counter) == 0:
-                return False
-            else:
-                counter.pop()
-    if len(counter) != 0:
-        return False
-    return True
-
-
+    raise NotImplementedError('Implement is_balanced_parentheses(text).')
 #
 #
 #

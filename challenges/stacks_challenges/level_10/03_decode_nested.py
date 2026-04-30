@@ -5,34 +5,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **10c.** Now handle full nesting: `"3[a2[c]]"` → `"accaccacc"` and `"2[abc]3[cd]ef"` → `"abcabccdcdcdef"`. The stack must save and restore the *entire state* of your in-progress computation (the string built so far *and* the repeat count) when entering/exiting a nesting level. You are essentially using the stack to simulate a call stack.
 
-# def decode_nested(text):
-#     raise NotImplementedError('Implement decode_nested(text).')
 def decode_nested(text):
-    s = []
-    ns = ""
-    b = ""
-    # prev = None
-    for t in text:
-        if t == "[":
-            s.append((ns, int(b)))
-            b = ""
-            ns = ""
-            # prev = "open"
-        elif t == "]":
-            if not s:
-                raise Exception
-            new_str, mult = s.pop()
-            ns = new_str + (ns * mult)
-            # prev = "closed"
-        elif t.isdigit():
-            b = b + t
-        else:
-            ns = ns + t
-    if s:
-        raise Exception
-    return ns
-
-
+    raise NotImplementedError('Implement decode_nested(text).')
 #
 #
 #

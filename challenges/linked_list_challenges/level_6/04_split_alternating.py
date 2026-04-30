@@ -2,6 +2,8 @@
 # Write split_alternating(head) that splits one list into two lists
 # by alternating nodes, and returns both heads.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **6.4** Write `split_alternating(head)` — split a single list into two lists by alternating nodes. `1 -> 2 -> 3 -> 4 -> 5` becomes `1 -> 3 -> 5` and `2 -> 4`. Return both heads.
 
 class Node:
     def __init__(self, data, next=None):

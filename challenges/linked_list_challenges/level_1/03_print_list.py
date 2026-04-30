@@ -2,6 +2,9 @@
 # Write a function print_list(head) that prints each element on one line,
 # or in the format "3 -> 7 -> 2 -> None".
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **1.3** Write a function `print_list(head)` that prints each element on one line, or in the format `3 -> 7 -> 2 -> None`.
+
 import io
 from contextlib import redirect_stdout
 

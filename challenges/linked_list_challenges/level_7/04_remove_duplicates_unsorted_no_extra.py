@@ -2,6 +2,8 @@
 # Write remove_duplicates_unsorted_no_extra(head) that removes duplicates
 # from an unsorted list without extra data structures.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **7.4** Now write `remove_duplicates_unsorted_no_extra(head)` — same as above, but without using any extra data structure. (This will be O(n²), and that's fine.)
 
 class Node:
     def __init__(self, data, next=None):

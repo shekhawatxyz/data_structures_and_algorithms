@@ -2,6 +2,9 @@
 # Write concatenate(head1, head2) that joins two doubly linked lists
 # end-to-end and returns the combined head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **6.4** Write `concatenate(head1, head2)` — join two doubly linked lists end to end. Return the head of the combined list.
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

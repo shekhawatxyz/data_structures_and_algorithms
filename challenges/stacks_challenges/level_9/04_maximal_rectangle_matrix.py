@@ -4,42 +4,12 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **9d.** Extension: given a binary matrix (0s and 1s) of size m × n, find the largest rectangle containing only 1s. (Hint: build a histogram for each row — treating consecutive 1s going upward as bar heights — then run your 9c solution on each row's histogram. The answer is the maximum across all rows.)
-#
-
 
 def largest_rectangle_stack(heights):
-    heights = heights + [0]
-    max_area = 0
-    height_stack = []
-    left = -1
-    heights.append(0)
-    for i, h in enumerate(heights):
-        while height_stack and h < heights[height_stack[-1]]:
-            popped_index = height_stack.pop()
-            if not height_stack:
-                area = heights[popped_index] * (i - left - 1)
-            else:
-                area = heights[popped_index] * (i - height_stack[-1] - 1)
-            if area > max_area:
-                max_area = area
-        height_stack.append(i)
-    return max_area
-
+    raise NotImplementedError('Implement largest_rectangle_stack(heights).')
 
 def maximal_rectangle_binary_matrix(matrix):
-    for i, r in enumerate(matrix):
-        if i != 0:
-            for c, j in enumerate(r):
-                if matrix[i][c] != 0:
-                    matrix[i][c] = matrix[i - 1][c] + matrix[i][c]
-    maximum_area = 0
-    for f in matrix:
-        current_area = largest_rectangle_stack(f)
-        if current_area > maximum_area:
-            maximum_area = current_area
-    return maximum_area
-
-
+    raise NotImplementedError('Implement maximal_rectangle_binary_matrix(matrix).')
 #
 #
 #

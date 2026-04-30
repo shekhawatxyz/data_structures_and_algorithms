@@ -2,6 +2,9 @@
 # Write sort_biotonic(head) for lists that increase then decrease,
 # returning a fully sorted list in ascending order.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **7.2** Write `sort_biotonic(head)` — a *bitonic* doubly linked list first increases and then decreases (e.g., `1 -> 3 -> 7 -> 5 -> 2`). Sort it in O(n) time. (Hint: think about splitting and merging.)
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

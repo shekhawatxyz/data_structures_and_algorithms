@@ -2,6 +2,8 @@
 # Write reverse_in_groups(head, k) that reverses the list in groups of k.
 # If fewer than k nodes remain, reverse that final group as well.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **8.1** Write `reverse_in_groups(head, k)` — reverse the list in groups of `k`. If the number of remaining nodes is less than `k`, reverse them as well. Example: `1 -> 2 -> 3 -> 4 -> 5` with `k=3` becomes `3 -> 2 -> 1 -> 5 -> 4`.
 
 class Node:
     def __init__(self, data, next=None):

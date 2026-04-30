@@ -1,22 +1,11 @@
 # Level 8a - Daily Temperatures (Monotonic Stack)
 # Write daily_temperatures_waits(temps) returning days-until-warmer values.
 
-
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **8a.** Given an array of daily temperatures (integers), return an array where each element tells you how many days you'd have to wait for a warmer temperature. If no warmer day exists, output `0`. Example: `[73, 74, 75, 71, 69, 72, 76, 73]` → `[1, 1, 4, 2, 1, 1, 0, 0]`. Use a stack. (Hint: what should the stack store — values, indices, or both? What invariant should it maintain?)
 
-
 def daily_temperatures_waits(temps):
-    stacks = []
-    results = [0 for _ in temps]
-    for i in range(len(temps)):
-        while stacks and temps[i] > temps[stacks[-1]]:
-            idx = stacks.pop()
-            results[idx] = i - idx
-        stacks.append(i)
-    return results
-
-
+    raise NotImplementedError('Implement daily_temperatures_waits(temps).')
 #
 #
 #

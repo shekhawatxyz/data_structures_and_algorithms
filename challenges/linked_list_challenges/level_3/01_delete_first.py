@@ -2,6 +2,8 @@
 # Write delete_first(head, value) that removes the first node with
 # the given value and returns the (possibly new) head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **3.1** Write `delete_first(head, value)` — removes the first node with the given value. Returns the (possibly new) head. Do nothing if the value isn't found.
 
 class Node:
     def __init__(self, data, next=None):

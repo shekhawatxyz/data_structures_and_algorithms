@@ -8,30 +8,22 @@
 
 class Stack:
     def __init__(self):
-        self.items = []
+        raise NotImplementedError('Implement Stack.__init__().')
 
     def push(self, item):
-        self.items.append(item)
+        raise NotImplementedError('Implement Stack.push(item).')
 
     def pop(self):
-        if self.is_empty():
-            raise IndexError
-        return self.items.pop()
+        raise NotImplementedError('Implement Stack.pop().')
 
     def peek(self):
-        if self.is_empty():
-            raise IndexError
-        return self.items[-1]
+        raise NotImplementedError('Implement Stack.peek().')
 
     def is_empty(self):
-        if len(self.items) == 0:
-            return True
-        return False
+        raise NotImplementedError('Implement Stack.is_empty().')
 
     def size(self):
-        return len(self.items)
-
-
+        raise NotImplementedError('Implement Stack.size().')
 #
 #
 #

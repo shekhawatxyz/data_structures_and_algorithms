@@ -5,42 +5,21 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **7b.** Now design a `MinStack` with the same interface but for `get_min`. If you did 7a, this is almost identical — but do it from scratch to reinforce the pattern. Then think: can you reduce the space used by the auxiliary stack? (Hint: you don't need to push onto the auxiliary stack on *every* push.)
 
-
 class MinStack:
     def __init__(self):
-        self._items = []
-        self._min = []
+        raise NotImplementedError('Implement MinStack.__init__().')
 
     def push(self, item):
-        if not self._items:
-            self._items.append(item)
-            self._min.append(item)
-        elif item <= self._min[-1]:
-            self._min.append(item)
-            self._items.append(item)
-        else:
-            self._items.append(item)
+        raise NotImplementedError('Implement MinStack.push(item).')
 
     def pop(self):
-        if not self._items:
-            raise IndexError
-        elif self._min[-1] == self._items[-1]:
-            self._min.pop()
-        return self._items.pop()
+        raise NotImplementedError('Implement MinStack.pop().')
 
     def peek(self):
-        if not self._items:
-            raise IndexError
-        else:
-            return self._items[-1]
+        raise NotImplementedError('Implement MinStack.peek().')
 
     def get_min(self):
-        if not self._min:
-            raise IndexError
-        else:
-            return self._min[-1]
-
-
+        raise NotImplementedError('Implement MinStack.get_min().')
 #
 #
 #

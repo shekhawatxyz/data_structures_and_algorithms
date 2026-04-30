@@ -2,6 +2,9 @@
 # Write merge_sort(head) for doubly linked lists in O(n log n)
 # while keeping prev pointers correct in the final list.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **8.2** Write `merge_sort(head)` — sort a doubly linked list using merge sort in O(n log n) time. You've written `find_middle`, `split`, and `merge_sorted` in earlier problems. Now combine them, keeping `prev` pointers consistent throughout.
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data

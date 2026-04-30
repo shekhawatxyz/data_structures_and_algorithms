@@ -2,6 +2,8 @@
 # Write insert_at(head, index, value) for 0-indexed insertion positions
 # and return the new head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **2.3** Write `insert_at(head, index, value)` — inserts at position `index` (0-indexed). Returns the new head.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

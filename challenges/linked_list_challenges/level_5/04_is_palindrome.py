@@ -2,6 +2,8 @@
 # Write is_palindrome(head) that returns True if the linked list
 # reads the same forwards and backwards, else False.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **5.4** Write `is_palindrome(head)` — returns `True` if the list reads the same forwards and backwards. Try to do this in O(n) time and O(1) extra space (you are allowed to modify and then restore the list).
 
 class Node:
     def __init__(self, data, next=None):

@@ -5,49 +5,26 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **1c.** Add a `__str__` method to your `Stack` class that prints the stack contents from top to bottom (so you can see what's in it at any point). Then write a script that interleaves pushes and pops — e.g., push 1, push 2, pop, push 3, pop, pop — printing the stack after each operation. Predict the full output before running.
-#
 
 import io
-from contextlib import redirect_stdout
 
+from contextlib import redirect_stdout
 
 class Stack:
     def __init__(self):
-        self._items = []
+        raise NotImplementedError('Implement Stack.__init__().')
 
     def push(self, item):
-        self._items.append(item)
+        raise NotImplementedError('Implement Stack.push(item).')
 
     def pop(self):
-        if not self._items:
-            raise IndexError("pop from empty stack")
-        return self._items.pop()
+        raise NotImplementedError('Implement Stack.pop().')
 
     def __str__(self):
-        if len(self._items) == 0:
-            return "[]"
-        st = ""
-        for s in reversed(self._items):
-            st = f"{st} {s}"
-        return st
-
+        raise NotImplementedError('Implement Stack.__str__().')
 
 def interleaved_stack_demo():
-    s = Stack()
-    s.push(1)
-    print(s)
-    s.push(2)
-    print(s)
-    s.pop()
-    print(s)
-    s.push(3)
-    print(s)
-    s.pop()
-    print(s)
-    s.pop()
-    print(s)
-
-
+    raise NotImplementedError('Implement interleaved_stack_demo().')
 #
 #
 #

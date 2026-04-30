@@ -2,6 +2,8 @@
 # Write insert_back(head, value) that appends at the end of the list
 # and returns the head. Handle the empty-list case.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **2.2** Write `insert_back(head, value)` — returns the head. Think about the edge case where the list is empty.
 
 class Node:
     def __init__(self, data, next=None):

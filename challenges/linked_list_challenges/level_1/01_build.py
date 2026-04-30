@@ -2,6 +2,8 @@
 # Write a function build(values) that takes a Python list and returns
 # the head of a singly linked list containing those values in order.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **1.1** Write a function `build(values)` that takes a Python list and returns the head of a singly linked list containing those values in order.
 
 class Node:
     def __init__(self, data, next=None):

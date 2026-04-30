@@ -2,6 +2,8 @@
 # Write insert_back(head, value) that inserts a new node at the end
 # and returns the (possibly unchanged) head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **2.2** Write `insert_back(head, value)` — returns the head. (You'll need to find the tail first, or think about whether to maintain one.)
 
 class Node:
     def __init__(self, data, prev=None, next=None):

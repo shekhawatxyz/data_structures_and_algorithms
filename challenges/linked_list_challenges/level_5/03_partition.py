@@ -2,6 +2,8 @@
 # Write partition(head, x) that places all values < x before values >= x,
 # while preserving relative order within each partition.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **5.3** Write `partition(head, x)` — rearrange the list so that all nodes with values less than `x` come before all nodes with values greater than or equal to `x`. The relative order within each partition should be preserved.
 
 class Node:
     def __init__(self, data, next=None):

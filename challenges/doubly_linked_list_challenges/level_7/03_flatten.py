@@ -2,6 +2,19 @@
 # Write flatten(head) for a multilevel doubly linked list where each node
 # may have a child list inserted immediately after the node.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **7.3** Write `flatten(head)` — each node now has an additional `child` attribute (default `None`) that may point to the head of another doubly linked list. Flatten the entire structure into a single-level doubly linked list. When a node has a child list, insert the child list immediately after that node (before the node's original next). Process all children recursively/iteratively.
+#
+# Use this extended node:
+# ```python
+# class Node:
+#     def __init__(self, data, prev=None, next=None, child=None):
+#         self.data = data
+#         self.prev = prev
+#         self.next = next
+#         self.child = child
+# ```
+
 class Node:
     def __init__(self, data, prev=None, next=None, child=None):
         self.data = data

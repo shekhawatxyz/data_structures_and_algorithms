@@ -2,6 +2,8 @@
 # Write merge_sort(head) that sorts a linked list in O(n log n)
 # time and returns the new sorted head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **8.3** Write `merge_sort(head)` — sort a linked list using merge sort. Returns the new head. This should run in O(n log n) time. You've already written the pieces; now combine them.
 
 class Node:
     def __init__(self, data, next=None):

@@ -6,33 +6,24 @@
 # **1b.** Write a small test script that creates a stack, pushes the integers 1 through 5, then pops and prints them all. Predict the output before running it. Verify your prediction.
 
 import io
-from contextlib import redirect_stdout
 
+from contextlib import redirect_stdout
 
 class Stack:
     def __init__(self):
-        self._items = []
+        raise NotImplementedError('Implement Stack.__init__().')
 
     def push(self, item):
-        self._items.append(item)
+        raise NotImplementedError('Implement Stack.push(item).')
 
     def pop(self):
-        if not self._items:
-            raise IndexError("pop from empty stack")
-        return self._items.pop()
+        raise NotImplementedError('Implement Stack.pop().')
 
     def is_empty(self):
-        return len(self._items) == 0
-
+        raise NotImplementedError('Implement Stack.is_empty().')
 
 def push_pop_demo():
-    sample = Stack()
-    for _ in range(1, 6):
-        sample.push(_)
-    while not sample.is_empty():
-        print(sample.pop())
-
-
+    raise NotImplementedError('Implement push_pop_demo().')
 #
 #
 #

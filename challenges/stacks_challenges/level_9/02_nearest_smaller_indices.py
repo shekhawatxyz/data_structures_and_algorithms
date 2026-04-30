@@ -6,38 +6,14 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **9b.** Now think about what information you'd need to compute each bar's "extent" (how far left and right it can go as the minimum) in O(n). This is exactly what a monotonic stack gives you. For each element, use a stack to find the index of the *nearest smaller element to the left* and the *nearest smaller element to the right*. These two arrays, combined, give you each bar's maximal rectangle. Implement this.
 
-
 def nearest_smaller_indices(heights):
-    right = next_smaller_elements(heights)
-    left = previous_smaller_elements(heights)
-    return left, right
-
+    raise NotImplementedError('Implement nearest_smaller_indices(heights).')
 
 def next_smaller_elements(values):
-    stack = []
-    result = [len(values) for _ in values]
-    i = 0
-    while i < len(values):
-        while stack and values[i] < values[stack[-1]]:
-            idx = stack.pop()
-            result[idx] = i
-        stack.append(i)
-        i += 1
-    return result
-
+    raise NotImplementedError('Implement next_smaller_elements(values).')
 
 def previous_smaller_elements(values):
-    stacks = []
-    results = [-1 for _ in values]
-    for j in range(len(values)):
-        while stacks and values[j] <= values[stacks[-1]]:
-            stacks.pop()
-        if stacks and values[j] > values[stacks[-1]]:
-            results[j] = stacks[-1]
-        stacks.append(j)
-    return results
-
-
+    raise NotImplementedError('Implement previous_smaller_elements(values).')
 #
 #
 #

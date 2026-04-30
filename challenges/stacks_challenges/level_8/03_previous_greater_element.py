@@ -5,19 +5,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **8c.** Variation: for each element, find the *previous greater element* — the nearest element to its *left* that is strictly larger. Output `-1` if none. Example: `[4, 2, 6, 1, 3]` → `[-1, 4, -1, 6, 6]`. Same O(n) constraint. Notice how the direction change affects when you process elements vs. when you read answers off the stack.
 
-
 def previous_greater_elements(values):
-    stacks = []
-    results = [-1 for _ in values]
-    for j in range(len(values)):
-        while stacks and values[j] >= values[stacks[-1]]:
-            stacks.pop()
-        if stacks and values[j] < values[stacks[-1]]:
-            results[j] = values[stacks[-1]]
-        stacks.append(j)
-    return results
-
-
+    raise NotImplementedError('Implement previous_greater_elements(values).')
 #
 #
 #

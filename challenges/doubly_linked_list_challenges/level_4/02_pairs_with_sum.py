@@ -2,6 +2,8 @@
 # Write pairs_with_sum(head, target) for a sorted list using a head/tail
 # two-pointer approach and return all matching value pairs.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **4.2** Write `pairs_with_sum(head, target)` — given a *sorted* doubly linked list, find all pairs of nodes whose values sum to `target`. Do this in O(n) time using the two-pointer technique: one pointer starts at the head, the other at the tail, and they walk inward. (With a singly linked list, the "start at the tail" part would be a problem.)
 
 class Node:
     def __init__(self, data, prev=None, next=None):

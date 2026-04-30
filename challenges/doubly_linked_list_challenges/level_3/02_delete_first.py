@@ -2,6 +2,8 @@
 # Write delete_first(head, value) that removes the first matching value
 # and returns the new head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **3.2** Write `delete_first(head, value)` — removes the first node with the given value. Returns the new head.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

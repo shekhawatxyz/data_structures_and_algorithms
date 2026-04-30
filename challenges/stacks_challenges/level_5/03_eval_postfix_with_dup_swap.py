@@ -4,51 +4,9 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **5c.** Add support for a `"dup"` operator (duplicates the top of the stack) and a `"swap"` operator (swaps the top two elements). Evaluate: `["3", "dup", "*", "4", "swap", "-"]`. Predict the result before running it. These stack-manipulation operations are how real stack-based languages (Forth, PostScript) and virtual machines work.
-#
-
 
 def eval_postfix_with_stack_ops(tokens):
-    nums = []
-    binary_operators = {
-        "+": lambda a, b: a + b,
-        "-": lambda a, b: a - b,
-        "*": lambda a, b: a * b,
-        "/": lambda a, b: int(a / b),
-    }
-    unary_operators = {"neg": lambda a: -a}
-    for t in tokens:
-        if t in unary_operators:
-            if not nums:
-                raise Exception
-            nv = unary_operators[t](int(nums[-1]))
-            nums.pop()
-            nums.append(nv)
-        elif t in binary_operators:
-            n = binary_operators[t](int(nums[-2]), int(nums[-1]))
-            nums.pop()
-            nums.pop()
-            nums.append(n)
-        elif t == "dup":
-            if not nums:
-                raise Exception
-            v = int(nums[-1])
-            nums.append(v)
-        elif t == "swap":
-            if len(nums) < 2:
-                raise Exception
-            a = nums[-1]
-            b = nums[-2]
-            nums.pop()
-            nums.pop()
-            nums.append(a)
-            nums.append(b)
-        else:
-            nums.append(t)
-    if len(nums) > 1:
-        raise Exception
-    return int(nums[0])
-
-
+    raise NotImplementedError('Implement eval_postfix_with_stack_ops(tokens).')
 #
 #
 #

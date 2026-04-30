@@ -2,6 +2,8 @@
 # Write reverse(head) that reverses a linked list iteratively
 # and returns the new head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **5.1** Write `reverse(head)` — reverse the linked list iteratively. Returns the new head.
 
 class Node:
     def __init__(self, data, next=None):

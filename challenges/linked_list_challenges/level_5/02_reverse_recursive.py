@@ -2,6 +2,8 @@
 # Write reverse_recursive(head) that reverses a linked list recursively
 # and returns the new head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **5.2** Write `reverse_recursive(head)` — same thing, but recursively.
 
 class Node:
     def __init__(self, data, next=None):

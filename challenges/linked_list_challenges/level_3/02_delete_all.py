@@ -2,6 +2,8 @@
 # Write delete_all(head, value) that removes every node with the
 # given value and returns the new head.
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **3.2** Write `delete_all(head, value)` — removes *every* node with the given value.
 
 class Node:
     def __init__(self, data, next=None):

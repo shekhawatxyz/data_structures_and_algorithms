@@ -2,6 +2,8 @@
 # Write reverse_between(head, left, right) that reverses only the
 # sublist from position left to right (1-indexed).
 
+# Complete Exact Problem Statement (from linked-list-challenges.md):
+# **7.1** Write `reverse_between(head, left, right)` — reverse only the sublist from position `left` to position `right` (1-indexed). The rest of the list remains unchanged.
 
 class Node:
     def __init__(self, data, next=None):

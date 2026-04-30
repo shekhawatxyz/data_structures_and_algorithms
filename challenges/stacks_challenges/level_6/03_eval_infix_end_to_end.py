@@ -5,78 +5,14 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **6c.** Chain your 6b converter with your 5a evaluator to evaluate infix expressions end-to-end. Test on: `"3 + 4 * 2 / ( 1 - 5 )"` → should give `1` (with integer division).
 
-
 def eval_postfix_with_neg(tokens):
-    nums = []
-    binary_operators = {
-        "+": lambda a, b: a + b,
-        "-": lambda a, b: a - b,
-        "*": lambda a, b: a * b,
-        "/": lambda a, b: int(a / b),
-    }
-    unary_operators = {"neg": lambda a: -a}
-    for t in tokens:
-        if t in unary_operators:
-            if not nums:
-                raise Exception
-            nv = unary_operators[t](int(nums[-1]))
-            nums.pop()
-            nums.append(nv)
-        elif t in binary_operators:
-            n = binary_operators[t](int(nums[-2]), int(nums[-1]))
-            nums.pop()
-            nums.pop()
-            nums.append(n)
-        else:
-            nums.append(t)
-    if len(nums) > 1:
-        raise Exception
-    return int(nums[0])
-
+    raise NotImplementedError('Implement eval_postfix_with_neg(tokens).')
 
 def infix_to_postfix(tokens):
-    st = []
-    output = []
-    prec = {"*": 2, "/": 2, "+": 1, "-": 1}
-    if len(tokens) == 0:
-        raise Exception
-    for i, e in enumerate(tokens):
-        if e == "(":
-            st.append("(")
-        elif e == ")":
-            while st and st[-1] != "(":
-                output.append(st.pop())
-            st.pop()
-        elif e in prec:
-            if i == 0:
-                raise Exception
-            elif i == len(tokens) - 1:
-                raise Exception
-            if tokens[i - 1] in prec:
-                raise Exception
-            while st:
-                if st[-1] == "(":
-                    break
-                if prec[st[-1]] >= prec[e]:
-                    s = st.pop()
-                    output.append(s)
-                else:
-                    break
-            st.append(e)
-        else:
-            output.append(int(e))
-    if "(" in st:
-        raise Exception
-    while st:
-        output.append(st.pop())
-    return output
-
+    raise NotImplementedError('Implement infix_to_postfix(tokens).')
 
 def evaluate_infix(expression):
-    e = expression.split()
-    return eval_postfix_with_neg(infix_to_postfix(e))
-
-
+    raise NotImplementedError('Implement evaluate_infix(expression).')
 #
 #
 #

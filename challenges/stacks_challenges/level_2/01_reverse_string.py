@@ -5,15 +5,7 @@
 # **2a.** Write a function that takes a string and returns it reversed, using only a stack. (Push every character, then pop them all.)
 
 def reverse_string_stack(text):
-    l = []
-    for t in text:
-        l.append(t)
-    reversed_text = ""
-    while l:
-        reversed_text = f"{reversed_text}{l.pop()}"
-    return reversed_text
-
-
+    raise NotImplementedError('Implement reverse_string_stack(text).')
 #
 #
 #

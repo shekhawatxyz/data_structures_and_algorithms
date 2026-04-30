@@ -6,24 +6,7 @@
 # **3b.** Write a function that takes a string (of any characters, not just parentheses) and removes all adjacent duplicates, using a stack. For example: `"abbaca"` → `"ca"`. (Process each character: if it matches the top of the stack, pop; otherwise push. Whatever remains in the stack is the result.)
 
 def remove_adjacent_duplicates(text):
-    s = []
-    if len(text) == 0:
-        return ''
-
-    for i, c in enumerate(text):
-        if len(s) > 0:
-            if c == s[-1]:
-                s.pop()
-                continue
-            s.append(c)
-            continue
-        s.append(c)
-
-    b = ''
-    for a in s:
-        b = f'{b}{a}'
-    return b
-
+    raise NotImplementedError('Implement remove_adjacent_duplicates(text).')
 #
 #
 #

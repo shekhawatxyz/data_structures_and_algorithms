@@ -4,54 +4,9 @@
 
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **6d.** Extend your shunting-yard to handle right-associative exponentiation `^`. For example, `"2 ^ 3 ^ 2"` should be treated as `2 ^ (3 ^ 2) = 512`, not `(2 ^ 3) ^ 2 = 64`. The key: the only thing that changes is the comparison — for right-associative operators, you pop only when the stack-top has *strictly greater* precedence, not greater-or-equal.
-#
-
 
 def infix_to_postfix_with_exponent(tokens):
-    st = []
-    output = []
-    prec = {"^": 3, "*": 2, "/": 2, "+": 1, "-": 1}
-    if len(tokens) == 0:
-        raise Exception
-    for i, e in enumerate(tokens):
-        if e == "(":
-            st.append("(")
-        elif e == ")":
-            if "(" not in st:
-                raise Exception
-            while st and st[-1] != "(":
-                output.append(st.pop())
-            st.pop()
-        elif e in prec:
-            if i == 0:
-                raise Exception
-            elif i == len(tokens) - 1:
-                raise Exception
-            if tokens[i - 1] in prec:
-                raise Exception
-            while st:
-                if st[-1] == "(":
-                    break
-                if e == "^":
-                    if prec[st[-1]] > prec[e]:
-                        output.append(st.pop())
-                    else:
-                        break
-                elif prec[st[-1]] >= prec[e]:
-                    s = st.pop()
-                    output.append(s)
-                else:
-                    break
-            st.append(e)
-        else:
-            output.append(e)
-    if "(" in st:
-        raise Exception
-    while st:
-        output.append(st.pop())
-    return output
-
-
+    raise NotImplementedError('Implement infix_to_postfix_with_exponent(tokens).')
 #
 #
 #

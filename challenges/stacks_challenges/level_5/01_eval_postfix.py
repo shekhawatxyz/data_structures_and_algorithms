@@ -5,28 +5,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **5a.** Write a function that evaluates a postfix (reverse Polish notation) expression. Input is a list of tokens like `["3", "4", "+", "2", "*"]` → `14`. Support `+`, `-`, `*`, `/` (integer division, truncating toward zero).
 
-
 def eval_postfix(tokens):
-    nums = []
-    operators = {
-        "+": lambda a, b: a + b,
-        "-": lambda a, b: a - b,
-        "*": lambda a, b: a * b,
-        "/": lambda a, b: int(a / b),
-    }
-    for t in tokens:
-        if t not in operators:
-            nums.append(t)
-        else:
-            n = operators[t](int(nums[-2]), int(nums[-1]))
-            nums.pop()
-            nums.pop()
-            nums.append(n)
-    if len(nums) > 1:
-        raise Exception
-    return int(nums[0])
-
-
+    raise NotImplementedError('Implement eval_postfix(tokens).')
 #
 #
 #

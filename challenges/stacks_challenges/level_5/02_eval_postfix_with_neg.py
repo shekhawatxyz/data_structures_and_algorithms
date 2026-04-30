@@ -5,35 +5,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **5b.** Extend your evaluator to support a unary negation token, say `"neg"`, which pops the top value and pushes its negation. For example: `["5", "neg", "3", "+"]` → `-2`. This forces you to handle operators with different arities.
 
-
 def eval_postfix_with_neg(tokens):
-    nums = []
-    binary_operators = {
-        "+": lambda a, b: a + b,
-        "-": lambda a, b: a - b,
-        "*": lambda a, b: a * b,
-        "/": lambda a, b: int(a / b),
-    }
-    unary_operators = {"neg": lambda a: -a}
-    for t in tokens:
-        if t in unary_operators:
-            if not nums:
-                raise Exception
-            nv = unary_operators[t](int(nums[-1]))
-            nums.pop()
-            nums.append(nv)
-        elif t in binary_operators:
-            n = binary_operators[t](int(nums[-2]), int(nums[-1]))
-            nums.pop()
-            nums.pop()
-            nums.append(n)
-        else:
-            nums.append(t)
-    if len(nums) > 1:
-        raise Exception
-    return int(nums[0])
-
-
+    raise NotImplementedError('Implement eval_postfix_with_neg(tokens).')
 #
 #
 #

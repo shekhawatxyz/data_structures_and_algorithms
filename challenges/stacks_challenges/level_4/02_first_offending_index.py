@@ -6,26 +6,8 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **4b.** Write a function that takes a string of brackets like the above, and if it is *invalid*, returns the index of the *first* offending character (either the first unmatched closer or, if all closers matched but openers remain, the index of the earliest unmatched opener). If valid, return `-1`.
 
-
 def first_offending_bracket_index(text):
-    brackets = []
-    closers = {")": "(", "]": "[", "}": "{"}
-    for i, t in enumerate(text):
-        if t in "{[(":
-            brackets.append((t, i))
-        else:
-            if t in closers:
-                if not brackets:
-                    return i
-                elif brackets[-1][0] == closers[t]:
-                    brackets.pop()
-                else:
-                    return i
-    if not brackets:
-        return -1
-    return brackets[0][1]
-
-
+    raise NotImplementedError('Implement first_offending_bracket_index(text).')
 #
 #
 #

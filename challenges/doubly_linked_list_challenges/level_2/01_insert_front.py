@@ -2,6 +2,8 @@
 # Write insert_front(head, value) that inserts a new node at the front
 # and returns the new head.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **2.1** Write `insert_front(head, value)` — returns the new head.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

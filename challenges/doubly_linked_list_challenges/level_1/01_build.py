@@ -2,6 +2,8 @@
 # Write build(values) that takes a Python list and returns the head
 # of a doubly linked list with correct prev and next pointers.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **1.1** Write `build(values)` — takes a Python list and returns the head of a doubly linked list. Make sure every node's `prev` pointer is correctly set.
 
 class Node:
     def __init__(self, data, prev=None, next=None):

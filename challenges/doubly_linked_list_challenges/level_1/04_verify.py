@@ -2,6 +2,8 @@
 # Write verify(head) that checks full bidirectional consistency:
 # for each node, next.prev and prev.next links should agree.
 
+# Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
+# **1.4** Write `verify(head)` — traverses the entire list and checks that for every node `n`, if `n.next` is not `None` then `n.next.prev is n`, and if `n.prev` is not `None` then `n.prev.next is n`. Returns `True` if all links are consistent, `False` otherwise. Use this to test everything you write from here on.
 
 class Node:
     def __init__(self, data, prev=None, next=None):
