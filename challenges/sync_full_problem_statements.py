@@ -13,6 +13,8 @@ LEVEL_DIR_RE = re.compile(r"^level_(\d+)$")
 FILE_RE = re.compile(r"^(\d+)_.*\.py$")
 LEVEL_HEADER_RE = re.compile(r"^## Level\s+(\d+)\b")
 CHALLENGE_LINE_RE = re.compile(r"^\*\*([^\s*]*\d[^\s*]*)\*\*\s+.*$")
+CHALLENGE_HEADING_RE = re.compile(r"^###\s+([^\s]*\d[^\s]*)\s+.+$")
+FLAT_CHALLENGE_HEADER_RE = re.compile(r"^##\s+\d+\.\s+.+$")
 MARKER_RE = re.compile(r"^# Complete Exact Problem Statement \(from .+\):$")
 
 
@@ -69,7 +71,7 @@ def parse_markdown_blocks(markdown_path: Path) -> dict[int, list[list[str]]]:
             i += 1
             continue
 
-        if CHALLENGE_LINE_RE.match(lines[i]):
+        if CHALLENGE_LINE_RE.match(lines[i]) or CHALLENGE_HEADING_RE.match(lines[i]):
             block = [lines[i]]
             i += 1
 
@@ -78,6 +80,7 @@ def parse_markdown_blocks(markdown_path: Path) -> dict[int, list[list[str]]]:
                 if (
                     LEVEL_HEADER_RE.match(line)
                     or CHALLENGE_LINE_RE.match(line)
+                    or CHALLENGE_HEADING_RE.match(line)
                     or line == "---"
                 ):
                     break
@@ -93,6 +96,32 @@ def parse_markdown_blocks(markdown_path: Path) -> dict[int, list[list[str]]]:
         i += 1
 
     return blocks_by_level
+
+
+def parse_flat_markdown_blocks(markdown_path: Path) -> list[list[str]]:
+    lines = markdown_path.read_text(encoding="utf-8").splitlines()
+    blocks: list[list[str]] = []
+    i = 0
+
+    while i < len(lines):
+        if not FLAT_CHALLENGE_HEADER_RE.match(lines[i]):
+            i += 1
+            continue
+
+        block = [lines[i]]
+        i += 1
+        while i < len(lines):
+            line = lines[i]
+            if FLAT_CHALLENGE_HEADER_RE.match(line) or line == "---":
+                break
+            block.append(line)
+            i += 1
+
+        while block and block[-1] == "":
+            block.pop()
+        blocks.append(block)
+
+    return blocks
 
 
 def comment_block(markdown_lines: list[str], markdown_name: str) -> list[str]:
@@ -200,6 +229,7 @@ def plan_sync_challenge_dir(challenge_dir: Path) -> list[tuple[Path, str]]:
 
     markdown_path = markdown_files[0]
     blocks_by_level = parse_markdown_blocks(markdown_path)
+    flat_blocks = parse_flat_markdown_blocks(markdown_path)
     files_by_level: dict[int, list[Path]] = {}
     for level, file_path in challenge_files(challenge_dir):
         files_by_level.setdefault(level, []).append(file_path)
@@ -209,6 +239,19 @@ def plan_sync_challenge_dir(challenge_dir: Path) -> list[tuple[Path, str]]:
 
     markdown_levels = {level for level, blocks in blocks_by_level.items() if blocks}
     file_levels = set(files_by_level)
+
+    if not markdown_levels and flat_blocks:
+        cursor = 0
+        for level, files in sorted(files_by_level.items()):
+            next_cursor = cursor + len(files)
+            blocks_by_level[level] = flat_blocks[cursor:next_cursor]
+            cursor = next_cursor
+        if cursor != len(flat_blocks):
+            raise ValueError(
+                f"{challenge_dir.name} has {sum(len(files) for files in files_by_level.values())} "
+                f"files but {len(flat_blocks)} flat markdown challenge blocks."
+            )
+        markdown_levels = set(files_by_level)
 
     extra_file_levels = sorted(file_levels - markdown_levels)
     if extra_file_levels:
