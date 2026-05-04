@@ -126,34 +126,50 @@ def _run_all_tests(test_cases):
         raise SystemExit(1)
 
 
+def _inorder(tree):
+    result = []
+
+    def walk(node):
+        if node is tree.nil:
+            return
+        walk(node.left)
+        result.append(node.key)
+        walk(node.right)
+
+    walk(tree.root)
+    return result
+
+
+def _insert_keys_and_check(keys):
+    tree = Tree()
+    inserted = []
+    for k in keys:
+        insert_and_verify(tree, k)
+        inserted.append(k)
+        _assert_equal(_inorder(tree), sorted(inserted),
+                      f"in-order traversal should match inserted keys after inserting {k}.")
+
+
 def test_stress_10_keys():
     import random
     random.seed(42)
-    tree = Tree()
     keys = random.sample(range(1, 100), 10)
-    for k in keys:
-        insert_and_verify(tree, k)
+    _insert_keys_and_check(keys)
 
 
 def test_stress_100_keys():
     import random
     random.seed(123)
-    tree = Tree()
     keys = random.sample(range(1, 1000), 100)
-    for k in keys:
-        insert_and_verify(tree, k)
+    _insert_keys_and_check(keys)
 
 
 def test_stress_ascending():
-    tree = Tree()
-    for k in range(1, 51):
-        insert_and_verify(tree, k)
+    _insert_keys_and_check(range(1, 51))
 
 
 def test_stress_descending():
-    tree = Tree()
-    for k in range(50, 0, -1):
-        insert_and_verify(tree, k)
+    _insert_keys_and_check(range(50, 0, -1))
 
 
 if __name__ == "__main__":

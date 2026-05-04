@@ -74,7 +74,7 @@ def _run_all_tests(test_cases):
 
 def test_insert_into_empty_tree():
     root = bst_insert(None, 5)
-    assert root is not None
+    _assert_true(root is not None, "insert into empty tree should return a node.")
     _assert_equal(root.value, 5, "new root should hold inserted value.")
     _assert_true(root.left is None and root.right is None, "new root should have no children.")
 
@@ -90,7 +90,7 @@ def test_chained_inserts_yield_sorted_inorder():
 def test_duplicates_go_right():
     root = bst_insert(None, 5)
     root = bst_insert(root, 5)
-    assert root.right is not None
+    _assert_true(root.right is not None, "duplicate insert should create a right child.")
     _assert_equal(root.right.value, 5, "right child should hold duplicate value.")
     _assert_true(root.left is None, "duplicate should not land on the left.")
 
@@ -99,10 +99,10 @@ def test_inserts_preserve_structure():
     root = None
     for v in [10, 5, 15, 3]:
         root = bst_insert(root, v)
-    assert root is not None
-    assert root.left is not None
-    assert root.right is not None
-    assert root.left.left is not None
+    _assert_true(root is not None, "root should exist after inserts.")
+    _assert_true(root.left is not None, "left child should exist.")
+    _assert_true(root.right is not None, "right child should exist.")
+    _assert_true(root.left.left is not None, "left-left grandchild should exist.")
     _assert_equal(root.value, 10, "first inserted should remain root.")
     _assert_equal(root.left.value, 5, "smaller value should go left of root.")
     _assert_equal(root.right.value, 15, "larger value should go right of root.")

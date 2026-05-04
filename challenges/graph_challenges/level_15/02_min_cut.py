@@ -112,35 +112,29 @@ def _make_capacity(n, edges):
 def test_01_pedagogy_single_edge():
     cap = _make_capacity(2, [(0, 1, 5)])
     cut = min_cut(2, cap, 0, 1)
-    _assert_true(0 in cut, "Source must be in source-side cut.")
-    _assert_true(1 not in cut, "Sink must not be in source-side cut.")
+    _assert_equal(set(cut), {0}, "Only the source remains reachable after saturating the edge.")
 
 
 def test_02_bottleneck_cut():
     # 0->1(10), 1->2(3), 2->3(10): cut at edge 1->2
     cap = _make_capacity(4, [(0, 1, 10), (1, 2, 3), (2, 3, 10)])
     cut = min_cut(4, cap, 0, 3)
-    _assert_true(0 in cut, "Source in cut.")
-    _assert_true(3 not in cut, "Sink not in cut.")
-    _assert_true(1 in cut, "Vertex 1 on source side of bottleneck.")
-    _assert_true(2 not in cut, "Vertex 2 on sink side of bottleneck.")
+    _assert_equal(set(cut), {0, 1}, "Source-side cut should stop before bottleneck edge 1->2.")
 
 
 def test_03_two_paths():
     # 0->1->3 (cap 5) and 0->2->3 (cap 3)
     cap = _make_capacity(4, [(0, 1, 5), (1, 3, 5), (0, 2, 3), (2, 3, 3)])
     cut = min_cut(4, cap, 0, 3)
-    _assert_true(0 in cut, "Source in cut.")
-    _assert_true(3 not in cut, "Sink not in cut.")
+    _assert_equal(set(cut), {0}, "Both outgoing source edges are saturated in the min cut.")
 
 
 def test_04_source_isolated():
     # 0->1(2), 0->2(3): no path to vertex 3
     cap = _make_capacity(4, [(0, 1, 2), (0, 2, 3)])
     cut = min_cut(4, cap, 0, 3)
-    # All vertices reachable from s in residual (since t is unreachable, all except t)
-    _assert_true(0 in cut, "Source in cut.")
-    _assert_true(3 not in cut, "Sink not in cut.")
+    _assert_equal(set(cut), {0, 1, 2},
+                  "When sink is unreachable, source-side cut includes all vertices reachable from source.")
 
 
 if __name__ == "__main__":

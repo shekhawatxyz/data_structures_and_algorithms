@@ -126,22 +126,52 @@ def _run_all_tests(test_cases):
         raise SystemExit(1)
 
 
-def test_simple_insert_delete_sequence():
+def _inorder(tree):
+    result = []
+
+    def walk(node):
+        if node is tree.nil:
+            return
+        walk(node.left)
+        result.append(node.key)
+        walk(node.right)
+
+    walk(tree.root)
+    return result
+
+
+def _expected_keys_after(operations):
+    keys = set()
+    for op, key in operations:
+        if op == "insert":
+            keys.add(key)
+        elif op == "delete":
+            keys.discard(key)
+        else:
+            raise AssertionError(f"Unexpected operation {op!r}.")
+    return sorted(keys)
+
+
+def _run_ops_and_check(operations):
     tree = Tree()
+    insert_delete_verify(tree, operations)
+    _assert_equal(_inorder(tree), _expected_keys_after(operations),
+                  "final in-order traversal should match tracked set of keys.")
+
+
+def test_simple_insert_delete_sequence():
     ops = [("insert", 10), ("insert", 20), ("insert", 30), ("delete", 20)]
-    insert_delete_verify(tree, ops)
+    _run_ops_and_check(ops)
 
 
 def test_delete_nonexistent_key():
-    tree = Tree()
     ops = [("insert", 5), ("delete", 99), ("insert", 10)]
-    insert_delete_verify(tree, ops)
+    _run_ops_and_check(ops)
 
 
 def test_insert_delete_same_key():
-    tree = Tree()
     ops = [("insert", 42), ("delete", 42)]
-    insert_delete_verify(tree, ops)
+    _run_ops_and_check(ops)
 
 
 def test_mixed_50_operations():
@@ -153,15 +183,13 @@ def test_mixed_50_operations():
             ops.append(("insert", random.randint(1, 30)))
         else:
             ops.append(("delete", random.randint(1, 30)))
-    tree = Tree()
-    insert_delete_verify(tree, ops)
+    _run_ops_and_check(ops)
 
 
 def test_all_inserts_then_all_deletes():
-    tree = Tree()
     keys = [15, 3, 27, 8, 42, 1, 19]
     ops = [("insert", k) for k in keys] + [("delete", k) for k in keys]
-    insert_delete_verify(tree, ops)
+    _run_ops_and_check(ops)
 
 
 if __name__ == "__main__":

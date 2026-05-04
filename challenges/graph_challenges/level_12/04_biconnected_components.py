@@ -143,7 +143,15 @@ def test_04_path_graph():
     # 0-1-2-3: each edge is its own biconnected component
     adj = _build_undirected_adj(4, [(0, 1), (1, 2), (2, 3)])
     comps = biconnected_components(adj)
-    _assert_equal(len(comps), 3, "Path of 4 vertices has 3 biconnected components.")
+    normalized = sorted(
+        ({(min(u, v), max(u, v)) for u, v in comp} for comp in comps),
+        key=lambda edges: sorted(edges),
+    )
+    _assert_equal(
+        normalized,
+        [{(0, 1)}, {(1, 2)}, {(2, 3)}],
+        "Path of 4 vertices has one biconnected component per edge.",
+    )
 
 
 if __name__ == "__main__":

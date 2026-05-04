@@ -146,7 +146,7 @@ def test_05_interactions_frequency_update():
     ac.input("#")
     # Now abc has count 2, abd has count 1
     result = ac.input("a")
-    _assert_equal(result[0], "abc", "'abc' should now be first (higher frequency).")
+    _assert_equal(result, ["abc", "abd"], "'abc' should now sort before 'abd' by higher frequency.")
 
 
 if __name__ == "__main__":
