@@ -98,8 +98,7 @@ def test_lca_in_separate_subtrees():
     a = nodes[3]  # value 4
     b = nodes[6]  # value 7
     result = lowest_common_ancestor(root, a, b)
-    assert result is not None
-    _assert_equal(result.value, 1, "LCA of 4 and 7 should be the root (1).")
+    _assert_true(result is root, "LCA of 4 and 7 should be the root node.")
 
 
 def test_lca_in_same_subtree():
@@ -107,8 +106,7 @@ def test_lca_in_same_subtree():
     a = nodes[3]  # value 4
     b = nodes[4]  # value 5
     result = lowest_common_ancestor(root, a, b)
-    assert result is not None
-    _assert_equal(result.value, 2, "LCA of 4 and 5 should be 2.")
+    _assert_true(result is nodes[1], "LCA of 4 and 5 should be the node with value 2.")
 
 
 def test_node_is_its_own_ancestor():
@@ -116,16 +114,20 @@ def test_node_is_its_own_ancestor():
     a = nodes[1]  # value 2
     b = nodes[3]  # value 4 (descendant of 2)
     result = lowest_common_ancestor(root, a, b)
-    assert result is not None
-    _assert_equal(result.value, 2, "ancestor and descendant should yield the ancestor as LCA.")
+    _assert_true(result is a, "ancestor and descendant should yield the ancestor node.")
 
 
 def test_same_node_twice():
     root, nodes = _make_level_order_with_index([1, 2, 3])
     a = nodes[2]  # value 3
     result = lowest_common_ancestor(root, a, a)
-    assert result is not None
-    _assert_equal(result.value, 3, "LCA of a node with itself should be that node.")
+    _assert_true(result is a, "LCA of a node with itself should be that exact node.")
+
+
+def test_duplicate_values_use_node_identity():
+    root = Node(1, Node(2), Node(2))
+    result = lowest_common_ancestor(root, root.left, root.right)
+    _assert_true(result is root, "duplicate values should not confuse node identity.")
 
 
 if __name__ == "__main__":
@@ -135,5 +137,6 @@ if __name__ == "__main__":
         ("LCA in same subtree", test_lca_in_same_subtree),
         ("node is its own ancestor", test_node_is_its_own_ancestor),
         ("same node twice", test_same_node_twice),
+        ("duplicate values use node identity", test_duplicate_values_use_node_identity),
     ]
     _run_all_tests(TEST_CASES)

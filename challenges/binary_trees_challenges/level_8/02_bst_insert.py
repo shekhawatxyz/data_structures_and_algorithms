@@ -109,11 +109,18 @@ def test_inserts_preserve_structure():
     _assert_equal(root.left.left.value, 3, "value smaller than 5 should go left of 5.")
 
 
+def test_insert_returns_existing_root_for_non_empty_tree():
+    root = bst_insert(None, 10)
+    same_root = bst_insert(root, 12)
+    _assert_true(same_root is root, "inserting into a non-empty tree should return the existing root.")
+
+
 if __name__ == "__main__":
     TEST_CASES = [
         ("insert into empty tree", test_insert_into_empty_tree),
         ("chained inserts yield sorted inorder", test_chained_inserts_yield_sorted_inorder),
         ("duplicates go right", test_duplicates_go_right),
         ("inserts preserve structure", test_inserts_preserve_structure),
+        ("insert returns existing root", test_insert_returns_existing_root_for_non_empty_tree),
     ]
     _run_all_tests(TEST_CASES)

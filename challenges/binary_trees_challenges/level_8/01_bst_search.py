@@ -106,6 +106,12 @@ def test_no_match_returns_none():
     _assert_true(bst_search(tree, 4) is None, "missing value should return None.")
 
 
+def test_duplicate_target_returns_first_match():
+    root = Node(5, right=Node(5))
+    _assert_true(bst_search(root, 5) is root,
+                 "search should return the first matching node in BST search order.")
+
+
 if __name__ == "__main__":
     TEST_CASES = [
         ("empty tree returns None", test_empty_tree_returns_none),
@@ -113,5 +119,6 @@ if __name__ == "__main__":
         ("left subtree match", test_left_subtree_match),
         ("right subtree match", test_right_subtree_match),
         ("no match returns None", test_no_match_returns_none),
+        ("duplicate target returns first match", test_duplicate_target_returns_first_match),
     ]
     _run_all_tests(TEST_CASES)

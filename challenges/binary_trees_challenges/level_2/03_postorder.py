@@ -92,7 +92,7 @@ def test_full_small_tree():
 
 
 def test_right_skewed_tree():
-    tree = _make_level_order([1, None, 2, None, None, None, 3])
+    tree = _make_level_order([1, None, 2, None, 3])
     _assert_equal(postorder(tree), [3, 2, 1],
                   "postorder reaches deepest right descendant first.")
 

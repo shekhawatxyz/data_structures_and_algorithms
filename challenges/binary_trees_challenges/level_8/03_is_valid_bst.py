@@ -110,6 +110,12 @@ def test_duplicates_allowed_on_right():
                   "duplicates on the right are allowed by the spec.")
 
 
+def test_duplicates_rejected_on_left():
+    tree = _make_level_order([5, 5, 6])
+    _assert_equal(is_valid_bst(tree), False,
+                  "duplicates on the left violate the strict-left rule.")
+
+
 if __name__ == "__main__":
     TEST_CASES = [
         ("empty tree is valid", test_empty_tree_is_valid),
@@ -118,5 +124,6 @@ if __name__ == "__main__":
         ("spec invalid", test_spec_invalid),
         ("violation in left subtree", test_violation_in_left_subtree),
         ("duplicates allowed on right", test_duplicates_allowed_on_right),
+        ("duplicates rejected on left", test_duplicates_rejected_on_left),
     ]
     _run_all_tests(TEST_CASES)

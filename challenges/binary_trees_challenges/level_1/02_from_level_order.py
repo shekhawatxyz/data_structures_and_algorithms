@@ -97,11 +97,21 @@ def test_with_none_gaps():
     _assert_true(root.right.right is None, "right.right should be None per spec.")
 
 
+def test_compressed_right_skewed_tree():
+    root = from_level_order([1, None, 2, None, 3])
+    _assert_equal(root.value, 1, "root value should match.")
+    _assert_true(root.left is None, "root.left should be None.")
+    _assert_equal(root.right.value, 2, "root.right should be 2.")
+    _assert_true(root.right.left is None, "node 2 should have no left child.")
+    _assert_equal(root.right.right.value, 3, "node 2 right child should be 3.")
+
+
 if __name__ == "__main__":
     TEST_CASES = [
         ("empty list returns None", test_empty_list_returns_none),
         ("single node", test_single_node),
         ("full three node tree", test_full_three_node_tree),
         ("with None gaps", test_with_none_gaps),
+        ("compressed right-skewed tree", test_compressed_right_skewed_tree),
     ]
     _run_all_tests(TEST_CASES)

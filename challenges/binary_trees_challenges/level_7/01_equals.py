@@ -96,7 +96,7 @@ def test_same_shape_different_values():
 
 def test_different_shape_same_values():
     a = _make_level_order([1, 2, None, 3])
-    b = _make_level_order([1, None, 2, None, None, None, 3])
+    b = _make_level_order([1, None, 2, None, 3])
     _assert_equal(equals(a, b), False, "different shapes should make trees unequal.")
 
 

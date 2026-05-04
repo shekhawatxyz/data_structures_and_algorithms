@@ -90,7 +90,7 @@ def test_left_skewed_tree():
 
 
 def test_right_skewed_tree():
-    tree = _make_level_order([1, None, 2, None, None, None, 3])
+    tree = _make_level_order([1, None, 2, None, 3])
     _assert_equal(preorder_iterative(tree), [1, 2, 3],
                   "iterative preorder follows right chain on a right-skewed tree.")
 
