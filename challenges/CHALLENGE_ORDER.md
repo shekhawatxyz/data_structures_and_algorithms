@@ -6,7 +6,7 @@ Recommended solve order:
 2. Stacks (`stacks_challenges`)
 3. Doubly Linked Lists (`doubly_linked_list_challenges`)
 4. Queues (`queues_challenges`)
-5. Binary Trees (`binary_trees_challenges`) - incomplete; scaffold/tests still need to be added
+5. Binary Trees (`binary_trees_challenges`)
 6. Red-Black Trees (`red_black_tree_challenges`)
 7. Hashmaps (`hashmap_challenges`)
 8. Tries (`trie_challenges`)
