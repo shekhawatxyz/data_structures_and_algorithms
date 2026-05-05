@@ -5,14 +5,26 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **6.4** Write `concatenate(head1, head2)` — join two doubly linked lists end to end. Return the head of the combined list.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def concatenate(head1, head2):
-    raise NotImplementedError('Implement concatenate(head1, head2).')
+    if head1 is None:
+        return head2
+    if head2 is None:
+        return head1
+    cursor = head1
+    while cursor.next:
+        cursor = cursor.next
+    cursor.next = head2
+    head2.prev = cursor
+    return head1
+
 
 #
 #
@@ -59,6 +71,7 @@ def concatenate(head1, head2):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +113,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +130,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +173,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,24 +240,36 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_concatenate_two_non_empty_lists():
     head1 = _make_doubly_linked_list([1, 2])
     head2 = _make_doubly_linked_list([3, 4])
     result = concatenate(head1, head2)
-    _assert_equal(_to_list_forward(result), [1, 2, 3, 4], 'concatenate should join both lists in order.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should remain valid after concatenation.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3, 4],
+        "concatenate should join both lists in order.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should remain valid after concatenation.",
+    )
 
 
 def test_concatenate_first_empty_returns_second():
     head2 = _make_doubly_linked_list([8, 9])
     result = concatenate(None, head2)
-    _assert_equal(_to_list_forward(result), [8, 9], 'concatenate(None, B) should return B.')
+    _assert_equal(
+        _to_list_forward(result), [8, 9], "concatenate(None, B) should return B."
+    )
 
 
 def test_concatenate_second_empty_returns_first():
     head1 = _make_doubly_linked_list([5, 6])
     result = concatenate(head1, None)
-    _assert_equal(_to_list_forward(result), [5, 6], 'concatenate(A, None) should return A.')
+    _assert_equal(
+        _to_list_forward(result), [5, 6], "concatenate(A, None) should return A."
+    )
 
 
 def test_concatenate_preserves_join_pointer_relationship():
@@ -250,16 +277,26 @@ def test_concatenate_preserves_join_pointer_relationship():
     head2 = _make_doubly_linked_list([30])
     tail1 = _tail_from_head(head1)
     result = concatenate(head1, head2)
-    _assert_true(tail1.next is head2, 'Old tail of first list should point to second head after join.')
-    _assert_true(head2.prev is tail1, 'Second head.prev should point to first tail after join.')
-    _assert_equal(_to_list_forward(result), [10, 20, 30], 'Joined values should appear in order.')
+    _assert_true(
+        tail1.next is head2,
+        "Old tail of first list should point to second head after join.",
+    )
+    _assert_true(
+        head2.prev is tail1, "Second head.prev should point to first tail after join."
+    )
+    _assert_equal(
+        _to_list_forward(result), [10, 20, 30], "Joined values should appear in order."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('concatenate non-empty lists', test_concatenate_two_non_empty_lists),
-        ('first list empty', test_concatenate_first_empty_returns_second),
-        ('second list empty', test_concatenate_second_empty_returns_first),
-        ('join pointers set correctly', test_concatenate_preserves_join_pointer_relationship),
+        ("concatenate non-empty lists", test_concatenate_two_non_empty_lists),
+        ("first list empty", test_concatenate_first_empty_returns_second),
+        ("second list empty", test_concatenate_second_empty_returns_first),
+        (
+            "join pointers set correctly",
+            test_concatenate_preserves_join_pointer_relationship,
+        ),
     ]
     _run_all_tests(TEST_CASES)

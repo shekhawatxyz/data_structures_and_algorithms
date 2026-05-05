@@ -5,14 +5,34 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **6.3** Write `split_at(head, index)` — split a doubly linked list into two independent doubly linked lists at the given index. Return both heads. Make sure the `prev` of the second list's head is `None` and the `next` of the first list's tail is `None`.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def split_at(head, index):
-    raise NotImplementedError('Implement split_at(head, index).')
+    if head is None:
+        raise ValueError
+    counter = 0
+    cursor = head
+    if counter == index:
+        return None, head
+    while cursor:
+        cp = cursor.prev
+        if index == counter:
+            if cp:
+                cp.next = None
+            cursor.prev = None
+            return head, cursor
+        cursor = cursor.next
+        counter += 1
+    if counter == index:
+        return head, None
+    raise ValueError
+
 
 #
 #
@@ -59,6 +79,7 @@ def split_at(head, index):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +121,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +138,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +181,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,10 +248,11 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def _as_two_heads(result):
     _assert_true(
         isinstance(result, (tuple, list)) and len(result) == 2,
-        'split_at should return a pair: (head1, head2).',
+        "split_at should return a pair: (head1, head2).",
     )
     return result[0], result[1]
 
@@ -236,38 +260,61 @@ def _as_two_heads(result):
 def test_split_at_middle_index():
     head = _make_doubly_linked_list([1, 2, 3, 4, 5])
     left, right = _as_two_heads(split_at(head, 2))
-    _assert_equal(_to_list_forward(left), [1, 2], 'Left side should contain nodes before split index.')
-    _assert_equal(_to_list_forward(right), [3, 4, 5], 'Right side should start at the split index.')
-    _assert_true(_tail_from_head(left).next is None, 'Left tail.next should be None after split.')
-    _assert_true(right.prev is None, 'Right head.prev should be None after split.')
+    _assert_equal(
+        _to_list_forward(left),
+        [1, 2],
+        "Left side should contain nodes before split index.",
+    )
+    _assert_equal(
+        _to_list_forward(right),
+        [3, 4, 5],
+        "Right side should start at the split index.",
+    )
+    _assert_true(
+        _tail_from_head(left).next is None, "Left tail.next should be None after split."
+    )
+    _assert_true(right.prev is None, "Right head.prev should be None after split.")
 
 
 def test_split_at_zero_index_returns_empty_left():
     head = _make_doubly_linked_list([7, 8, 9])
     left, right = _as_two_heads(split_at(head, 0))
-    _assert_true(left is None, 'split_at(..., 0) should return None as first head.')
-    _assert_equal(_to_list_forward(right), [7, 8, 9], 'Right list should contain all original nodes.')
-    _assert_true(right.prev is None, 'Right head.prev must be None after split at 0.')
+    _assert_true(left is None, "split_at(..., 0) should return None as first head.")
+    _assert_equal(
+        _to_list_forward(right),
+        [7, 8, 9],
+        "Right list should contain all original nodes.",
+    )
+    _assert_true(right.prev is None, "Right head.prev must be None after split at 0.")
 
 
 def test_split_at_length_returns_empty_right():
     head = _make_doubly_linked_list([1, 2, 3])
     left, right = _as_two_heads(split_at(head, 3))
-    _assert_equal(_to_list_forward(left), [1, 2, 3], 'Left should contain all nodes when index == length.')
-    _assert_true(right is None, 'Right should be None when index == length.')
+    _assert_equal(
+        _to_list_forward(left),
+        [1, 2, 3],
+        "Left should contain all nodes when index == length.",
+    )
+    _assert_true(right is None, "Right should be None when index == length.")
 
 
 def test_split_at_invalid_indexes_raise_errors():
     head = _make_doubly_linked_list([1, 2, 3])
-    _assert_raises(lambda: split_at(head, -1), 'split_at should raise for negative indexes.')
-    _assert_raises(lambda: split_at(head, 10), 'split_at should raise for indexes larger than list length.')
+    _assert_raises(
+        lambda: split_at(head, -1), "split_at should raise for negative indexes."
+    )
+    _assert_raises(
+        lambda: split_at(head, 10),
+        "split_at should raise for indexes larger than list length.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('split at middle index', test_split_at_middle_index),
-        ('split at zero index', test_split_at_zero_index_returns_empty_left),
-        ('split at length index', test_split_at_length_returns_empty_right),
-        ('invalid indexes raise', test_split_at_invalid_indexes_raise_errors),
+        ("split at middle index", test_split_at_middle_index),
+        ("split at zero index", test_split_at_zero_index_returns_empty_left),
+        ("split at length index", test_split_at_length_returns_empty_right),
+        ("invalid indexes raise", test_split_at_invalid_indexes_raise_errors),
     ]
     _run_all_tests(TEST_CASES)
