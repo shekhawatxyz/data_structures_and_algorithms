@@ -19,22 +19,22 @@ def merge_sorted(head1, head2):
     if head2 is None:
         return head1
     d = Node(0)
-    dummy = d
+    cursor = d
     while head1 is not None and head2 is not None:
         if head1.data <= head2.data:
-            dummy.next = head1
-            head1.prev = dummy
-            dummy = head1
+            cursor.next = head1
+            head1.prev = cursor
+            cursor = head1
             head1 = head1.next
         else:
-            dummy.next = head2
-            head2.prev = dummy
-            dummy = head2
+            cursor.next = head2
+            head2.prev = cursor
+            cursor = head2
             head2 = head2.next
     remaining = head1 or head2
     if remaining:
-        dummy.next = remaining
-        remaining.prev = dummy
+        cursor.next = remaining
+        remaining.prev = cursor
     d.next.prev = None
     return d.next
 

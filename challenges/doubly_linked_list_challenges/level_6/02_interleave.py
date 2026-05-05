@@ -5,14 +5,39 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **6.2** Write `interleave(head1, head2)` — weave two lists together, alternating nodes. All `prev` and `next` pointers must be correct.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def interleave(head1, head2):
-    raise NotImplementedError('Implement interleave(head1, head2).')
+    if head1 is None:
+        return head2
+    if head2 is None:
+        return head1
+    d = Node(0)
+    tail = d
+    while head1 and head2:
+        h1n = head1.next
+        h2n = head2.next
+        tail.next = head1
+        head1.prev = tail
+        tail = head1
+        head1 = h1n
+        tail.next = head2
+        head2.prev = tail
+        tail = head2
+        head2 = h2n
+    remaining = head1 or head2
+    if remaining:
+        tail.next = remaining
+        remaining.prev = tail
+    d.next.prev = None
+    return d.next
+
 
 #
 #
@@ -59,6 +84,7 @@ def interleave(head1, head2):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +126,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +143,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +186,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,41 +253,65 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_interleave_equal_length_lists():
     head1 = _make_doubly_linked_list([1, 2, 3])
-    head2 = _make_doubly_linked_list(['a', 'b', 'c'])
+    head2 = _make_doubly_linked_list(["a", "b", "c"])
     result = interleave(head1, head2)
-    _assert_equal(_to_list_forward(result), [1, 'a', 2, 'b', 3, 'c'], 'Equal-length lists should fully alternate.')
-    _assert_true(_verify_bidirectional_links(result), 'Links should remain valid after interleaving.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, "a", 2, "b", 3, "c"],
+        "Equal-length lists should fully alternate.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "Links should remain valid after interleaving.",
+    )
 
 
 def test_interleave_first_list_longer():
     head1 = _make_doubly_linked_list([1, 2, 3, 4])
-    head2 = _make_doubly_linked_list(['x', 'y'])
+    head2 = _make_doubly_linked_list(["x", "y"])
     result = interleave(head1, head2)
-    _assert_equal(_to_list_forward(result), [1, 'x', 2, 'y', 3, 4], 'Extra nodes from first list should remain at end.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, "x", 2, "y", 3, 4],
+        "Extra nodes from first list should remain at end.",
+    )
 
 
 def test_interleave_second_list_longer():
     head1 = _make_doubly_linked_list([1, 2])
-    head2 = _make_doubly_linked_list(['x', 'y', 'z'])
+    head2 = _make_doubly_linked_list(["x", "y", "z"])
     result = interleave(head1, head2)
-    _assert_equal(_to_list_forward(result), [1, 'x', 2, 'y', 'z'], 'Extra nodes from second list should remain at end.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, "x", 2, "y", "z"],
+        "Extra nodes from second list should remain at end.",
+    )
 
 
 def test_interleave_with_empty_inputs():
     only_second = _make_doubly_linked_list([9, 8])
-    _assert_equal(_to_list_forward(interleave(None, only_second)), [9, 8], 'interleave(None, B) should return B.')
+    _assert_equal(
+        _to_list_forward(interleave(None, only_second)),
+        [9, 8],
+        "interleave(None, B) should return B.",
+    )
 
     only_first = _make_doubly_linked_list([1, 2])
-    _assert_equal(_to_list_forward(interleave(only_first, None)), [1, 2], 'interleave(A, None) should return A.')
+    _assert_equal(
+        _to_list_forward(interleave(only_first, None)),
+        [1, 2],
+        "interleave(A, None) should return A.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('equal-length interleave', test_interleave_equal_length_lists),
-        ('first list longer', test_interleave_first_list_longer),
-        ('second list longer', test_interleave_second_list_longer),
-        ('empty input handling', test_interleave_with_empty_inputs),
+        ("equal-length interleave", test_interleave_equal_length_lists),
+        ("first list longer", test_interleave_first_list_longer),
+        ("second list longer", test_interleave_second_list_longer),
+        ("empty input handling", test_interleave_with_empty_inputs),
     ]
     _run_all_tests(TEST_CASES)
