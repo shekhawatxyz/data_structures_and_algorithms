@@ -123,8 +123,11 @@ def test_02_negative_edge():
 def test_03_negative_cycle_detected():
     # 3 vertices forming a negative cycle: 0->1 weight 1, 1->2 weight -1, 2->0 weight -1
     edges = [(0, 1, 1), (1, 2, -1), (2, 0, -1)]
-    result = bellman_ford(3, edges, 0)
-    # Should signal negative cycle: either return None, raise, or return special value
+    try:
+        result = bellman_ford(3, edges, 0)
+    except ValueError:
+        return
+    # Should signal negative cycle: either return None, raise ValueError, or return special value
     _assert_true(result is None or result == "NEGATIVE_CYCLE",
                  "Should detect negative cycle (return None or 'NEGATIVE_CYCLE').")
 
