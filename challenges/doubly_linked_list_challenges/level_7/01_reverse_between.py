@@ -5,14 +5,51 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **7.1** Write `reverse_between(head, left, right)` — reverse only the sublist from position `left` to `right` (1-indexed). All `prev` and `next` pointers in the entire list must remain consistent. This is the doubly linked version of the singly linked list challenge, and it's harder because there are more links to get right at the boundaries.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def reverse_between(head, left, right):
-    raise NotImplementedError('Implement reverse_between(head, left, right).')
+    if left > right or left < 1:
+        raise ValueError
+    if head is None:
+        return None
+    if left == right:
+        return head
+    counter = 1
+    cursor = head
+    a = b = c = d = None
+    while cursor:
+        next_node = cursor.next
+        if counter == right + 1:
+            break
+        elif left <= counter <= right:
+            if counter == left:
+                a = cursor.prev
+                b = cursor
+            elif counter == right:
+                c = cursor
+                d = cursor.next
+            cursor.next = cursor.prev
+            cursor.prev = next_node
+        cursor = next_node
+        counter += 1
+    if not c:
+        raise ValueError
+    b.next = d
+    c.prev = a
+    if a:
+        a.next = c
+    if d:
+        d.prev = b
+    if left == 1:
+        return c
+    return head
+
 
 #
 #
@@ -59,6 +96,7 @@ def reverse_between(head, left, right):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +138,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +155,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +198,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,40 +265,67 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_reverse_between_middle_segment():
     head = _make_doubly_linked_list([1, 2, 3, 4, 5])
     result = reverse_between(head, 2, 4)
-    _assert_equal(_to_list_forward(result), [1, 4, 3, 2, 5], 'Middle segment should reverse in place.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should stay valid after middle reversal.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 4, 3, 2, 5],
+        "Middle segment should reverse in place.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should stay valid after middle reversal.",
+    )
 
 
 def test_reverse_between_entire_list():
     head = _make_doubly_linked_list([1, 2, 3])
     result = reverse_between(head, 1, 3)
-    _assert_equal(_to_list_forward(result), [3, 2, 1], 'Full-range reverse_between should reverse the whole list.')
+    _assert_equal(
+        _to_list_forward(result),
+        [3, 2, 1],
+        "Full-range reverse_between should reverse the whole list.",
+    )
 
 
 def test_reverse_between_left_equals_right_noop():
     head = _make_doubly_linked_list([1, 2, 3])
     result = reverse_between(head, 2, 2)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'If left == right, list should remain unchanged.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3],
+        "If left == right, list should remain unchanged.",
+    )
 
 
 def test_reverse_between_handles_head_or_tail_boundaries():
     head1 = _make_doubly_linked_list([1, 2, 3, 4])
     result1 = reverse_between(head1, 1, 2)
-    _assert_equal(_to_list_forward(result1), [2, 1, 3, 4], 'Range starting at head should reverse correctly.')
+    _assert_equal(
+        _to_list_forward(result1),
+        [2, 1, 3, 4],
+        "Range starting at head should reverse correctly.",
+    )
 
     head2 = _make_doubly_linked_list([1, 2, 3, 4])
     result2 = reverse_between(head2, 3, 4)
-    _assert_equal(_to_list_forward(result2), [1, 2, 4, 3], 'Range ending at tail should reverse correctly.')
+    _assert_equal(
+        _to_list_forward(result2),
+        [1, 2, 4, 3],
+        "Range ending at tail should reverse correctly.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('reverse middle segment', test_reverse_between_middle_segment),
-        ('reverse entire list', test_reverse_between_entire_list),
-        ('left==right no-op', test_reverse_between_left_equals_right_noop),
-        ('head/tail boundary ranges', test_reverse_between_handles_head_or_tail_boundaries),
+        ("reverse middle segment", test_reverse_between_middle_segment),
+        ("reverse entire list", test_reverse_between_entire_list),
+        ("left==right no-op", test_reverse_between_left_equals_right_noop),
+        (
+            "head/tail boundary ranges",
+            test_reverse_between_handles_head_or_tail_boundaries,
+        ),
     ]
     _run_all_tests(TEST_CASES)
