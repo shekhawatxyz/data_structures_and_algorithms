@@ -5,14 +5,74 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **7.2** Write `sort_biotonic(head)` — a *bitonic* doubly linked list first increases and then decreases (e.g., `1 -> 3 -> 7 -> 5 -> 2`). Sort it in O(n) time. (Hint: think about splitting and merging.)
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
+def reverse(head):
+    if head is None:
+        return None
+    new_head = None
+    current = head
+    while current:
+        next_node = current.next
+        current.next = current.prev
+        current.prev = next_node
+        new_head = current
+        current = next_node
+    return new_head
+
+
+def merge_sorted(head1, head2):
+    if head1 is None:
+        return head2
+    if head2 is None:
+        return head1
+    d = Node(0)
+    cursor = d
+    while head1 is not None and head2 is not None:
+        if head1.data <= head2.data:
+            cursor.next = head1
+            head1.prev = cursor
+            cursor = head1
+            head1 = head1.next
+        else:
+            cursor.next = head2
+            head2.prev = cursor
+            cursor = head2
+            head2 = head2.next
+    remaining = head1 or head2
+    if remaining:
+        cursor.next = remaining
+        remaining.prev = cursor
+    d.next.prev = None
+    return d.next
+
+
 def sort_biotonic(head):
-    raise NotImplementedError('Implement sort_biotonic(head).')
+    if head is None:
+        return None
+    if head.next is None:
+        return head
+    head2 = None
+    current = head
+    highest_value = head.data
+    while current:
+        if current.data >= highest_value:
+            highest_value = current.data
+        else:
+            if current.prev:
+                current.prev.next = None
+            current.prev = None
+            break
+        current = current.next
+    head2 = reverse(current)
+    return merge_sorted(head, head2)
+
 
 #
 #
@@ -59,6 +119,7 @@ def sort_biotonic(head):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +161,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +178,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +221,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,37 +288,58 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_sort_biotonic_basic_peak_case():
     head = _make_doubly_linked_list([1, 3, 7, 5, 2])
     result = sort_biotonic(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 3, 5, 7], 'Bitonic sequence should be sorted ascending.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should remain valid after sort_biotonic.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3, 5, 7],
+        "Bitonic sequence should be sorted ascending.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should remain valid after sort_biotonic.",
+    )
 
 
 def test_sort_biotonic_already_increasing_list():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     result = sort_biotonic(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 3, 4], 'Already-increasing input should remain sorted.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3, 4],
+        "Already-increasing input should remain sorted.",
+    )
 
 
 def test_sort_biotonic_with_duplicates():
     head = _make_doubly_linked_list([1, 4, 6, 6, 5, 2])
     result = sort_biotonic(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 4, 5, 6, 6], 'sort_biotonic should handle duplicate values.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 4, 5, 6, 6],
+        "sort_biotonic should handle duplicate values.",
+    )
 
 
 def test_sort_biotonic_empty_and_single_node_inputs():
-    _assert_true(sort_biotonic(None) is None, 'sort_biotonic(None) should return None.')
+    _assert_true(sort_biotonic(None) is None, "sort_biotonic(None) should return None.")
     single = _make_doubly_linked_list([9])
     result = sort_biotonic(single)
-    _assert_equal(_to_list_forward(result), [9], 'Single-node input should remain unchanged.')
+    _assert_equal(
+        _to_list_forward(result), [9], "Single-node input should remain unchanged."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('basic bitonic sort case', test_sort_biotonic_basic_peak_case),
-        ('already increasing list', test_sort_biotonic_already_increasing_list),
-        ('bitonic with duplicates', test_sort_biotonic_with_duplicates),
-        ('empty/single input handling', test_sort_biotonic_empty_and_single_node_inputs),
+        ("basic bitonic sort case", test_sort_biotonic_basic_peak_case),
+        ("already increasing list", test_sort_biotonic_already_increasing_list),
+        ("bitonic with duplicates", test_sort_biotonic_with_duplicates),
+        (
+            "empty/single input handling",
+            test_sort_biotonic_empty_and_single_node_inputs,
+        ),
     ]
     _run_all_tests(TEST_CASES)
