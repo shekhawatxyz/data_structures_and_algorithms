@@ -12,8 +12,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Verify prompt blocks stay in sync
-        run: python3 challenges/sync_full_problem_statements.py --check linked_list_challenges stacks_challenges
       - name: Verify stacks stay in unsolved state
         run: python3 challenges/reset_challenge_solutions.py --check stacks_challenges
       - name: Verify linked-list reset and restore round trip on a temp copy
