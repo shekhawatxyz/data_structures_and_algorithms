@@ -5,14 +5,30 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **7.4** Write `remove_duplicates_unsorted(head)` — remove duplicate values from an unsorted doubly linked list, keeping the first occurrence. The `prev` pointer makes the unlinking easier than in the singly linked version — notice the difference.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def remove_duplicates_unsorted(head):
-    raise NotImplementedError('Implement remove_duplicates_unsorted(head).')
+    if head is None:
+        return head
+    unique = set()
+    cursor = head
+    while cursor:
+        cn = cursor.next
+        if cursor.data not in unique:
+            unique.add(cursor.data)
+        else:
+            cursor.prev.next = cursor.next
+            if cursor.next:
+                cursor.next.prev = cursor.prev
+        cursor = cn
+    return head
+
 
 #
 #
@@ -59,6 +75,7 @@ def remove_duplicates_unsorted(head):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +117,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +134,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +177,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,38 +244,57 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_remove_duplicates_unsorted_preserves_first_occurrences():
     head = _make_doubly_linked_list([3, 1, 3, 2, 1, 4, 2])
     result = remove_duplicates_unsorted(head)
     _assert_equal(
         _to_list_forward(result),
         [3, 1, 2, 4],
-        'remove_duplicates_unsorted should keep first occurrences in original order.',
+        "remove_duplicates_unsorted should keep first occurrences in original order.",
     )
-    _assert_true(_verify_bidirectional_links(result), 'Links should remain valid after duplicate removal.')
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "Links should remain valid after duplicate removal.",
+    )
 
 
 def test_remove_duplicates_unsorted_all_duplicates_case():
     head = _make_doubly_linked_list([5, 5, 5, 5])
     result = remove_duplicates_unsorted(head)
-    _assert_equal(_to_list_forward(result), [5], 'All duplicates should collapse to one node.')
+    _assert_equal(
+        _to_list_forward(result), [5], "All duplicates should collapse to one node."
+    )
 
 
 def test_remove_duplicates_unsorted_no_duplicates_case():
     head = _make_doubly_linked_list([1, 2, 3])
     result = remove_duplicates_unsorted(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'Already-unique list should remain unchanged.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3],
+        "Already-unique list should remain unchanged.",
+    )
 
 
 def test_remove_duplicates_unsorted_empty_input():
-    _assert_true(remove_duplicates_unsorted(None) is None, 'remove_duplicates_unsorted(None) should return None.')
+    _assert_true(
+        remove_duplicates_unsorted(None) is None,
+        "remove_duplicates_unsorted(None) should return None.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('preserves first occurrences', test_remove_duplicates_unsorted_preserves_first_occurrences),
-        ('all duplicates collapse', test_remove_duplicates_unsorted_all_duplicates_case),
-        ('unique list unchanged', test_remove_duplicates_unsorted_no_duplicates_case),
-        ('empty input returns None', test_remove_duplicates_unsorted_empty_input),
+        (
+            "preserves first occurrences",
+            test_remove_duplicates_unsorted_preserves_first_occurrences,
+        ),
+        (
+            "all duplicates collapse",
+            test_remove_duplicates_unsorted_all_duplicates_case,
+        ),
+        ("unique list unchanged", test_remove_duplicates_unsorted_no_duplicates_case),
+        ("empty input returns None", test_remove_duplicates_unsorted_empty_input),
     ]
     _run_all_tests(TEST_CASES)
