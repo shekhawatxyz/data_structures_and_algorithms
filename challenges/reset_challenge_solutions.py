@@ -12,9 +12,8 @@ import sys
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
 
+LEVEL_DIR_RE = re.compile(r"^level_(\d+)$")
 FILE_RE = re.compile(r"^(\d+)_.*\.py$")
 PROMPT_MARKER_RE = re.compile(r"^# Complete Exact Problem Statement \(from .+\):$")
 FILLER_LINE_RE = re.compile(r"^#$")
@@ -257,10 +256,54 @@ def extract_solution_lines(file_path: Path) -> list[str]:
 
 def challenge_files(challenge_dir: Path) -> list[Path]:
     result: list[Path] = []
-    for path in sorted(challenge_dir.glob("level_*/*.py")):
-        if FILE_RE.match(path.name):
-            result.append(path)
+
+    for level_dir in sorted(challenge_dir.iterdir()):
+        if not level_dir.is_dir() or not LEVEL_DIR_RE.match(level_dir.name):
+            continue
+        for path in sorted(level_dir.glob("*.py")):
+            if FILE_RE.match(path.name):
+                result.append(path)
+
     return result
+
+
+def discover_challenge_dirs(base_dir: Path) -> list[Path]:
+    result = []
+
+    for entry in sorted(base_dir.iterdir()):
+        if not entry.is_dir():
+            continue
+
+        markdown_files = sorted(entry.glob("*challenges.md"))
+        if len(markdown_files) != 1:
+            continue
+
+        if not any(
+            child.is_dir() and LEVEL_DIR_RE.match(child.name) for child in entry.iterdir()
+        ):
+            continue
+
+        result.append(entry)
+
+    return result
+
+
+def resolve_target_dirs(base_dir: Path, targets: list[str]) -> list[Path]:
+    if not targets:
+        return discover_challenge_dirs(base_dir)
+
+    resolved = []
+    for target in targets:
+        path = (
+            (base_dir / target).resolve()
+            if not Path(target).is_absolute()
+            else Path(target)
+        )
+        if not path.is_dir():
+            raise FileNotFoundError(f"Challenge directory not found: {target}")
+        resolved.append(path)
+
+    return resolved
 
 
 def plan_reset_challenge_dir(challenge_dir: Path) -> list[tuple[Path, str]]:
@@ -335,17 +378,7 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        from sync_full_problem_statements import (
-            discover_challenge_dirs,
-            resolve_target_dirs,
-        )
-
-        base_dir = Path(__file__).resolve().parent
-        target_dirs = (
-            resolve_target_dirs(base_dir, args.targets)
-            if args.targets
-            else discover_challenge_dirs(base_dir)
-        )
+        target_dirs = resolve_target_dirs(SCRIPT_DIR, args.targets)
 
         planned_by_dir: dict[Path, list[tuple[Path, str]]] = {}
         for challenge_dir in target_dirs:
