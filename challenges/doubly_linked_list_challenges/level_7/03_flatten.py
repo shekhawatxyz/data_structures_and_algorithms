@@ -15,6 +15,7 @@
 #         self.child = child
 # ```
 
+
 class Node:
     def __init__(self, data, prev=None, next=None, child=None):
         self.data = data
@@ -22,8 +23,31 @@ class Node:
         self.next = next
         self.child = child
 
+
 def flatten(head):
-    raise NotImplementedError('Implement flatten(head).')
+    _flatten_helper(head)
+    return head
+
+
+def _flatten_helper(head):
+    if head is None:
+        return None
+    cursor = head
+    last = None
+    while cursor:
+        if cursor.child:
+            hn = cursor.next
+            tail = _flatten_helper(cursor.child)
+            cursor.next = cursor.child
+            cursor.child.prev = cursor
+            tail.next = hn
+            if hn:
+                hn.prev = tail
+            cursor.child = None
+        last = cursor
+        cursor = cursor.next
+    return last
+
 
 #
 #
@@ -70,6 +94,7 @@ def flatten(head):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -111,7 +136,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -128,7 +153,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -171,7 +196,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -236,15 +263,20 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def _assert_no_child_links(head):
     current = head
     steps = 0
     while current is not None:
-        _assert_true(current.child is None, 'All child pointers should be None after flattening.')
+        _assert_true(
+            current.child is None, "All child pointers should be None after flattening."
+        )
         current = current.next
         steps += 1
         if steps > 2000:
-            raise AssertionError('Traversal exceeded safety limit while checking child pointers.')
+            raise AssertionError(
+                "Traversal exceeded safety limit while checking child pointers."
+            )
 
 
 def _build_multilevel_example():
@@ -282,17 +314,27 @@ def test_flatten_multilevel_structure_depth_first_order():
     _assert_equal(
         _to_list_forward(result),
         [1, 2, 7, 8, 11, 12, 3, 9, 10],
-        'flatten should splice child lists immediately after parent nodes in depth-first order.',
+        "flatten should splice child lists immediately after parent nodes in depth-first order.",
     )
-    _assert_true(_verify_bidirectional_links(result), 'All prev/next links should remain consistent after flatten.')
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All prev/next links should remain consistent after flatten.",
+    )
     _assert_no_child_links(result)
 
 
 def test_flatten_already_flat_list_unchanged():
     head = _make_doubly_linked_list([1, 2, 3])
     result = flatten(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'Flattening a flat list should keep order unchanged.')
-    _assert_true(_verify_bidirectional_links(result), 'Flat list links should remain valid after flatten.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3],
+        "Flattening a flat list should keep order unchanged.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "Flat list links should remain valid after flatten.",
+    )
 
 
 def test_flatten_single_node_with_child():
@@ -303,20 +345,30 @@ def test_flatten_single_node_with_child():
     head.child = child1
 
     result = flatten(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'Single parent with child chain should flatten directly after parent.')
-    _assert_true(_verify_bidirectional_links(result), 'Links should remain valid for flattened single-parent case.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3],
+        "Single parent with child chain should flatten directly after parent.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "Links should remain valid for flattened single-parent case.",
+    )
     _assert_no_child_links(result)
 
 
 def test_flatten_empty_input_returns_none():
-    _assert_true(flatten(None) is None, 'flatten(None) should return None.')
+    _assert_true(flatten(None) is None, "flatten(None) should return None.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('multilevel depth-first flatten', test_flatten_multilevel_structure_depth_first_order),
-        ('already-flat list unchanged', test_flatten_already_flat_list_unchanged),
-        ('single parent with child chain', test_flatten_single_node_with_child),
-        ('empty input returns None', test_flatten_empty_input_returns_none),
+        (
+            "multilevel depth-first flatten",
+            test_flatten_multilevel_structure_depth_first_order,
+        ),
+        ("already-flat list unchanged", test_flatten_already_flat_list_unchanged),
+        ("single parent with child chain", test_flatten_single_node_with_child),
+        ("empty input returns None", test_flatten_empty_input_returns_none),
     ]
     _run_all_tests(TEST_CASES)
