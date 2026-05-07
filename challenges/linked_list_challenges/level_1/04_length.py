@@ -4,6 +4,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **1.4** Write a function `length(head)` that returns the number of nodes in the list.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -11,9 +12,14 @@ class Node:
 
 
 def length(head):
-    raise NotImplementedError('Implement length(head).')
+    n = 0
+    cursor = head
+    while cursor:
+        n += 1
+        cursor = cursor.next
+    return n
 
-#
+
 #
 #
 #

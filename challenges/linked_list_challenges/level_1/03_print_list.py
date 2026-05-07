@@ -16,7 +16,16 @@ class Node:
 
 
 def print_list(head):
-    raise NotImplementedError('Implement print_list(head).')
+    if head is None:
+        return None
+    s = f"{head.data}"
+    head = head.next
+    while head:
+        s = s + f" -> {head.data}"
+        head = head.next
+    s = s + " -> None"
+    print(s)
+
 
 #
 #

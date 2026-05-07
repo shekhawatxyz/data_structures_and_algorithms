@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **1.2** Write a function `to_list(head)` that takes the head of a linked list and returns a Python list of its values.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,12 @@ class Node:
 
 
 def to_list(head):
-    raise NotImplementedError('Implement to_list(head).')
+    v = []
+    while head:
+        v.append(head.data)
+        head = head.next
+    return v
+
 
 #
 #
