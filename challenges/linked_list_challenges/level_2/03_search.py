@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **2.3** Write `search(head, value)` — returns `True` if the value is in the list, `False` otherwise.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,13 @@ class Node:
 
 
 def search(head, value):
-    raise NotImplementedError('Implement search(head, value).')
+    cursor = head
+    while cursor:
+        if cursor.data == value:
+            return True
+        cursor = cursor.next
+    return False
+
 
 #
 #

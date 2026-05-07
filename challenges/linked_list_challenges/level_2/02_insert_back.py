@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **2.2** Write `insert_back(head, value)` — returns the head. Think about the edge case where the list is empty.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,15 @@ class Node:
 
 
 def insert_back(head, value):
-    raise NotImplementedError('Implement insert_back(head, value).')
+    new_tail = Node(value)
+    if head is None:
+        return new_tail
+    cursor = head
+    while cursor.next:
+        cursor = cursor.next
+    cursor.next = new_tail
+    return head
+
 
 #
 #

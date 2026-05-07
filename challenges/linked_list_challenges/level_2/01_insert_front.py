@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **2.1** Write `insert_front(head, value)` — returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,10 @@ class Node:
 
 
 def insert_front(head, value):
-    raise NotImplementedError('Implement insert_front(head, value).')
+    new_head = Node(value)
+    new_head.next = head
+    return new_head
+
 
 #
 #
