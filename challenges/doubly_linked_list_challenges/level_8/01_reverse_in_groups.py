@@ -5,14 +5,42 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **8.1** Write `reverse_in_groups(head, k)` — reverse in groups of `k`, maintaining all `prev` pointers. The boundary stitching between groups is the hard part: each reversed group's new tail must connect forward to the next group's new head, and all `prev` links must point back correctly.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
 def reverse_in_groups(head, k):
-    raise NotImplementedError('Implement reverse_in_groups(head, k).')
+    cursor = head
+    if k < 1:
+        raise ValueError
+    group_head = None
+    new_head = None
+    prev_group_tail = None
+    while cursor:
+        counter = 0
+        group_tail = cursor
+        while counter < k and cursor is not None:
+            cn = cursor.next
+            if counter == 0:
+                cursor.prev = None
+            cursor.next = cursor.prev
+            cursor.prev = cn
+            group_head = cursor
+            counter += 1
+            cursor = cn
+        if new_head is None:
+            new_head = group_head
+            group_head.prev = None
+        else:
+            group_head.prev = prev_group_tail
+            prev_group_tail.next = group_head
+        prev_group_tail = group_tail
+    return new_head
+
 
 #
 #
@@ -59,6 +87,7 @@ def reverse_in_groups(head, k):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +129,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +146,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +189,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,36 +256,55 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_reverse_in_groups_k_three_example():
     head = _make_doubly_linked_list([1, 2, 3, 4, 5])
     result = reverse_in_groups(head, 3)
-    _assert_equal(_to_list_forward(result), [3, 2, 1, 5, 4], 'k=3 should reverse each group and leftover group.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should remain valid after grouped reversal.')
+    _assert_equal(
+        _to_list_forward(result),
+        [3, 2, 1, 5, 4],
+        "k=3 should reverse each group and leftover group.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should remain valid after grouped reversal.",
+    )
 
 
 def test_reverse_in_groups_k_one_no_change():
     head = _make_doubly_linked_list([1, 2, 3])
     result = reverse_in_groups(head, 1)
-    _assert_equal(_to_list_forward(result), [1, 2, 3], 'k=1 should leave list unchanged.')
+    _assert_equal(
+        _to_list_forward(result), [1, 2, 3], "k=1 should leave list unchanged."
+    )
 
 
 def test_reverse_in_groups_k_greater_than_length():
     head = _make_doubly_linked_list([1, 2, 3])
     result = reverse_in_groups(head, 10)
-    _assert_equal(_to_list_forward(result), [3, 2, 1], 'k>length should reverse full list as one group.')
+    _assert_equal(
+        _to_list_forward(result),
+        [3, 2, 1],
+        "k>length should reverse full list as one group.",
+    )
 
 
 def test_reverse_in_groups_invalid_k_raises_error():
     head = _make_doubly_linked_list([1, 2, 3])
-    _assert_raises(lambda: reverse_in_groups(head, 0), 'reverse_in_groups should raise for k=0.')
-    _assert_raises(lambda: reverse_in_groups(head, -2), 'reverse_in_groups should raise for negative k.')
+    _assert_raises(
+        lambda: reverse_in_groups(head, 0), "reverse_in_groups should raise for k=0."
+    )
+    _assert_raises(
+        lambda: reverse_in_groups(head, -2),
+        "reverse_in_groups should raise for negative k.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('k=3 grouped reversal', test_reverse_in_groups_k_three_example),
-        ('k=1 no change', test_reverse_in_groups_k_one_no_change),
-        ('k>length full reversal', test_reverse_in_groups_k_greater_than_length),
-        ('invalid k raises error', test_reverse_in_groups_invalid_k_raises_error),
+        ("k=3 grouped reversal", test_reverse_in_groups_k_three_example),
+        ("k=1 no change", test_reverse_in_groups_k_one_no_change),
+        ("k>length full reversal", test_reverse_in_groups_k_greater_than_length),
+        ("invalid k raises error", test_reverse_in_groups_invalid_k_raises_error),
     ]
     _run_all_tests(TEST_CASES)
