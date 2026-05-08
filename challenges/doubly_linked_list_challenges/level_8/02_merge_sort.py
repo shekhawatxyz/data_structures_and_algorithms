@@ -5,14 +5,64 @@
 # Complete Exact Problem Statement (from doubly-linked-list-challenges.md):
 # **8.2** Write `merge_sort(head)` — sort a doubly linked list using merge sort in O(n log n) time. You've written `find_middle`, `split`, and `merge_sorted` in earlier problems. Now combine them, keeping `prev` pointers consistent throughout.
 
+
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
 
+
+def merge_sorted(head1, head2):
+    if head1 is None:
+        return head2
+    if head2 is None:
+        return head1
+    d = Node(0)
+    cursor = d
+    while head1 is not None and head2 is not None:
+        if head1.data <= head2.data:
+            cursor.next = head1
+            head1.prev = cursor
+            cursor = head1
+            head1 = head1.next
+        else:
+            cursor.next = head2
+            head2.prev = cursor
+            cursor = head2
+            head2 = head2.next
+    remaining = head1 or head2
+    if remaining:
+        cursor.next = remaining
+        remaining.prev = cursor
+    d.next.prev = None
+    return d.next
+
+
+def split_at_middle(head):
+    if head is None:
+        return None, None
+    if head.next is None:
+        return head, None
+    slow = head
+    fast = head.next
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    second = slow.next
+    slow.next = None
+    second.prev = None
+    return head, second
+
+
 def merge_sort(head):
-    raise NotImplementedError('Implement merge_sort(head).')
+    if head is None or head.next is None:
+        return head
+    left, right = split_at_middle(head)
+    left_side = merge_sort(left)
+    right_side = merge_sort(right)
+    return merge_sorted(left_side, right_side)
+
 
 #
 #
@@ -59,6 +109,7 @@ def merge_sort(head):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -100,7 +151,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -117,7 +168,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -160,7 +211,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -225,37 +278,55 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def test_merge_sort_unsorted_input():
     head = _make_doubly_linked_list([4, 2, 1, 3])
     result = merge_sort(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 3, 4], 'merge_sort should sort an unsorted list ascending.')
-    _assert_true(_verify_bidirectional_links(result), 'All links should remain valid after merge_sort.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3, 4],
+        "merge_sort should sort an unsorted list ascending.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(result),
+        "All links should remain valid after merge_sort.",
+    )
 
 
 def test_merge_sort_already_sorted_input():
     head = _make_doubly_linked_list([1, 2, 3, 4])
     result = merge_sort(head)
-    _assert_equal(_to_list_forward(result), [1, 2, 3, 4], 'Already sorted input should remain sorted.')
+    _assert_equal(
+        _to_list_forward(result),
+        [1, 2, 3, 4],
+        "Already sorted input should remain sorted.",
+    )
 
 
 def test_merge_sort_with_duplicates_and_negatives():
     head = _make_doubly_linked_list([3, -1, 2, 3, 0, -1])
     result = merge_sort(head)
-    _assert_equal(_to_list_forward(result), [-1, -1, 0, 2, 3, 3], 'merge_sort should handle duplicates/negatives.')
+    _assert_equal(
+        _to_list_forward(result),
+        [-1, -1, 0, 2, 3, 3],
+        "merge_sort should handle duplicates/negatives.",
+    )
 
 
 def test_merge_sort_empty_and_single_node_cases():
-    _assert_true(merge_sort(None) is None, 'merge_sort(None) should return None.')
+    _assert_true(merge_sort(None) is None, "merge_sort(None) should return None.")
     single = _make_doubly_linked_list([42])
     result = merge_sort(single)
-    _assert_equal(_to_list_forward(result), [42], 'Single-node list should remain unchanged.')
+    _assert_equal(
+        _to_list_forward(result), [42], "Single-node list should remain unchanged."
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('sort unsorted input', test_merge_sort_unsorted_input),
-        ('already sorted input', test_merge_sort_already_sorted_input),
-        ('duplicates and negatives', test_merge_sort_with_duplicates_and_negatives),
-        ('empty/single cases', test_merge_sort_empty_and_single_node_cases),
+        ("sort unsorted input", test_merge_sort_unsorted_input),
+        ("already sorted input", test_merge_sort_already_sorted_input),
+        ("duplicates and negatives", test_merge_sort_with_duplicates_and_negatives),
+        ("empty/single cases", test_merge_sort_empty_and_single_node_cases),
     ]
     _run_all_tests(TEST_CASES)
