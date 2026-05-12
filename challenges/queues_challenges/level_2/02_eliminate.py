@@ -15,9 +15,23 @@
 # eliminate(["A", "B", "C", "D", "E"], 3)  # "D"
 # eliminate(["A", "B", "C"], 1)            # "C"
 # ```
+from collections import deque
+
 
 def eliminate(names, k):
-    raise NotImplementedError("Implement eliminate(names, k).")
+    if len(names) < 1 or k < 1:
+        raise ValueError
+    q = deque(names)
+    count = 1
+    while len(q) != 1:
+        temp = q.popleft()
+        if count != k:
+            q.append(temp)
+            count += 1
+        else:
+            count = 1
+    return q[0]
+
 
 #
 #
@@ -113,20 +127,33 @@ def _run_all_tests(test_cases):
 
 
 def test_samples():
-    _assert_equal(eliminate(["A", "B", "C", "D", "E"], 3), "D",
-                  "sample with k=3 should leave D.")
-    _assert_equal(eliminate(["A", "B", "C"], 1), "C",
-                  "k=1 should eliminate from front until the last original name.")
+    _assert_equal(
+        eliminate(["A", "B", "C", "D", "E"], 3), "D", "sample with k=3 should leave D."
+    )
+    _assert_equal(
+        eliminate(["A", "B", "C"], 1),
+        "C",
+        "k=1 should eliminate from front until the last original name.",
+    )
 
 
 def test_single_person():
-    _assert_equal(eliminate(["Only"], 5), "Only",
-                  "single participant should survive regardless of k.")
+    _assert_equal(
+        eliminate(["Only"], 5),
+        "Only",
+        "single participant should survive regardless of k.",
+    )
 
 
 def test_invalid_input_raises():
-    _assert_raises(ValueError, lambda: eliminate([], 2), "empty names should raise ValueError.")
-    _assert_raises(ValueError, lambda: eliminate(["A"], 0), "non-positive k should raise ValueError.")
+    _assert_raises(
+        ValueError, lambda: eliminate([], 2), "empty names should raise ValueError."
+    )
+    _assert_raises(
+        ValueError,
+        lambda: eliminate(["A"], 0),
+        "non-positive k should raise ValueError.",
+    )
 
 
 if __name__ == "__main__":
