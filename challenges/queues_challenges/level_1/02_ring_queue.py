@@ -18,24 +18,41 @@
 # q.dequeue()        # 2
 # ```
 
+
 class RingQueue:
     def __init__(self, capacity):
-        raise NotImplementedError("Implement RingQueue.__init__(capacity).")
+        self.lst = [None] * capacity
+        self.capacity = capacity
+        self.count = 0
+        self.head = 0
+        self.tail = 0
 
     def enqueue(self, x):
-        raise NotImplementedError("Implement RingQueue.enqueue(x).")
+        if self.__len__() == self.capacity:
+            raise OverflowError("queue is at capacity")
+        self.lst[self.tail] = x
+        self.tail = (self.tail + 1) % self.capacity
+        self.count += 1
 
     def dequeue(self):
-        raise NotImplementedError("Implement RingQueue.dequeue().")
+        if self.is_empty():
+            raise IndexError("queue is empty")
+        return_val = self.lst[self.head]
+        self.head = (self.head + 1) % self.capacity
+        self.count -= 1
+        return return_val
 
     def peek(self):
-        raise NotImplementedError("Implement RingQueue.peek().")
+        if self.is_empty():
+            raise IndexError("queue is empty")
+        return self.lst[self.head]
 
     def is_empty(self):
-        raise NotImplementedError("Implement RingQueue.is_empty().")
+        return self.__len__() == 0
 
     def __len__(self):
-        raise NotImplementedError("Implement RingQueue.__len__().")
+        return self.count
+
 
 #
 #
@@ -102,19 +119,27 @@ def test_wraparound_preserves_fifo():
     q.enqueue(3)
     _assert_equal(q.dequeue(), 1, "first item should leave first.")
     q.enqueue(4)
-    _assert_equal([q.dequeue(), q.dequeue(), q.dequeue()], [2, 3, 4],
-                  "queue should preserve FIFO order across wraparound.")
+    _assert_equal(
+        [q.dequeue(), q.dequeue(), q.dequeue()],
+        [2, 3, 4],
+        "queue should preserve FIFO order across wraparound.",
+    )
 
 
 def test_full_and_empty_raise():
     q = RingQueue(2)
     q.enqueue("a")
     q.enqueue("b")
-    _assert_raises(OverflowError, lambda: q.enqueue("c"),
-                   "enqueue on a full queue should raise OverflowError.")
+    _assert_raises(
+        OverflowError,
+        lambda: q.enqueue("c"),
+        "enqueue on a full queue should raise OverflowError.",
+    )
     _assert_equal(q.dequeue(), "a", "first item should still be present.")
     _assert_equal(q.dequeue(), "b", "second item should still be present.")
-    _assert_raises(IndexError, q.dequeue, "dequeue on empty queue should raise IndexError.")
+    _assert_raises(
+        IndexError, q.dequeue, "dequeue on empty queue should raise IndexError."
+    )
     _assert_raises(IndexError, q.peek, "peek on empty queue should raise IndexError.")
 
 
