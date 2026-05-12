@@ -22,24 +22,30 @@
 # len(q)         # 2
 # ```
 
+
 class ListQueue:
     def __init__(self):
-        raise NotImplementedError("Implement ListQueue.__init__().")
+        self.lst = []
 
     def enqueue(self, x):
-        raise NotImplementedError("Implement ListQueue.enqueue(x).")
+        self.lst.append(x)
 
     def dequeue(self):
-        raise NotImplementedError("Implement ListQueue.dequeue().")
+        if self.is_empty():
+            raise IndexError
+        return self.lst.pop(0)
 
     def peek(self):
-        raise NotImplementedError("Implement ListQueue.peek().")
+        if self.is_empty():
+            raise IndexError("queue is empty")
+        return self.lst[0]
 
     def is_empty(self):
-        raise NotImplementedError("Implement ListQueue.is_empty().")
+        return self.__len__() == 0
 
     def __len__(self):
-        raise NotImplementedError("Implement ListQueue.__len__().")
+        return len(self.lst)
+
 
 #
 #
@@ -121,7 +127,9 @@ def test_empty_state_transitions():
 
 def test_empty_operations_raise():
     q = ListQueue()
-    _assert_raises(IndexError, q.dequeue, "dequeue on empty queue should raise IndexError.")
+    _assert_raises(
+        IndexError, q.dequeue, "dequeue on empty queue should raise IndexError."
+    )
     _assert_raises(IndexError, q.peek, "peek on empty queue should raise IndexError.")
 
 
