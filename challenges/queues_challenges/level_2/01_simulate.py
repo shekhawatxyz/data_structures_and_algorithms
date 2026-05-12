@@ -19,11 +19,25 @@
 # ```
 # simulate(["E 1", "E 2", "P", "D", "P"])  # [1, 1, 2]
 # ```
+from collections import deque
+
 
 def simulate(commands):
-    raise NotImplementedError("Implement simulate(commands).")
+    q = deque()
+    output_list = []
+    for c in commands:
+        parts = c.split()
+        op = parts[0]
+        if op == "E":
+            value = int(parts[1])
+            q.append(value)
+        elif op == "D":
+            output_list.append(q.popleft())
+        elif op == "P":
+            output_list.append(q[0])
+    return output_list
 
-#
+
 #
 #
 #
@@ -102,19 +116,28 @@ def _run_all_tests(test_cases):
 
 
 def test_sample_commands():
-    _assert_equal(simulate(["E 1", "E 2", "P", "D", "P"]), [1, 1, 2],
-                  "sample command stream should match expected output.")
+    _assert_equal(
+        simulate(["E 1", "E 2", "P", "D", "P"]),
+        [1, 1, 2],
+        "sample command stream should match expected output.",
+    )
 
 
 def test_multiple_dequeues_and_peeks():
     commands = ["E 5", "E -1", "D", "E 7", "P", "D", "D"]
-    _assert_equal(simulate(commands), [5, -1, -1, 7],
-                  "results should appear only for D and P commands.")
+    _assert_equal(
+        simulate(commands),
+        [5, -1, -1, 7],
+        "results should appear only for D and P commands.",
+    )
 
 
 def test_no_result_commands():
-    _assert_equal(simulate(["E 10", "E 20"]), [],
-                  "enqueue-only command stream should produce no results.")
+    _assert_equal(
+        simulate(["E 10", "E 20"]),
+        [],
+        "enqueue-only command stream should produce no results.",
+    )
 
 
 if __name__ == "__main__":
