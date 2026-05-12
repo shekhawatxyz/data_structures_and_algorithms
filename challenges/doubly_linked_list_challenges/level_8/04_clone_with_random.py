@@ -15,6 +15,7 @@
 #         self.random = random
 # ```
 
+
 class Node:
     def __init__(self, data, prev=None, next=None, random=None):
         self.data = data
@@ -22,8 +23,27 @@ class Node:
         self.next = next
         self.random = random
 
+
 def clone_with_random(head):
-    raise NotImplementedError('Implement clone_with_random(head).')
+    if head is None:
+        return head
+    cache = {}
+    cursor = head
+    while cursor:
+        new_cursor = Node(cursor.data)
+        cache[cursor] = new_cursor
+        cursor = cursor.next
+
+    cursor = head
+    while cursor:
+        clone = cache[cursor]
+        clone.prev = cache[cursor.prev] if cursor.prev else None
+        clone.next = cache[cursor.next] if cursor.next else None
+        clone.random = cache[cursor.random] if cursor.random else None
+        cursor = cursor.next
+
+    return cache[head]
+
 
 #
 #
@@ -70,6 +90,7 @@ def clone_with_random(head):
 #
 #
 #
+
 
 def _make_doubly_linked_list(values):
     head = None
@@ -111,7 +132,7 @@ def _to_list_forward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Forward traversal exceeded safety limit; possible cycle or broken links.'
+                "Forward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -128,7 +149,7 @@ def _to_list_backward(head, max_nodes=2000):
         steps += 1
         if steps > max_nodes:
             raise AssertionError(
-                'Backward traversal exceeded safety limit; possible cycle or broken links.'
+                "Backward traversal exceeded safety limit; possible cycle or broken links."
             )
 
     return values
@@ -171,7 +192,9 @@ def _list_nodes(head, max_nodes=2000):
         current = current.next
         steps += 1
         if steps > max_nodes:
-            raise AssertionError('Node traversal exceeded safety limit; possible cycle.')
+            raise AssertionError(
+                "Node traversal exceeded safety limit; possible cycle."
+            )
 
     return nodes
 
@@ -236,6 +259,7 @@ def _run_all_tests(test_cases):
     if passed != total:
         raise SystemExit(1)
 
+
 def _build_random_list(values, random_targets):
     if not values:
         return None, []
@@ -253,15 +277,17 @@ def _build_random_list(values, random_targets):
 
 
 def test_clone_with_random_empty_input_returns_none():
-    _assert_true(clone_with_random(None) is None, 'clone_with_random(None) should return None.')
+    _assert_true(
+        clone_with_random(None) is None, "clone_with_random(None) should return None."
+    )
 
 
 def test_clone_with_random_copies_values_and_structure():
     head, original_nodes = _build_random_list(
         [1, 2, 3],
         {
-            0: 2,   # 1.random -> 3
-            1: 0,   # 2.random -> 1
+            0: 2,  # 1.random -> 3
+            1: 0,  # 2.random -> 1
             2: None,
         },
     )
@@ -269,11 +295,21 @@ def test_clone_with_random_copies_values_and_structure():
     cloned_head = clone_with_random(head)
     cloned_nodes = _list_nodes(cloned_head)
 
-    _assert_equal([n.data for n in cloned_nodes], [1, 2, 3], 'Cloned list values should match original values.')
-    _assert_true(_verify_bidirectional_links(cloned_head), 'Cloned next/prev links should be consistent.')
+    _assert_equal(
+        [n.data for n in cloned_nodes],
+        [1, 2, 3],
+        "Cloned list values should match original values.",
+    )
+    _assert_true(
+        _verify_bidirectional_links(cloned_head),
+        "Cloned next/prev links should be consistent.",
+    )
 
     for original, cloned in zip(original_nodes, cloned_nodes):
-        _assert_true(original is not cloned, 'Each cloned node must be a distinct object from original node.')
+        _assert_true(
+            original is not cloned,
+            "Each cloned node must be a distinct object from original node.",
+        )
 
     original_index = {node: i for i, node in enumerate(original_nodes)}
     cloned_index = {node: i for i, node in enumerate(cloned_nodes)}
@@ -283,21 +319,24 @@ def test_clone_with_random_copies_values_and_structure():
         cloned_target = cloned_node.random
 
         if original_target is None:
-            _assert_true(cloned_target is None, 'Cloned random pointer should be None when original random is None.')
+            _assert_true(
+                cloned_target is None,
+                "Cloned random pointer should be None when original random is None.",
+            )
         else:
             expected_index = original_index[original_target]
             _assert_true(
                 cloned_target in cloned_index,
-                'Cloned random pointers must point to cloned nodes, not original nodes.',
+                "Cloned random pointers must point to cloned nodes, not original nodes.",
             )
             _assert_equal(
                 cloned_index[cloned_target],
                 expected_index,
-                'Cloned random pointer should point to clone of the original random target.',
+                "Cloned random pointer should point to clone of the original random target.",
             )
             _assert_true(
                 cloned_target is not original_target,
-                'Cloned random target must not reference the original node.',
+                "Cloned random target must not reference the original node.",
             )
 
 
@@ -310,8 +349,15 @@ def test_clone_with_random_is_deep_copy_independent_of_original_mutations():
     original_nodes[0].random = None
     original_nodes[0].next = None
 
-    _assert_equal([n.data for n in cloned_nodes], [5, 6], 'Clone data should not change when original data mutates.')
-    _assert_true(cloned_nodes[0].random is cloned_nodes[1], 'Clone random links should remain independent.')
+    _assert_equal(
+        [n.data for n in cloned_nodes],
+        [5, 6],
+        "Clone data should not change when original data mutates.",
+    )
+    _assert_true(
+        cloned_nodes[0].random is cloned_nodes[1],
+        "Clone random links should remain independent.",
+    )
 
 
 def test_clone_with_random_single_node_self_random():
@@ -319,16 +365,30 @@ def test_clone_with_random_single_node_self_random():
     head.random = head
 
     cloned_head = clone_with_random(head)
-    _assert_true(cloned_head is not head, 'Cloned single node should be a different object.')
-    _assert_equal(cloned_head.data, 42, 'Cloned single node should copy data value.')
-    _assert_true(cloned_head.random is cloned_head, 'Self-random should point to cloned self, not original.')
+    _assert_true(
+        cloned_head is not head, "Cloned single node should be a different object."
+    )
+    _assert_equal(cloned_head.data, 42, "Cloned single node should copy data value.")
+    _assert_true(
+        cloned_head.random is cloned_head,
+        "Self-random should point to cloned self, not original.",
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('empty input returns None', test_clone_with_random_empty_input_returns_none),
-        ('copies values/structure/random mapping', test_clone_with_random_copies_values_and_structure),
-        ('deep copy independence', test_clone_with_random_is_deep_copy_independent_of_original_mutations),
-        ('single-node self-random clone', test_clone_with_random_single_node_self_random),
+        ("empty input returns None", test_clone_with_random_empty_input_returns_none),
+        (
+            "copies values/structure/random mapping",
+            test_clone_with_random_copies_values_and_structure,
+        ),
+        (
+            "deep copy independence",
+            test_clone_with_random_is_deep_copy_independent_of_original_mutations,
+        ),
+        (
+            "single-node self-random clone",
+            test_clone_with_random_single_node_self_random,
+        ),
     ]
     _run_all_tests(TEST_CASES)
