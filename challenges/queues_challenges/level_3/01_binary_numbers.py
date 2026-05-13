@@ -16,9 +16,27 @@
 # ```
 #
 # The intended technique uses a queue. Don't just call `bin(i)` in a loop.
+from collections import deque
+
 
 def binary_numbers(n):
-    raise NotImplementedError("Implement binary_numbers(n).")
+    if n == 0:
+        return []
+    if n < 1:
+        raise ValueError
+    result = []
+    queue = deque(["1"])
+    count = 0
+    for _ in range(n):
+        s = queue.popleft()
+        result.append(s)
+        count += 1
+        child_1 = s + "0"
+        child_2 = s + "1"
+        queue.append(child_1)
+        queue.append(child_2)
+    return result
+
 
 #
 #
@@ -114,8 +132,11 @@ def _run_all_tests(test_cases):
 
 
 def test_sample():
-    _assert_equal(binary_numbers(5), ["1", "10", "11", "100", "101"],
-                  "first five binary numbers should match the sample.")
+    _assert_equal(
+        binary_numbers(5),
+        ["1", "10", "11", "100", "101"],
+        "first five binary numbers should match the sample.",
+    )
 
 
 def test_boundary_zero():
@@ -128,7 +149,9 @@ def test_larger_prefix():
 
 
 def test_negative_raises():
-    _assert_raises(ValueError, lambda: binary_numbers(-1), "negative n should raise ValueError.")
+    _assert_raises(
+        ValueError, lambda: binary_numbers(-1), "negative n should raise ValueError."
+    )
 
 
 if __name__ == "__main__":
