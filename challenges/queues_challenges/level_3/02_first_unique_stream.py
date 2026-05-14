@@ -17,9 +17,26 @@
 # first_unique_stream("aabc")    # ["a", "#", "b", "b"]
 # first_unique_stream("aabbcc")  # ["a", "#", "b", "#", "c", "#"]
 # ```
+from collections import deque
+
 
 def first_unique_stream(stream):
-    raise NotImplementedError("Implement first_unique_stream(stream).")
+    counts = [0] * 26
+    queue = deque()
+    result = []
+    for char in stream:
+        # Admission
+        current_num = ord(char) - ord("a")
+        counts[current_num] += 1
+        queue.append(char)
+        while queue and counts[ord(queue[0]) - ord("a")] > 1:
+            queue.popleft()
+        if not queue:
+            result.append("#")
+        else:
+            result.append(queue[0])
+    return result
+
 
 #
 #
@@ -100,25 +117,39 @@ def _run_all_tests(test_cases):
 
 
 def test_samples():
-    _assert_equal(first_unique_stream("aabc"), ["a", "#", "b", "b"],
-                  "sample stream aabc should match expected outputs.")
-    _assert_equal(first_unique_stream("aabbcc"), ["a", "#", "b", "#", "c", "#"],
-                  "sample stream aabbcc should match expected outputs.")
+    _assert_equal(
+        first_unique_stream("aabc"),
+        ["a", "#", "b", "b"],
+        "sample stream aabc should match expected outputs.",
+    )
+    _assert_equal(
+        first_unique_stream("aabbcc"),
+        ["a", "#", "b", "#", "c", "#"],
+        "sample stream aabbcc should match expected outputs.",
+    )
 
 
 def test_empty_stream():
-    _assert_equal(first_unique_stream(""), [], "empty stream should produce no outputs.")
+    _assert_equal(
+        first_unique_stream(""), [], "empty stream should produce no outputs."
+    )
 
 
 def test_unique_can_return_to_later_character():
-    _assert_equal(first_unique_stream("abac"), ["a", "a", "b", "b"],
-                  "queue should discard repeated earlier characters.")
+    _assert_equal(
+        first_unique_stream("abac"),
+        ["a", "a", "b", "b"],
+        "queue should discard repeated earlier characters.",
+    )
 
 
 if __name__ == "__main__":
     TEST_CASES = [
         ("samples", test_samples),
         ("empty stream", test_empty_stream),
-        ("unique can return to later character", test_unique_can_return_to_later_character),
+        (
+            "unique can return to later character",
+            test_unique_can_return_to_later_character,
+        ),
     ]
     _run_all_tests(TEST_CASES)
