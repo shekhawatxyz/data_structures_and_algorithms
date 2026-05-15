@@ -9,25 +9,57 @@
 # - `push(x)`, `pop()`, `top()`, `is_empty()`, `__len__()`
 #
 # Internally use exactly one queue (with the operations from 1a/1b). One of `push` and `pop` will be O(n); choose which.
+from typing import List
+
+
+class ListQueue:
+    def __init__(self):
+        self.lst = []
+
+    def enqueue(self, x):
+        self.lst.append(x)
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError
+        return self.lst.pop(0)
+
+    def peek(self):
+        if self.is_empty():
+            raise IndexError("queue is empty")
+        return self.lst[0]
+
+    def is_empty(self):
+        return self.__len__() == 0
+
+    def __len__(self):
+        return len(self.lst)
+
 
 class QueueStack:
     def __init__(self):
-        raise NotImplementedError("Implement QueueStack.__init__().")
+        self._queue = ListQueue()
 
     def push(self, x):
-        raise NotImplementedError("Implement QueueStack.push(x).")
+        current_length = len(self._queue)
+        self._queue.enqueue(x)
+        counter = 0
+        while counter < current_length:
+            self._queue.enqueue(self._queue.dequeue())
+            counter += 1
 
     def pop(self):
-        raise NotImplementedError("Implement QueueStack.pop().")
+        return self._queue.dequeue()
 
     def top(self):
-        raise NotImplementedError("Implement QueueStack.top().")
+        return self._queue.peek()
 
     def is_empty(self):
-        raise NotImplementedError("Implement QueueStack.is_empty().")
+        return len(self._queue) == 0
 
     def __len__(self):
-        raise NotImplementedError("Implement QueueStack.__len__().")
+        return len(self._queue)
+
 
 #
 #
@@ -133,8 +165,11 @@ def test_lifo_order_and_top():
     stack.push(2)
     stack.push(3)
     _assert_equal(stack.top(), 3, "top should return most recent item.")
-    _assert_equal([stack.pop(), stack.pop(), stack.pop()], [3, 2, 1],
-                  "pop should return items in LIFO order.")
+    _assert_equal(
+        [stack.pop(), stack.pop(), stack.pop()],
+        [3, 2, 1],
+        "pop should return items in LIFO order.",
+    )
 
 
 def test_empty_state_and_len():
