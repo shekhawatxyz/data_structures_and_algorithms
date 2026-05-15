@@ -16,9 +16,57 @@
 # reverse_first_k(q, 3)
 # q: front [3, 2, 1, 4, 5, 6] back
 # ```
+import importlib.util, os
 
-def reverse_first_k(q, k):
-    raise NotImplementedError("Implement reverse_first_k(q, k).")
+_here = os.path.dirname(os.path.abspath(__file__))
+_spec = importlib.util.spec_from_file_location(
+    "list_queue_1a",
+    os.path.join(_here, "..", "level_1", "01_list_queue.py"),
+)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+ListQueue = _mod.ListQueue
+
+
+class Stack:
+    def __init__(self) -> None:
+        self._items = []
+
+    def __len__(self):
+        return len(self._items)
+
+    def top(self):
+        if not self._items:
+            raise IndexError("empty")
+        return self._items[-1]
+
+    def push(self, x):
+        self._items.append(x)
+
+    def pop(self):
+        if not self._items:
+            raise IndexError("empty")
+        return self._items.pop()
+
+
+def reverse_first_k(q: ListQueue, k: int) -> None:
+    if k < 0:
+        raise ValueError("k is negative")
+    count = 0
+    temporary_stack = Stack()
+    total_length = q.__len__()
+    if k > total_length:
+        raise ValueError("k is larger than the queue")
+    while count < k:
+        temporary_stack.push(q.dequeue())
+        count += 1
+    while len(temporary_stack) > 0:
+        q.enqueue(temporary_stack.pop())
+    while count < total_length:
+        q.enqueue(q.dequeue())
+        count += 1
+    return
+
 
 #
 #
@@ -144,8 +192,9 @@ def _run_all_tests(test_cases):
 def test_sample():
     q = SimpleQueue([1, 2, 3, 4, 5, 6])
     reverse_first_k(q, 3)
-    _assert_equal(_to_list(q), [3, 2, 1, 4, 5, 6],
-                  "first k elements should be reversed only.")
+    _assert_equal(
+        _to_list(q), [3, 2, 1, 4, 5, 6], "first k elements should be reversed only."
+    )
 
 
 def test_zero_and_full_length():
@@ -157,10 +206,16 @@ def test_zero_and_full_length():
 
 
 def test_invalid_k_raises():
-    _assert_raises(ValueError, lambda: reverse_first_k(SimpleQueue([1, 2]), -1),
-                   "negative k should raise ValueError.")
-    _assert_raises(ValueError, lambda: reverse_first_k(SimpleQueue([1, 2]), 3),
-                   "k greater than len(q) should raise ValueError.")
+    _assert_raises(
+        ValueError,
+        lambda: reverse_first_k(SimpleQueue([1, 2]), -1),
+        "negative k should raise ValueError.",
+    )
+    _assert_raises(
+        ValueError,
+        lambda: reverse_first_k(SimpleQueue([1, 2]), 3),
+        "k greater than len(q) should raise ValueError.",
+    )
 
 
 if __name__ == "__main__":
