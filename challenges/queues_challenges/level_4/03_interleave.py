@@ -16,9 +16,33 @@
 # interleave(q)
 # q: front [1, 4, 2, 5, 3, 6] back
 # ```
+import importlib.util, os
 
-def interleave(q):
-    raise NotImplementedError("Implement interleave(q).")
+_here = os.path.dirname(os.path.abspath(__file__))
+_spec = importlib.util.spec_from_file_location(
+    "list_queue_1a",
+    os.path.join(_here, "..", "level_1", "01_list_queue.py"),
+)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+ListQueue = _mod.ListQueue
+
+
+def interleave(q: ListQueue) -> None:
+    temp = ListQueue()
+    total_length = len(q)
+    if total_length % 2 != 0:
+        raise ValueError("only works for even length queues")
+    counter = 0
+    while counter < total_length // 2:
+        temp.enqueue(q.dequeue())
+        counter += 1
+    counter = 0
+    while counter < total_length // 2:
+        q.enqueue(temp.dequeue())
+        q.enqueue(q.dequeue())
+        counter += 1
+
 
 #
 #
@@ -144,8 +168,11 @@ def _run_all_tests(test_cases):
 def test_sample():
     q = SimpleQueue([1, 2, 3, 4, 5, 6])
     interleave(q)
-    _assert_equal(_to_list(q), [1, 4, 2, 5, 3, 6],
-                  "halves should interleave in alternating order.")
+    _assert_equal(
+        _to_list(q),
+        [1, 4, 2, 5, 3, 6],
+        "halves should interleave in alternating order.",
+    )
 
 
 def test_two_and_empty():
@@ -158,8 +185,11 @@ def test_two_and_empty():
 
 
 def test_odd_length_raises():
-    _assert_raises(ValueError, lambda: interleave(SimpleQueue([1, 2, 3])),
-                   "odd-length queue should raise ValueError.")
+    _assert_raises(
+        ValueError,
+        lambda: interleave(SimpleQueue([1, 2, 3])),
+        "odd-length queue should raise ValueError.",
+    )
 
 
 if __name__ == "__main__":
