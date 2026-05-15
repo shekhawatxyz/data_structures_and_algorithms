@@ -5,25 +5,56 @@
 # ### 5b — Queue using two stacks
 #
 # Implement a `StackQueue` class with the operations of `ListQueue` (1a), but internally backed by exactly two stacks. Each `enqueue`, `dequeue`, and `peek` should run in O(1) **amortized** time.
+class Stack:
+    def __init__(self) -> None:
+        self._items = []
+
+    def __len__(self):
+        return len(self._items)
+
+    def top(self):
+        if not self._items:
+            raise IndexError("empty")
+        return self._items[-1]
+
+    def push(self, x):
+        self._items.append(x)
+
+    def pop(self):
+        if not self._items:
+            raise IndexError("empty")
+        return self._items.pop()
+
 
 class StackQueue:
     def __init__(self):
-        raise NotImplementedError("Implement StackQueue.__init__().")
+        self._in_stack = Stack()
+        self._out_stack = Stack()
 
     def enqueue(self, x):
-        raise NotImplementedError("Implement StackQueue.enqueue(x).")
+        self._in_stack.push(x)
 
     def dequeue(self):
-        raise NotImplementedError("Implement StackQueue.dequeue().")
+        self._ensure_out_loaded()
+        return self._out_stack.pop()
 
     def peek(self):
-        raise NotImplementedError("Implement StackQueue.peek().")
+        self._ensure_out_loaded()
+        return self._out_stack.top()
 
     def is_empty(self):
-        raise NotImplementedError("Implement StackQueue.is_empty().")
+        return len(self._out_stack) == 0 and len(self._in_stack) == 0
 
     def __len__(self):
-        raise NotImplementedError("Implement StackQueue.__len__().")
+        return len(self._in_stack) + len(self._out_stack)
+
+    def _ensure_out_loaded(self):
+        if len(self._out_stack) == 0:
+            if len(self._in_stack) == 0:
+                raise IndexError("queue is empty")
+            while len(self._in_stack) > 0:
+                self._out_stack.push(self._in_stack.pop())
+
 
 #
 #
@@ -130,8 +161,11 @@ def test_fifo_order_across_transfers():
     _assert_equal(q.dequeue(), 1, "first item should leave first.")
     q.enqueue(3)
     q.enqueue(4)
-    _assert_equal([q.dequeue(), q.dequeue(), q.dequeue()], [2, 3, 4],
-                  "queue should stay FIFO across stack transfers.")
+    _assert_equal(
+        [q.dequeue(), q.dequeue(), q.dequeue()],
+        [2, 3, 4],
+        "queue should stay FIFO across stack transfers.",
+    )
 
 
 def test_peek_len_and_empty():
@@ -146,7 +180,9 @@ def test_peek_len_and_empty():
 
 def test_empty_operations_raise():
     q = StackQueue()
-    _assert_raises(IndexError, q.dequeue, "dequeue on empty queue should raise IndexError.")
+    _assert_raises(
+        IndexError, q.dequeue, "dequeue on empty queue should raise IndexError."
+    )
     _assert_raises(IndexError, q.peek, "peek on empty queue should raise IndexError.")
 
 
