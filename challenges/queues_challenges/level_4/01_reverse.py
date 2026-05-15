@@ -16,9 +16,25 @@
 # reverse(q)
 # q: front [4, 3, 2, 1] back
 # ```
+import importlib.util, os
 
-def reverse(q):
-    raise NotImplementedError("Implement reverse(q).")
+_here = os.path.dirname(os.path.abspath(__file__))
+_spec = importlib.util.spec_from_file_location(
+    "list_queue_1a",
+    os.path.join(_here, "..", "level_1", "01_list_queue.py"),
+)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+ListQueue = _mod.ListQueue
+
+
+def reverse(q: ListQueue) -> None:
+    if len(q) <= 1:
+        return
+    first = q.dequeue()
+    reverse(q)
+    q.enqueue(first)
+
 
 #
 #
