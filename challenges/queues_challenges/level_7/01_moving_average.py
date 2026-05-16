@@ -18,13 +18,77 @@
 # ma.next(3)    # 4.666...
 # ma.next(5)    # 6.0     (window is now [10, 3, 5])
 # ```
-
 class MovingAverage:
     def __init__(self, k):
-        raise NotImplementedError("Implement MovingAverage.__init__(k).")
+        if k < 1:
+            raise ValueError("Cannot average over 0 elements")
+        self.window = Deque(capacity=k)
+        self.total = 0.0
 
     def next(self, x):
-        raise NotImplementedError("Implement MovingAverage.next(x).")
+        if self.window.__len__() == self.window.capacity:
+            evicted = self.window.pop_front()
+            self.total = self.total - evicted
+        self.window.push_back(x)
+        self.total += x
+        return self.total / len(self.window)
+
+
+class Deque:
+    def __init__(self, capacity):
+        self.lst = [None] * capacity
+        self.capacity = capacity
+        self.head = 0
+        self.tail = 0
+        self.count = 0
+
+    def push_front(self, x):
+        if self.count == self.capacity:
+            raise OverflowError("Queue is full")
+        self.head = (self.head - 1) % self.capacity
+        self.lst[self.head] = x
+        self.count += 1
+
+    def push_back(self, x):
+        if self.count == self.capacity:
+            raise OverflowError("Queue is full")
+        self.lst[self.tail] = x
+        self.tail = (self.tail + 1) % self.capacity
+        self.count += 1
+
+    def pop_front(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        front_value = self.lst[self.head]
+        self.head = (self.head + 1) % self.capacity
+        self.count -= 1
+        return front_value
+
+    def pop_back(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        self.tail = (self.tail - 1) % self.capacity
+        back_value = self.lst[self.tail]
+        self.count -= 1
+        return back_value
+
+    def peek_front(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        return self.lst[self.head]
+
+    def peek_back(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        temp_tail = (self.tail - 1) % self.capacity
+        return self.lst[temp_tail]
+
+    def is_empty(self):
+        return self.count == 0
+
+    def __len__(self):
+        return self.count
+
 
 #
 #
@@ -135,7 +199,9 @@ def test_window_size_one():
 
 def test_invalid_window_raises():
     _assert_raises(ValueError, lambda: MovingAverage(0), "k=0 should raise ValueError.")
-    _assert_raises(ValueError, lambda: MovingAverage(-1), "negative k should raise ValueError.")
+    _assert_raises(
+        ValueError, lambda: MovingAverage(-1), "negative k should raise ValueError."
+    )
 
 
 if __name__ == "__main__":
