@@ -21,19 +21,49 @@
 # q.dequeue()        # 1
 # q.get_max()        # 5
 # ```
+from collections import deque
+
 
 class MaxQueue:
     def __init__(self):
-        raise NotImplementedError("Implement MaxQueue.__init__().")
+        self.head = None
+        self.tail = None
+        self.dq = deque()
 
     def enqueue(self, x):
-        raise NotImplementedError("Implement MaxQueue.enqueue(x).")
+        new_node = Node(x)
+        if self.head is None:
+            self.head = self.tail = new_node
+            self.dq.append(new_node.data)
+        else:
+            while self.dq and new_node.data > self.dq[-1]:
+                self.dq.pop()
+            self.dq.append(new_node.data)
+            self.tail.next = new_node
+            self.tail = new_node
 
     def dequeue(self):
-        raise NotImplementedError("Implement MaxQueue.dequeue().")
+        if self.head is None:
+            raise IndexError("Empty queue")
+        if self.head.data == self.dq[0]:
+            self.dq.popleft()
+        return_value = self.head.data
+        self.head = self.head.next
+        if self.head is None:
+            self.tail = None
+        return return_value
 
     def get_max(self):
-        raise NotImplementedError("Implement MaxQueue.get_max().")
+        if not self.dq:
+            raise IndexError("Empty queue")
+        return self.dq[0]
+
+
+class Node:
+    def __init__(self, x) -> None:
+        self.next = None
+        self.data = x
+
 
 #
 #
@@ -151,8 +181,12 @@ def test_duplicate_max_values():
 
 def test_empty_operations_raise():
     q = MaxQueue()
-    _assert_raises(IndexError, q.dequeue, "dequeue on empty queue should raise IndexError.")
-    _assert_raises(IndexError, q.get_max, "get_max on empty queue should raise IndexError.")
+    _assert_raises(
+        IndexError, q.dequeue, "dequeue on empty queue should raise IndexError."
+    )
+    _assert_raises(
+        IndexError, q.get_max, "get_max on empty queue should raise IndexError."
+    )
 
 
 if __name__ == "__main__":
