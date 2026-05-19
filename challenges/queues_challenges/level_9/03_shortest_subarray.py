@@ -18,8 +18,25 @@
 # shortest_subarray([84, -37, 32, 40, 95], 167)   # 3
 # ```
 
+
+from collections import deque
+
+
 def shortest_subarray(values, k):
-    raise NotImplementedError("Implement shortest_subarray(values, k).")
+    prefix = [0]
+    dq = deque()
+    best_length = float("inf")
+    for v in values:
+        prefix.append(prefix[-1] + v)
+    for r in range(1, len(values) + 1):
+        while dq and dq[-1][0] >= prefix[r - 1]:
+            dq.pop()
+        dq.append((prefix[r - 1], r - 1))
+        while dq and dq[0][0] <= prefix[r] - k:
+            _, l = dq.popleft()
+            best_length = min(best_length, r - l)
+    return best_length if best_length != float("inf") else -1
+
 
 #
 #
@@ -102,20 +119,30 @@ def _run_all_tests(test_cases):
 def test_samples():
     _assert_equal(shortest_subarray([1], 1), 1, "single item can satisfy k.")
     _assert_equal(shortest_subarray([1, 2], 4), -1, "return -1 when no subarray works.")
-    _assert_equal(shortest_subarray([2, -1, 2], 3), 3,
-                  "negative values can force a longer answer.")
-    _assert_equal(shortest_subarray([84, -37, 32, 40, 95], 167), 3,
-                  "sample with mixed signs should return 3.")
+    _assert_equal(
+        shortest_subarray([2, -1, 2], 3),
+        3,
+        "negative values can force a longer answer.",
+    )
+    _assert_equal(
+        shortest_subarray([84, -37, 32, 40, 95], 167),
+        3,
+        "sample with mixed signs should return 3.",
+    )
 
 
 def test_short_window_after_negative_prefix():
-    _assert_equal(shortest_subarray([17, 85, 93, -45, -21], 150), 2,
-                  "algorithm should find the shortest valid later window.")
+    _assert_equal(
+        shortest_subarray([17, 85, 93, -45, -21], 150),
+        2,
+        "algorithm should find the shortest valid later window.",
+    )
 
 
 def test_empty_returns_minus_one():
-    _assert_equal(shortest_subarray([], 1), -1,
-                  "empty input has no valid non-empty subarray.")
+    _assert_equal(
+        shortest_subarray([], 1), -1, "empty input has no valid non-empty subarray."
+    )
 
 
 if __name__ == "__main__":
