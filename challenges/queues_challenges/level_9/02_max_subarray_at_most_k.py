@@ -16,9 +16,29 @@
 # max_subarray_at_most_k([1, -2, 3, -1, 2], 3)   # 4      ([3, -1, 2])
 # max_subarray_at_most_k([-3, -1, -4, -1], 2)    # -1     ([-1])
 # ```
+from collections import deque
+
 
 def max_subarray_at_most_k(values, k):
-    raise NotImplementedError("Implement max_subarray_at_most_k(values, k).")
+    if k <= 0:
+        raise ValueError("Expected positive value")
+    if len(values) == 0:
+        raise ValueError("Empty list")
+    prefix = [0]
+    for v in values:
+        prefix.append(prefix[-1] + v)
+    answer = float("-inf")
+    dq = deque()
+    for r in range(1, len(values) + 1):
+        while dq and dq[0][1] < r - k:
+            dq.popleft()
+        while dq and dq[-1][0] >= prefix[r - 1]:
+            dq.pop()
+        dq.append((prefix[r - 1], r - 1))
+        min_p_l = dq[0][0]
+        answer = max(answer, prefix[r] - min_p_l)
+    return answer
+
 
 #
 #
@@ -115,24 +135,42 @@ def _run_all_tests(test_cases):
 
 def test_samples():
     values = [1, -2, 3, -1, 2]
-    _assert_equal(max_subarray_at_most_k(values, 2), 3,
-                  "best length-at-most-2 subarray should sum to 3.")
-    _assert_equal(max_subarray_at_most_k(values, 3), 4,
-                  "best length-at-most-3 subarray should sum to 4.")
-    _assert_equal(max_subarray_at_most_k([-3, -1, -4, -1], 2), -1,
-                  "all-negative input should still choose a non-empty subarray.")
+    _assert_equal(
+        max_subarray_at_most_k(values, 2),
+        3,
+        "best length-at-most-2 subarray should sum to 3.",
+    )
+    _assert_equal(
+        max_subarray_at_most_k(values, 3),
+        4,
+        "best length-at-most-3 subarray should sum to 4.",
+    )
+    _assert_equal(
+        max_subarray_at_most_k([-3, -1, -4, -1], 2),
+        -1,
+        "all-negative input should still choose a non-empty subarray.",
+    )
 
 
 def test_k_larger_than_length():
-    _assert_equal(max_subarray_at_most_k([2, -1, 4], 10), 5,
-                  "k larger than len(values) should allow the whole array.")
+    _assert_equal(
+        max_subarray_at_most_k([2, -1, 4], 10),
+        5,
+        "k larger than len(values) should allow the whole array.",
+    )
 
 
 def test_invalid_input_raises():
-    _assert_raises(ValueError, lambda: max_subarray_at_most_k([], 1),
-                   "empty values should raise ValueError because subarray must be non-empty.")
-    _assert_raises(ValueError, lambda: max_subarray_at_most_k([1], 0),
-                   "non-positive k should raise ValueError.")
+    _assert_raises(
+        ValueError,
+        lambda: max_subarray_at_most_k([], 1),
+        "empty values should raise ValueError because subarray must be non-empty.",
+    )
+    _assert_raises(
+        ValueError,
+        lambda: max_subarray_at_most_k([1], 0),
+        "non-positive k should raise ValueError.",
+    )
 
 
 if __name__ == "__main__":
