@@ -15,6 +15,9 @@
 # #       4 5
 # ```
 
+from collections import deque
+
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -23,9 +26,36 @@ class Node:
 
 
 def from_level_order(values):
-    raise NotImplementedError("Implement from_level_order(values).")
+    if len(values) == 0:
+        return None
+    dq = deque()
+    root = Node(values[0])
+    dq.append(root)
+    counter = 1
+    while dq:
+        parent = dq[0]
+        if counter == len(values):
+            break
+        if values[counter] is None:
+            left_node = None
+        else:
+            left_node = Node(values[counter])
+            dq.append(left_node)
+        parent.left = left_node
+        counter += 1
+        if counter == len(values):
+            break
+        if values[counter] is None:
+            right_node = None
+        else:
+            right_node = Node(values[counter])
+            dq.append(right_node)
+        parent.right = right_node
+        counter += 1
+        dq.popleft()
+    return root
 
-#
+
 #
 #
 #
@@ -117,8 +147,10 @@ def test_empty_list_returns_none():
 def test_single_node():
     root = from_level_order([7])
     _assert_equal(root.value, 7, "single-element list should produce a single root.")
-    _assert_true(root.left is None and root.right is None,
-                 "single-node tree should have no children.")
+    _assert_true(
+        root.left is None and root.right is None,
+        "single-node tree should have no children.",
+    )
 
 
 def test_full_three_node_tree():
