@@ -10,6 +10,7 @@
 # preorder(from_level_order([1, 2, 3, 4, 5]))   # [1, 2, 4, 5, 3]
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -37,7 +38,12 @@ def _make_level_order(values):
 
 
 def preorder(root):
-    raise NotImplementedError("Implement preorder(root).")
+    if root is None:
+        return []
+    left = preorder(root.left)
+    right = preorder(root.right)
+    return [root.value] + left + right
+
 
 #
 #
@@ -129,14 +135,18 @@ def test_single_node():
 
 def test_full_small_tree():
     tree = _make_level_order([1, 2, 3, 4, 5])
-    _assert_equal(preorder(tree), [1, 2, 4, 5, 3],
-                  "preorder visits root, left subtree, right subtree.")
+    _assert_equal(
+        preorder(tree),
+        [1, 2, 4, 5, 3],
+        "preorder visits root, left subtree, right subtree.",
+    )
 
 
 def test_left_skewed_tree():
     tree = _make_level_order([1, 2, None, 3])
-    _assert_equal(preorder(tree), [1, 2, 3],
-                  "preorder follows left chain before exploring right.")
+    _assert_equal(
+        preorder(tree), [1, 2, 3], "preorder follows left chain before exploring right."
+    )
 
 
 if __name__ == "__main__":
