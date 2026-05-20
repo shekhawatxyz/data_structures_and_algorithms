@@ -38,11 +38,17 @@ def _make_level_order(values):
 
 
 def preorder(root):
-    if root is None:
-        return []
-    left = preorder(root.left)
-    right = preorder(root.right)
-    return [root.value] + left + right
+    result = []
+    _preorder(root, result)
+    return result
+
+
+def _preorder(node, acc):
+    if node is None:
+        return
+    acc.append(node.value)
+    _preorder(node.left, acc)
+    _preorder(node.right, acc)
 
 
 #
