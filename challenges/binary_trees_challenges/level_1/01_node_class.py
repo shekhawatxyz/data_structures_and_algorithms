@@ -15,17 +15,23 @@
 #
 # `Node.from_nested(None)` returns `None`.
 
+
 class Node:
     value: object
     left: "Node | None"
     right: "Node | None"
 
     def __init__(self, value, left=None, right=None):
-        raise NotImplementedError("Implement Node.__init__(value, left, right).")
+        self.value = value
+        self.left = left
+        self.right = right
 
     @classmethod
     def from_nested(cls, spec):
-        raise NotImplementedError("Implement Node.from_nested(spec).")
+        if spec is None:
+            return None
+        return cls(spec[0], cls.from_nested(spec[1]), cls.from_nested(spec[2]))
+
 
 #
 #
@@ -124,10 +130,14 @@ def test_from_nested_builds_tree():
     _assert_equal(tree.value, 1, "root value should match spec.")
     _assert_equal(tree.left.value, 2, "left child value should match spec.")
     _assert_equal(tree.right.value, 3, "right child value should match spec.")
-    _assert_true(tree.left.left is None and tree.left.right is None,
-                 "leaf nodes should have no children.")
-    _assert_true(tree.right.left is None and tree.right.right is None,
-                 "leaf nodes should have no children.")
+    _assert_true(
+        tree.left.left is None and tree.left.right is None,
+        "leaf nodes should have no children.",
+    )
+    _assert_true(
+        tree.right.left is None and tree.right.right is None,
+        "leaf nodes should have no children.",
+    )
 
 
 def test_from_nested_deeper_tree():
@@ -139,7 +149,9 @@ def test_from_nested_deeper_tree():
 
 
 def test_from_nested_none_returns_none():
-    _assert_true(Node.from_nested(None) is None, "from_nested(None) should return None.")
+    _assert_true(
+        Node.from_nested(None) is None, "from_nested(None) should return None."
+    )
 
 
 if __name__ == "__main__":
