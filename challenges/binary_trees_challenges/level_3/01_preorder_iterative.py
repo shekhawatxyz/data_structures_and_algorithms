@@ -6,6 +6,7 @@
 #
 # Implement `preorder_iterative(root) -> list`. The output must match `preorder` from 2a.
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -33,7 +34,20 @@ def _make_level_order(values):
 
 
 def preorder_iterative(root):
-    raise NotImplementedError("Implement preorder_iterative(root).")
+    if root is None:
+        return []
+    stack = []
+    result = []
+    stack.append(root)
+    while stack:
+        rs = stack.pop()
+        result.append(rs.value)
+        if rs.right:
+            stack.append(rs.right)
+        if rs.left:
+            stack.append(rs.left)
+    return result
+
 
 #
 #
@@ -116,25 +130,36 @@ def _run_all_tests(test_cases):
 
 
 def test_empty_tree():
-    _assert_equal(preorder_iterative(None), [], "iterative preorder of empty tree should be [].")
+    _assert_equal(
+        preorder_iterative(None), [], "iterative preorder of empty tree should be []."
+    )
 
 
 def test_full_small_tree():
     tree = _make_level_order([1, 2, 3, 4, 5])
-    _assert_equal(preorder_iterative(tree), [1, 2, 4, 5, 3],
-                  "iterative preorder should match recursive preorder.")
+    _assert_equal(
+        preorder_iterative(tree),
+        [1, 2, 4, 5, 3],
+        "iterative preorder should match recursive preorder.",
+    )
 
 
 def test_left_skewed_tree():
     tree = _make_level_order([1, 2, None, 3, None, 4])
-    _assert_equal(preorder_iterative(tree), [1, 2, 3, 4],
-                  "iterative preorder follows left chain on a left-skewed tree.")
+    _assert_equal(
+        preorder_iterative(tree),
+        [1, 2, 3, 4],
+        "iterative preorder follows left chain on a left-skewed tree.",
+    )
 
 
 def test_right_skewed_tree():
     tree = _make_level_order([1, None, 2, None, 3])
-    _assert_equal(preorder_iterative(tree), [1, 2, 3],
-                  "iterative preorder follows right chain on a right-skewed tree.")
+    _assert_equal(
+        preorder_iterative(tree),
+        [1, 2, 3],
+        "iterative preorder follows right chain on a right-skewed tree.",
+    )
 
 
 if __name__ == "__main__":
