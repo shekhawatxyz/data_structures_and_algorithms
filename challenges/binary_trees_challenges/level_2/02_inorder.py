@@ -10,6 +10,7 @@
 # inorder(from_level_order([1, 2, 3, 4, 5]))    # [4, 2, 5, 1, 3]
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -37,7 +38,18 @@ def _make_level_order(values):
 
 
 def inorder(root):
-    raise NotImplementedError("Implement inorder(root).")
+    result = []
+    _inorder(root, result)
+    return result
+
+
+def _inorder(node, acc):
+    if node is None:
+        return
+    _inorder(node.left, acc)
+    acc.append(node.value)
+    _inorder(node.right, acc)
+
 
 #
 #
@@ -129,14 +141,18 @@ def test_single_node():
 
 def test_full_small_tree():
     tree = _make_level_order([1, 2, 3, 4, 5])
-    _assert_equal(inorder(tree), [4, 2, 5, 1, 3],
-                  "inorder visits left subtree, root, right subtree.")
+    _assert_equal(
+        inorder(tree),
+        [4, 2, 5, 1, 3],
+        "inorder visits left subtree, root, right subtree.",
+    )
 
 
 def test_bst_inorder_is_sorted():
     tree = _make_level_order([4, 2, 6, 1, 3, 5, 7])
-    _assert_equal(inorder(tree), [1, 2, 3, 4, 5, 6, 7],
-                  "inorder over a BST yields sorted values.")
+    _assert_equal(
+        inorder(tree), [1, 2, 3, 4, 5, 6, 7], "inorder over a BST yields sorted values."
+    )
 
 
 if __name__ == "__main__":
