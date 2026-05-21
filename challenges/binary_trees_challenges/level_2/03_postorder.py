@@ -10,6 +10,7 @@
 # postorder(from_level_order([1, 2, 3, 4, 5]))  # [4, 5, 2, 3, 1]
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -37,7 +38,18 @@ def _make_level_order(values):
 
 
 def postorder(root):
-    raise NotImplementedError("Implement postorder(root).")
+    result = []
+    _postorder(root, result)
+    return result
+
+
+def _postorder(node, acc):
+    if node is None:
+        return
+    _postorder(node.left, acc)
+    _postorder(node.right, acc)
+    acc.append(node.value)
+
 
 #
 #
@@ -124,19 +136,25 @@ def test_empty_tree():
 
 
 def test_single_node():
-    _assert_equal(postorder(Node(7)), [7], "postorder of single node should be [value].")
+    _assert_equal(
+        postorder(Node(7)), [7], "postorder of single node should be [value]."
+    )
 
 
 def test_full_small_tree():
     tree = _make_level_order([1, 2, 3, 4, 5])
-    _assert_equal(postorder(tree), [4, 5, 2, 3, 1],
-                  "postorder visits left subtree, right subtree, then root.")
+    _assert_equal(
+        postorder(tree),
+        [4, 5, 2, 3, 1],
+        "postorder visits left subtree, right subtree, then root.",
+    )
 
 
 def test_right_skewed_tree():
     tree = _make_level_order([1, None, 2, None, 3])
-    _assert_equal(postorder(tree), [3, 2, 1],
-                  "postorder reaches deepest right descendant first.")
+    _assert_equal(
+        postorder(tree), [3, 2, 1], "postorder reaches deepest right descendant first."
+    )
 
 
 if __name__ == "__main__":
