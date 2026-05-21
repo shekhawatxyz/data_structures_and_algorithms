@@ -6,6 +6,7 @@
 #
 # Implement `inorder_iterative(root) -> list`. The output must match `inorder` from 2b.
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -33,7 +34,21 @@ def _make_level_order(values):
 
 
 def inorder_iterative(root):
-    raise NotImplementedError("Implement inorder_iterative(root).")
+    if root is None:
+        return []
+    result = []
+    cur = root
+    stack = []
+    while cur is not None or stack:
+        if cur is not None:
+            stack.append(cur)
+            cur = cur.left
+        else:
+            popped = stack.pop()
+            result.append(popped.value)
+            cur = popped.right
+    return result
+
 
 #
 #
@@ -116,25 +131,36 @@ def _run_all_tests(test_cases):
 
 
 def test_empty_tree():
-    _assert_equal(inorder_iterative(None), [], "iterative inorder of empty tree should be [].")
+    _assert_equal(
+        inorder_iterative(None), [], "iterative inorder of empty tree should be []."
+    )
 
 
 def test_full_small_tree():
     tree = _make_level_order([1, 2, 3, 4, 5])
-    _assert_equal(inorder_iterative(tree), [4, 2, 5, 1, 3],
-                  "iterative inorder should match recursive inorder.")
+    _assert_equal(
+        inorder_iterative(tree),
+        [4, 2, 5, 1, 3],
+        "iterative inorder should match recursive inorder.",
+    )
 
 
 def test_bst_inorder_is_sorted():
     tree = _make_level_order([4, 2, 6, 1, 3, 5, 7])
-    _assert_equal(inorder_iterative(tree), [1, 2, 3, 4, 5, 6, 7],
-                  "iterative inorder over a BST yields sorted values.")
+    _assert_equal(
+        inorder_iterative(tree),
+        [1, 2, 3, 4, 5, 6, 7],
+        "iterative inorder over a BST yields sorted values.",
+    )
 
 
 def test_deep_left_chain():
     tree = _make_level_order([1, 2, None, 3, None, 4])
-    _assert_equal(inorder_iterative(tree), [4, 3, 2, 1],
-                  "iterative inorder unwinds a left chain in reverse.")
+    _assert_equal(
+        inorder_iterative(tree),
+        [4, 3, 2, 1],
+        "iterative inorder unwinds a left chain in reverse.",
+    )
 
 
 if __name__ == "__main__":
