@@ -6,6 +6,7 @@
 #
 # Implement `sum_values(root) -> int`. The sum over an empty tree is `0`. Assume node values are integers.
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -33,7 +34,10 @@ def _make_level_order(values):
 
 
 def sum_values(root):
-    raise NotImplementedError("Implement sum_values(root).")
+    if root is None:
+        return 0
+    return root.value + (sum_values(root.left) + sum_values(root.right))
+
 
 #
 #
@@ -124,13 +128,19 @@ def test_single_node_sum():
 
 
 def test_full_tree_sum():
-    _assert_equal(sum_values(_make_level_order([1, 2, 3, 4, 5])), 15,
-                  "tree of values 1..5 should sum to 15.")
+    _assert_equal(
+        sum_values(_make_level_order([1, 2, 3, 4, 5])),
+        15,
+        "tree of values 1..5 should sum to 15.",
+    )
 
 
 def test_negative_values_sum():
-    _assert_equal(sum_values(_make_level_order([-1, -2, 3, None, 4])), 4,
-                  "negative and positive values should combine correctly.")
+    _assert_equal(
+        sum_values(_make_level_order([-1, -2, 3, None, 4])),
+        4,
+        "negative and positive values should combine correctly.",
+    )
 
 
 if __name__ == "__main__":
