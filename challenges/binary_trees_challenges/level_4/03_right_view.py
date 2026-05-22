@@ -10,6 +10,8 @@
 # right_view(from_level_order([1, 2, 3, None, 4, None, None]))
 # # [1, 3, 4]
 # ```
+from collections import deque
+
 
 class Node:
     def __init__(self, value, left=None, right=None):
@@ -38,7 +40,23 @@ def _make_level_order(values):
 
 
 def right_view(root):
-    raise NotImplementedError("Implement right_view(root).")
+    if root is None:
+        return []
+    level_buffer = deque()
+    result = []
+    level_buffer.append(root)
+    while level_buffer:
+        val = None
+        level_length = len(level_buffer)
+        for _ in range(level_length):
+            val = level_buffer.popleft()
+            if val.left:
+                level_buffer.append(val.left)
+            if val.right:
+                level_buffer.append(val.right)
+        result.append(val.value)
+    return result
+
 
 #
 #
@@ -125,19 +143,27 @@ def test_empty_tree():
 
 
 def test_single_node():
-    _assert_equal(right_view(Node(7)), [7], "right-view of single node should be [value].")
+    _assert_equal(
+        right_view(Node(7)), [7], "right-view of single node should be [value]."
+    )
 
 
 def test_spec_example():
     tree = _make_level_order([1, 2, 3, None, 4, None, None])
-    _assert_equal(right_view(tree), [1, 3, 4],
-                  "right-view should pick rightmost node visible from the right.")
+    _assert_equal(
+        right_view(tree),
+        [1, 3, 4],
+        "right-view should pick rightmost node visible from the right.",
+    )
 
 
 def test_left_skew_visible_through_right():
     tree = _make_level_order([1, 2, None, 3])
-    _assert_equal(right_view(tree), [1, 2, 3],
-                  "with no right children, every level's only node is the rightmost.")
+    _assert_equal(
+        right_view(tree),
+        [1, 2, 3],
+        "with no right children, every level's only node is the rightmost.",
+    )
 
 
 if __name__ == "__main__":
