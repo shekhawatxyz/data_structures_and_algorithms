@@ -6,6 +6,7 @@
 #
 # Implement `height(root) -> int`. The height of an empty tree is `-1`; a single-node tree has height `0`.
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -33,7 +34,10 @@ def _make_level_order(values):
 
 
 def height(root):
-    raise NotImplementedError("Implement height(root).")
+    if root is None:
+        return -1
+    return 1 + max(height(root.left), height(root.right))
+
 
 #
 #
@@ -124,13 +128,19 @@ def test_single_node_height_is_zero():
 
 
 def test_balanced_height():
-    _assert_equal(height(_make_level_order([1, 2, 3, 4, 5])), 2,
-                  "balanced tree of three layers should have height 2.")
+    _assert_equal(
+        height(_make_level_order([1, 2, 3, 4, 5])),
+        2,
+        "balanced tree of three layers should have height 2.",
+    )
 
 
 def test_left_skewed_height():
-    _assert_equal(height(_make_level_order([1, 2, None, 3, None, 4])), 3,
-                  "left-skewed chain of four nodes should have height 3.")
+    _assert_equal(
+        height(_make_level_order([1, 2, None, 3, None, 4])),
+        3,
+        "left-skewed chain of four nodes should have height 3.",
+    )
 
 
 if __name__ == "__main__":
