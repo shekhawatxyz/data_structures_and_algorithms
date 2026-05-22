@@ -10,6 +10,9 @@
 # level_order(from_level_order([1, 2, 3, 4, None, 5]))   # [1, 2, 3, 4, 5]
 # ```
 
+from collections import deque
+
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -37,7 +40,20 @@ def _make_level_order(values):
 
 
 def level_order(root):
-    raise NotImplementedError("Implement level_order(root).")
+    if root is None:
+        return []
+    dq = deque()
+    result = []
+    dq.append(root)
+    while dq:
+        current = dq.popleft()
+        result.append(current.value)
+        if current.left:
+            dq.append(current.left)
+        if current.right:
+            dq.append(current.right)
+    return result
+
 
 #
 #
@@ -124,19 +140,27 @@ def test_empty_tree():
 
 
 def test_single_node():
-    _assert_equal(level_order(Node(7)), [7], "level-order of single node should be [value].")
+    _assert_equal(
+        level_order(Node(7)), [7], "level-order of single node should be [value]."
+    )
 
 
 def test_full_small_tree():
     tree = _make_level_order([1, 2, 3, 4, None, 5])
-    _assert_equal(level_order(tree), [1, 2, 3, 4, 5],
-                  "level-order should visit each level top-to-bottom, left-to-right.")
+    _assert_equal(
+        level_order(tree),
+        [1, 2, 3, 4, 5],
+        "level-order should visit each level top-to-bottom, left-to-right.",
+    )
 
 
 def test_skewed_tree():
     tree = _make_level_order([1, 2, None, 3])
-    _assert_equal(level_order(tree), [1, 2, 3],
-                  "level-order should descend through skewed tree level by level.")
+    _assert_equal(
+        level_order(tree),
+        [1, 2, 3],
+        "level-order should descend through skewed tree level by level.",
+    )
 
 
 if __name__ == "__main__":
