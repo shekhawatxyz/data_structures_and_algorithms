@@ -5,9 +5,6 @@
 # ### 5a — Count nodes
 #
 # Implement `count_nodes(root) -> int`. The empty tree has `0` nodes.
-from collections import deque
-
-
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -35,21 +32,11 @@ def _make_level_order(values):
 
 
 def count_nodes(root):
-    counter = 0
     if root is None:
-        return counter
-    level_buffer = deque()
-    level_buffer.append(root)
-    while level_buffer:
-        level_length = len(level_buffer)
-        for i in range(level_length):
-            val = level_buffer.popleft()
-            counter += 1
-            if val.left:
-                level_buffer.append(val.left)
-            if val.right:
-                level_buffer.append(val.right)
-    return counter
+        return 0
+    left = count_nodes(root.left)
+    right = count_nodes(root.right)
+    return 1 + left + right
 
 
 #
