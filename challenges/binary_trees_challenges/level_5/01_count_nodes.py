@@ -5,6 +5,8 @@
 # ### 5a — Count nodes
 #
 # Implement `count_nodes(root) -> int`. The empty tree has `0` nodes.
+from collections import deque
+
 
 class Node:
     def __init__(self, value, left=None, right=None):
@@ -33,7 +35,22 @@ def _make_level_order(values):
 
 
 def count_nodes(root):
-    raise NotImplementedError("Implement count_nodes(root).")
+    counter = 0
+    if root is None:
+        return counter
+    level_buffer = deque()
+    level_buffer.append(root)
+    while level_buffer:
+        level_length = len(level_buffer)
+        for i in range(level_length):
+            val = level_buffer.popleft()
+            counter += 1
+            if val.left:
+                level_buffer.append(val.left)
+            if val.right:
+                level_buffer.append(val.right)
+    return counter
+
 
 #
 #
@@ -124,13 +141,19 @@ def test_single_node_count():
 
 
 def test_full_three_node_tree_count():
-    _assert_equal(count_nodes(_make_level_order([1, 2, 3])), 3,
-                  "three-node tree should have count 3.")
+    _assert_equal(
+        count_nodes(_make_level_order([1, 2, 3])),
+        3,
+        "three-node tree should have count 3.",
+    )
 
 
 def test_uneven_tree_count():
-    _assert_equal(count_nodes(_make_level_order([1, 2, 3, None, 4, 5, None])), 5,
-                  "tree with five nodes should have count 5 regardless of shape.")
+    _assert_equal(
+        count_nodes(_make_level_order([1, 2, 3, None, 4, 5, None])),
+        5,
+        "tree with five nodes should have count 5 regardless of shape.",
+    )
 
 
 if __name__ == "__main__":
