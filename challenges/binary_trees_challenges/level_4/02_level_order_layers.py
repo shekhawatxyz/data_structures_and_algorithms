@@ -10,6 +10,8 @@
 # level_order_layers(from_level_order([1, 2, 3, 4, None, 5]))
 # # [[1], [2, 3], [4, 5]]
 # ```
+from collections import deque
+
 
 class Node:
     def __init__(self, value, left=None, right=None):
@@ -38,7 +40,24 @@ def _make_level_order(values):
 
 
 def level_order_layers(root):
-    raise NotImplementedError("Implement level_order_layers(root).")
+    if root is None:
+        return []
+    level_buffer = deque()
+    result = []
+    level_buffer.append(root)
+    while level_buffer:
+        result_level = []
+        level_length = len(level_buffer)
+        for i in range(level_length):
+            parent = level_buffer.popleft()
+            result_level.append(parent.value)
+            if parent.left:
+                level_buffer.append(parent.left)
+            if parent.right:
+                level_buffer.append(parent.right)
+        result.append(result_level)
+    return result
+
 
 #
 #
@@ -125,20 +144,29 @@ def test_empty_tree():
 
 
 def test_single_node():
-    _assert_equal(level_order_layers(Node(7)), [[7]],
-                  "single node should produce one layer with one value.")
+    _assert_equal(
+        level_order_layers(Node(7)),
+        [[7]],
+        "single node should produce one layer with one value.",
+    )
 
 
 def test_three_layers():
     tree = _make_level_order([1, 2, 3, 4, None, 5])
-    _assert_equal(level_order_layers(tree), [[1], [2, 3], [4, 5]],
-                  "layers should match the level-order grouping.")
+    _assert_equal(
+        level_order_layers(tree),
+        [[1], [2, 3], [4, 5]],
+        "layers should match the level-order grouping.",
+    )
 
 
 def test_left_skew_layers():
     tree = _make_level_order([1, 2, None, 3])
-    _assert_equal(level_order_layers(tree), [[1], [2], [3]],
-                  "skewed tree should produce one value per layer.")
+    _assert_equal(
+        level_order_layers(tree),
+        [[1], [2], [3]],
+        "skewed tree should produce one value per layer.",
+    )
 
 
 if __name__ == "__main__":
