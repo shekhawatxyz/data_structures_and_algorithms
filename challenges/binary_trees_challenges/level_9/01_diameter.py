@@ -1,10 +1,10 @@
-# Level 9b - Diameter
+# Level 9a - Diameter
 # Implement diameter(root) - longest path (in edges) between any two nodes.
 
 # Complete Exact Problem Statement (from binary-tree-challenges.md):
-# ### 9b — Diameter
+# ### 9a — Diameter
 #
-# Implement `diameter(root) -> int`. The diameter is the number of edges on the longest path between any two nodes in the tree. The diameter of an empty or single-node tree is `0`. Total runtime should be O(n).
+# Implement `diameter(root) -> int`. The diameter is the number of edges on the longest path between any two nodes. The diameter of an empty or single-node tree is `0`. Total runtime should be O(n).
 #
 # ```
 # diameter(from_level_order([1, 2, 3, 4, 5]))   # 3

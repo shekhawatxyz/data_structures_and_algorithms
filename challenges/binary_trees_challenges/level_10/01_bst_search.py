@@ -1,8 +1,8 @@
-# Level 8a - BST search
+# Level 10a - BST search
 # Implement bst_search(root, target) - find a node by key in BST traversal order.
 
 # Complete Exact Problem Statement (from binary-tree-challenges.md):
-# ### 8a — BST search
+# ### 10a — BST search
 #
 # Implement `bst_search(root, target) -> Node | None`. Return the first node found (in BST search order) whose `value == target`, or `None`.
 

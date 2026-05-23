@@ -1,8 +1,8 @@
-# Level 8b - BST insert
+# Level 10b - BST insert
 # Implement bst_insert(root, value) returning the (possibly new) root.
 
 # Complete Exact Problem Statement (from binary-tree-challenges.md):
-# ### 8b — BST insert
+# ### 10b — BST insert
 #
 # Implement `bst_insert(root, value) -> Node`. Return the (possibly new) root. Duplicates go to the right. Build the tree by chained calls:
 #

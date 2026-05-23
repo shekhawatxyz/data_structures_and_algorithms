@@ -1,8 +1,8 @@
-# Level 9a - Lowest common ancestor
+# Level 9b - Lowest common ancestor
 # Implement lowest_common_ancestor(root, a, b) returning the deepest shared ancestor.
 
 # Complete Exact Problem Statement (from binary-tree-challenges.md):
-# ### 9a — Lowest common ancestor
+# ### 9b — Lowest common ancestor
 #
 # Implement `lowest_common_ancestor(root, a, b) -> Node | None`, where `a` and `b` are `Node` references known to be present in the tree rooted at `root`. Return the deepest node that is an ancestor of both `a` and `b`. A node is its own ancestor. Return `None` only if `root` is `None`.
 

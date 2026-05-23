@@ -1,8 +1,8 @@
-# Level 8c - Is valid BST
+# Level 10c - Is valid BST
 # Implement is_valid_bst(root) - True iff the tree satisfies BST ordering.
 
 # Complete Exact Problem Statement (from binary-tree-challenges.md):
-# ### 8c — Is valid BST
+# ### 10c — Is valid BST
 #
 # Implement `is_valid_bst(root) -> bool`. A valid BST satisfies: for every node, all values in its left subtree are strictly less than the node's value, and all values in its right subtree are greater than or equal to the node's value. The empty tree is a valid BST.
 #
