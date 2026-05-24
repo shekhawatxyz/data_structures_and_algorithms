@@ -1,5 +1,7 @@
 # Red-Black Tree Programming Challenges
 
+_Problems: 0/30._
+
 A graduated sequence of programming challenges for understanding, implementing, and manipulating red-black trees in Python. Each level adds a single new dimension of complexity to what came before. The property checker built in Level 1 is the keystone — reuse it as your verification tool throughout.
 
 ---
@@ -25,9 +27,9 @@ The five RBT properties (CLRS notation):
 
 ---
 
-## Level 1 — Foundations
+## [ ] Level 1 — Foundations
 
-### 1a. `Node` class and property verifier
+- [ ] **1a. `Node` class and property verifier** — Status:
 
 Define your `Node` class with: `key`, `color`, `parent`, `left`, `right`. Then write:
 
@@ -41,7 +43,7 @@ The function should also implicitly verify the BST property (in-order key orderi
 
 Bonus version: `diagnose(tree) -> List[str]` that returns a list of which specific properties are violated. This is the more useful version for debugging later levels.
 
-### 1b. Pretty-printer
+- [ ] **1b. Pretty-printer** — Status:
 
 ```
 def render(tree) -> str
@@ -59,7 +61,7 @@ Render the tree in a way that lets you actually see what's going on, with colors
 
 Or sideways with R/B suffixes. Whatever you build, build it well — you will stare at it for hours during the rest of these levels.
 
-### 1c. Manual construction
+- [ ] **1c. Manual construction** — Status:
 
 Construct, by hand (i.e. by directly assigning fields), at least:
 - Three valid RBTs of differing shapes.
@@ -71,11 +73,11 @@ Run them through your verifier from 1a. Confirm valid trees pass and invalid tre
 
 ---
 
-## Level 2 — BST operations on an RBT (free reuse)
+## [ ] Level 2 — BST operations on an RBT (free reuse)
 
 Color is irrelevant to all of these. Implement them anyway, both to confirm your `Node` interface works and to have them available for later levels.
 
-### 2a. Search
+- [ ] **2a. Search** — Status:
 
 ```
 def search(tree, key) -> Optional[Node]
@@ -83,7 +85,7 @@ def search(tree, key) -> Optional[Node]
 
 Iterative version preferred.
 
-### 2b. Min, max, successor, predecessor
+- [ ] **2b. Min, max, successor, predecessor** — Status:
 
 ```
 def minimum(node) -> Node
@@ -94,7 +96,7 @@ def predecessor(node) -> Optional[Node]
 
 These take a node, not a key. Successor uses the parent pointer when there is no right subtree.
 
-### 2c. In-order traversal
+- [ ] **2c. In-order traversal** — Status:
 
 ```
 def inorder(tree) -> List[key]
@@ -104,9 +106,9 @@ Verify the result is sorted on every tree you have. This will be your sanity che
 
 ---
 
-## Level 3 — Rotations
+## [ ] Level 3 — Rotations
 
-### 3a. Left rotate
+- [ ] **3a. Left rotate** — Status:
 
 ```
 def left_rotate(tree, x) -> None
@@ -121,19 +123,19 @@ Get the pointer surgery exactly right:
 
 Draw it on paper before coding. Pointers in both directions must remain consistent.
 
-### 3b. Right rotate
+- [ ] **3b. Right rotate** — Status:
 
 Mirror of 3a. Should fall out almost mechanically once 3a is right.
 
-### 3c. In-order invariance test
+- [ ] **3c. In-order invariance test** — Status:
 
 Write a test: take any tree, perform any sequence of rotations on any nodes, and confirm in-order traversal is unchanged. Rotations rearrange the tree but never the sorted order — this is the invariant that makes them safe. Build a property-based test that performs random valid rotations and verifies invariance.
 
 ---
 
-## Level 4 — Insertion
+## [ ] Level 4 — Insertion
 
-### 4a. BST-style colored insert (no fix-up yet)
+- [ ] **4a. BST-style colored insert (no fix-up yet)** — Status:
 
 ```
 def naive_insert(tree, key) -> Node
@@ -145,7 +147,7 @@ After the call, the tree may not be a valid RBT — it may violate property 2 (i
 
 Call your verifier from 1a — confirm it correctly identifies which property is violated.
 
-### 4b. Identify the violation
+- [ ] **4b. Identify the violation** — Status:
 
 Given the inserted red node `z` from 4a, write a function that classifies the tree state:
 
@@ -157,7 +159,7 @@ Returns one of: `"valid"`, `"red_root"`, `"red_red"`. The `"red_red"` case is th
 
 This is just an exercise in being precise about the case structure before writing fix-up code.
 
-### 4c. Insert fix-up — the uncle-red case alone
+- [ ] **4c. Insert fix-up — the uncle-red case alone** — Status:
 
 The fix-up loop walks up the tree as long as `z.parent.color == RED`. There are three cases (and three mirror cases, depending on whether the parent is a left or right child of the grandparent). Implement only the uncle-red case for now:
 
@@ -169,7 +171,7 @@ def insert_fixup_uncle_red_only(tree, z) -> None
 
 This will not produce a fully valid RBT in general — it handles only one of the cases. But it should produce a valid RBT on inputs where the uncle-red case is the only one that ever fires during the entire fix-up. Construct such an input by hand and verify.
 
-### 4d. Insert fix-up — the uncle-black cases
+- [ ] **4d. Insert fix-up — the uncle-black cases** — Status:
 
 When the uncle is black, the fix is local: one or two rotations plus a recolor, and the loop terminates. There are two sub-cases:
 
@@ -185,7 +187,7 @@ def insert_fixup_uncle_black_only(tree, z) -> None
 
 Test on hand-constructed inputs where the uncle is always black at the moment of fix-up.
 
-### 4e. Full `rb_insert`
+- [ ] **4e. Full `rb_insert`** — Status:
 
 ```
 def insert(tree, key) -> Node
@@ -193,7 +195,7 @@ def insert(tree, key) -> Node
 
 Combine 4a, 4c, and 4d into the full insert with fix-up. Don't forget to set the root to black at the end (handles the red-root case from 4b).
 
-### 4f. Insertion stress test
+- [ ] **4f. Insertion stress test** — Status:
 
 Write a test that inserts a random sequence of N keys (try N = 100, 1000, 10000) and asserts after each insert that:
 - The verifier from 1a passes.
@@ -203,11 +205,11 @@ If anything fails, your `render` from 1b should be your first stop.
 
 ---
 
-## Level 5 — Empirical structural checks
+## [ ] Level 5 — Empirical structural checks
 
 These are not new operations; they are diagnostics that build intuition about *why* the RBT properties give logarithmic height.
 
-### 5a. Black-height bound
+- [ ] **5a. Black-height bound** — Status:
 
 After 5a inserts of n random keys, plot or print:
 - Tree height (longest root-to-leaf simple path, counting nodes).
@@ -216,11 +218,11 @@ After 5a inserts of n random keys, plot or print:
 
 The height should always be at most `2 * bh(root)`, and `bh(root)` should be at most `log2(n + 1)`. Convince yourself empirically that `height ≤ 2 * log2(n + 1)`.
 
-### 5b. Operation counts per insert
+- [ ] **5b. Operation counts per insert** — Status:
 
 Instrument your `insert` to count rotations performed and recolorings (color flips) per call. Insert n keys; record per-call counts. Compute the average and max. Both should look like `O(1)` amortized for rotations (insert does at most 2) and `O(log n)` worst case for recolorings.
 
-### 5c. Adversarial input vs naive BST
+- [ ] **5c. Adversarial input vs naive BST** — Status:
 
 Insert keys `1, 2, 3, ..., n` into:
 - A naive BST.
@@ -230,11 +232,11 @@ Print the height of each. The BST will be `n`. The RBT will be roughly `2 log n`
 
 ---
 
-## Level 6 — Deletion
+## [ ] Level 6 — Deletion
 
 Delete is structurally similar to insert (BST mechanics, then fix-up) but the fix-up is harder: there are four cases instead of three, and the asymmetry between left and right children makes the mirror cases less mechanical.
 
-### 6a. Transplant
+- [ ] **6a. Transplant** — Status:
 
 ```
 def transplant(tree, u, v) -> None
@@ -242,7 +244,7 @@ def transplant(tree, u, v) -> None
 
 Replace the subtree rooted at `u` with the subtree rooted at `v`. Update `u.parent`'s child pointer (or the tree root if `u` was the root) and set `v.parent`. Does not touch `u`'s children. This is your delete primitive.
 
-### 6b. BST-style delete (adapted)
+- [ ] **6b. BST-style delete (adapted)** — Status:
 
 ```
 def naive_delete(tree, z) -> Tuple[Node, Color]
@@ -259,7 +261,7 @@ Return the substituted node and the original color of the moved node, since that
 
 Run your verifier — confirm it diagnoses the violation correctly when a black node was removed.
 
-### 6c. Delete fix-up
+- [ ] **6c. Delete fix-up** — Status:
 
 The fix-up walks up the tree from the substituted node `x`, treating `x` as carrying an "extra black" (the doubly-black sentinel of CLRS). Four cases:
 
@@ -277,7 +279,7 @@ def delete_fixup(tree, x) -> None
 
 This is the hardest single piece of the entire RBT machinery. Take it slowly. Each case has a mirror; do them one mirror at a time and lean hard on the verifier. Hand-construct minimal inputs that exercise each case in isolation before testing combinations.
 
-### 6d. Full `rb_delete`
+- [ ] **6d. Full `rb_delete`** — Status:
 
 ```
 def delete(tree, key) -> bool
@@ -285,7 +287,7 @@ def delete(tree, key) -> bool
 
 Find the node, run 6b, run 6c if the displaced node was black. Return whether deletion happened (False if key not found).
 
-### 6e. Mixed insert/delete stress test
+- [ ] **6e. Mixed insert/delete stress test** — Status:
 
 Run a randomized sequence of inserts and deletes of length 10,000, each from a small key universe (say 1..1000) so deletes hit. After each operation, assert:
 - Verifier passes.
@@ -295,11 +297,11 @@ When something breaks, the trace + your renderer is your debugging path.
 
 ---
 
-## Level 7 — Augmentation: order-statistics tree
+## [ ] Level 7 — Augmentation: order-statistics tree
 
 This is the first step toward seeing RBTs as a substrate that supports *more* than ordered set operations. The key technical insight: any subtree-summary (like size) that can be computed from a node's two children's summaries can be maintained across insert, delete, and rotation in O(1) extra work per structural change.
 
-### 7a. Add `size` field; maintain it
+- [ ] **7a. Add `size` field; maintain it** — Status:
 
 Add `size` to your `Node`: the number of nodes in the subtree rooted at that node. NIL has size 0.
 
@@ -313,7 +315,7 @@ def is_size_consistent(tree) -> bool
 
 That recomputes sizes from scratch and compares them to the stored values. Run after every insert and delete in a stress test.
 
-### 7b. `select(i)` — find the i-th smallest
+- [ ] **7b. `select(i)` — find the i-th smallest** — Status:
 
 ```
 def select(tree, i) -> Node
@@ -321,7 +323,7 @@ def select(tree, i) -> Node
 
 In O(log n). Walk down from the root: at each node, the rank of the node within its subtree is `node.left.size + 1`. If `i` matches, return; if `i` is smaller, go left; otherwise go right with `i` decreased by `node.left.size + 1`.
 
-### 7c. `rank(x)` — find the rank of node x
+- [ ] **7c. `rank(x)` — find the rank of node x** — Status:
 
 ```
 def rank(tree, x) -> int
@@ -329,7 +331,7 @@ def rank(tree, x) -> int
 
 In O(log n). Start with rank `x.left.size + 1`. Walk up to root: every time you came up from a right child, add `parent.left.size + 1` to the rank.
 
-### 7d. Range count
+- [ ] **7d. Range count** — Status:
 
 ```
 def count_in_range(tree, low, high) -> int
@@ -339,11 +341,11 @@ How many keys are in `[low, high]`? Equivalent to `rank(predecessor_or_equal(hig
 
 ---
 
-## Level 8 — Truly hairy
+## [ ] Level 8 — Truly hairy
 
 Three classic CLRS problems. Each is a multi-day undertaking; do not expect to finish one in a single session.
 
-### 8a. Build an optimal RBT from a sorted array in O(n)
+- [ ] **8a. Build an optimal RBT from a sorted array in O(n)** — Status:
 
 ```
 def build_from_sorted(keys: List[int]) -> Tree
@@ -353,7 +355,7 @@ Given a sorted array of `n` keys, construct a valid RBT in O(n). The naive appro
 
 The key insight: if `n + 1` is a power of 2, the tree is perfectly complete and can be all black. Otherwise, the bottom level is incomplete; the lowest-level *real* nodes that sit above NIL leaves need to be red, so that paths through them have the same black count as paths that end one level higher.
 
-### 8b. Join two RBTs
+- [ ] **8b. Join two RBTs** — Status:
 
 ```
 def join(t1, t2) -> Tree
@@ -369,7 +371,7 @@ The technique:
 
 Handling the case where one tree is empty, both are empty, the bridge insertion violates property 4, etc., is fiddly. Tracking black-heights correctly is the conceptual core.
 
-### 8c. Split an RBT at a key
+- [ ] **8c. Split an RBT at a key** — Status:
 
 ```
 def split(tree, k) -> Tuple[Tree, Tree]

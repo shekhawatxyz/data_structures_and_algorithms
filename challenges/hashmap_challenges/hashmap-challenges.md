@@ -1,5 +1,7 @@
 # Hashmap Programming Challenges
 
+_Problems: 0/16._
+
 A graduated sequence of problems for understanding, programming, and manipulating hashmaps (Python `dict`). Work through them in order — each builds on techniques developed in the previous ones.
 
 ## Ground rules
@@ -9,7 +11,7 @@ A graduated sequence of problems for understanding, programming, and manipulatin
 
 ---
 
-## 1. `build_phonebook`
+- [ ] **1. `build_phonebook`** — Status:
 
 ```python
 def build_phonebook(entries: list[tuple[str, str]]) -> dict[str, str]:
@@ -24,7 +26,7 @@ Examples:
 
 ---
 
-## 2. `char_count`
+- [ ] **2. `char_count`** — Status:
 
 ```python
 def char_count(s: str) -> dict[str, int]:
@@ -39,7 +41,7 @@ Examples:
 
 ---
 
-## 3. `first_unique_char`
+- [ ] **3. `first_unique_char`** — Status:
 
 ```python
 def first_unique_char(s: str) -> int:
@@ -55,7 +57,7 @@ Examples:
 
 ---
 
-## 4. `most_frequent_element`
+- [ ] **4. `most_frequent_element`** — Status:
 
 ```python
 def most_frequent_element(nums: list[int]) -> int:
@@ -70,7 +72,7 @@ Examples:
 
 ---
 
-## 5. `is_anagram`
+- [ ] **5. `is_anagram`** — Status:
 
 ```python
 def is_anagram(s: str, t: str) -> bool:
@@ -86,7 +88,7 @@ Examples:
 
 ---
 
-## 6. `two_sum`
+- [ ] **6. `two_sum`** — Status:
 
 ```python
 def two_sum(nums: list[int], target: int) -> list[int]:
@@ -101,7 +103,7 @@ Examples:
 
 ---
 
-## 7. `contains_nearby_duplicate`
+- [ ] **7. `contains_nearby_duplicate`** — Status:
 
 ```python
 def contains_nearby_duplicate(nums: list[int], k: int) -> bool:
@@ -116,7 +118,7 @@ Examples:
 
 ---
 
-## 8. `word_to_indices`
+- [ ] **8. `word_to_indices`** — Status:
 
 ```python
 def word_to_indices(words: list[str]) -> dict[str, list[int]]:
@@ -131,7 +133,7 @@ Examples:
 
 ---
 
-## 9. `group_by_length`
+- [ ] **9. `group_by_length`** — Status:
 
 ```python
 def group_by_length(words: list[str]) -> dict[int, list[str]]:
@@ -145,7 +147,7 @@ Examples:
 
 ---
 
-## 10. `group_anagrams`
+- [ ] **10. `group_anagrams`** — Status:
 
 ```python
 def group_anagrams(words: list[str]) -> list[list[str]]:
@@ -160,7 +162,7 @@ Examples:
 
 ---
 
-## 11. `isomorphic_strings`
+- [ ] **11. `isomorphic_strings`** — Status:
 
 ```python
 def isomorphic_strings(s: str, t: str) -> bool:
@@ -177,7 +179,7 @@ Examples:
 
 ---
 
-## 12. `longest_substring_without_repeating`
+- [ ] **12. `longest_substring_without_repeating`** — Status:
 
 ```python
 def longest_substring_without_repeating(s: str) -> int:
@@ -193,7 +195,7 @@ Examples:
 
 ---
 
-## 13. `subarray_sum_equals_k`
+- [ ] **13. `subarray_sum_equals_k`** — Status:
 
 ```python
 def subarray_sum_equals_k(nums: list[int], k: int) -> int:
@@ -208,7 +210,7 @@ Examples:
 
 ---
 
-## 14. `longest_subarray_with_sum_k`
+- [ ] **14. `longest_subarray_with_sum_k`** — Status:
 
 ```python
 def longest_subarray_with_sum_k(nums: list[int], k: int) -> int:
@@ -223,7 +225,7 @@ Examples:
 
 ---
 
-## 15. `LoggerRateLimiter`
+- [ ] **15. `LoggerRateLimiter`** — Status:
 
 ```python
 class LoggerRateLimiter:
@@ -248,7 +250,7 @@ logger.should_print(11, "foo")   # True
 
 ---
 
-## 16. `RandomizedSet`
+- [ ] **16. `RandomizedSet`** — Status:
 
 ```python
 class RandomizedSet:

@@ -1,5 +1,7 @@
 # Queue Challenges
 
+_Problems: 18/18._
+
 A graduated sequence of programming challenges for building deep fluency with queues and their variants.
 
 **Language:** Python.
@@ -10,9 +12,9 @@ A graduated sequence of programming challenges for building deep fluency with qu
 
 ---
 
-## Level 1 — Build a queue
+## [x] Level 1 — Build a queue
 
-### 1a — Queue with a list
+- [x] **1a — Queue with a list** — Status:
 
 Implement a `ListQueue` class backed by a plain Python list:
 
@@ -32,7 +34,7 @@ q.peek()       # 2
 len(q)         # 2
 ```
 
-### 1b — Queue with a circular buffer
+- [x] **1b — Queue with a circular buffer** — Status:
 
 Implement a `RingQueue` class with the same operations as `ListQueue`, but:
 
@@ -50,9 +52,9 @@ q.dequeue()        # 2
 
 ---
 
-## Level 2 — Drive a queue
+## [x] Level 2 — Drive a queue
 
-### 2a — Command stream
+- [x] **2a — Command stream** — Status:
 
 ```python
 def simulate(commands: list[str]) -> list:
@@ -70,7 +72,7 @@ Simulate the commands on an initially empty queue. Return the list of results fr
 simulate(["E 1", "E 2", "P", "D", "P"])  # [1, 1, 2]
 ```
 
-### 2b — Round-robin elimination
+- [x] **2b — Round-robin elimination** — Status:
 
 ```python
 def eliminate(names: list[str], k: int) -> str:
@@ -86,9 +88,9 @@ eliminate(["A", "B", "C"], 1)            # "C"
 
 ---
 
-## Level 3 — Queue as a generator
+## [x] Level 3 — Queue as a generator
 
-### 3a — First n binary numbers
+- [x] **3a — First n binary numbers** — Status:
 
 ```python
 def binary_numbers(n: int) -> list[str]:
@@ -103,7 +105,7 @@ binary_numbers(5)   # ["1", "10", "11", "100", "101"]
 
 The intended technique uses a queue. Don't just call `bin(i)` in a loop.
 
-### 3b — First non-repeating character in a stream
+- [x] **3b — First non-repeating character in a stream** — Status:
 
 ```python
 def first_unique_stream(stream: str) -> list[str]:
@@ -121,11 +123,11 @@ first_unique_stream("aabbcc")  # ["a", "#", "b", "#", "c", "#"]
 
 ---
 
-## Level 4 — Queue manipulations
+## [x] Level 4 — Queue manipulations
 
 For all of Level 4, assume access to a queue with the operations from 1a/1b. You may use the call stack (recursion) freely. Where stated, you may also use a single auxiliary stack or queue.
 
-### 4a — Reverse a queue
+- [x] **4a — Reverse a queue** — Status:
 
 ```python
 def reverse(q) -> None:
@@ -140,7 +142,7 @@ reverse(q)
 q: front [4, 3, 2, 1] back
 ```
 
-### 4b — Reverse the first k elements
+- [x] **4b — Reverse the first k elements** — Status:
 
 ```python
 def reverse_first_k(q, k: int) -> None:
@@ -155,7 +157,7 @@ reverse_first_k(q, 3)
 q: front [3, 2, 1, 4, 5, 6] back
 ```
 
-### 4c — Interleave the halves
+- [x] **4c — Interleave the halves** — Status:
 
 ```python
 def interleave(q) -> None:
@@ -172,11 +174,11 @@ q: front [1, 4, 2, 5, 3, 6] back
 
 ---
 
-## Level 5 — Cross-structure implementation
+## [x] Level 5 — Cross-structure implementation
 
 You may treat a stack as a black box with `push`, `pop`, `top`, `is_empty`, `__len__`.
 
-### 5a — Stack using a queue
+- [x] **5a — Stack using a queue** — Status:
 
 Implement a `QueueStack` class with the operations of a stack:
 
@@ -184,15 +186,15 @@ Implement a `QueueStack` class with the operations of a stack:
 
 Internally use exactly one queue (with the operations from 1a/1b). One of `push` and `pop` will be O(n); choose which.
 
-### 5b — Queue using two stacks
+- [x] **5b — Queue using two stacks** — Status:
 
 Implement a `StackQueue` class with the operations of `ListQueue` (1a), but internally backed by exactly two stacks. Each `enqueue`, `dequeue`, and `peek` should run in O(1) **amortized** time.
 
 ---
 
-## Level 6 — Deque
+## [x] Level 6 — Deque
 
-### 6a — Build a deque
+- [x] **6a — Build a deque** — Status:
 
 Implement a `Deque` class backed by a fixed-capacity circular buffer:
 
@@ -205,9 +207,9 @@ All operations O(1).
 
 ---
 
-## Level 7 — Sliding window primer
+## [x] Level 7 — Sliding window primer
 
-### 7a — Moving average
+- [x] **7a — Moving average** — Status:
 
 Implement a `MovingAverage` class:
 
@@ -226,9 +228,9 @@ ma.next(5)    # 6.0     (window is now [10, 3, 5])
 
 ---
 
-## Level 8 — Monotonic deque
+## [x] Level 8 — Monotonic deque
 
-### 8a — First negative in each window
+- [x] **8a — First negative in each window** — Status:
 
 ```python
 def first_negative_each_window(values: list[int], k: int) -> list[int]:
@@ -242,7 +244,7 @@ first_negative_each_window([12, -1, -7, 8, -15, 30, 16, 28], 3)
 # [-1, -1, -7, -15, -15, 0]
 ```
 
-### 8b — Sliding window maximum
+- [x] **8b — Sliding window maximum** — Status:
 
 ```python
 def sliding_max(values: list[int], k: int) -> list[int]:
@@ -258,9 +260,9 @@ sliding_max([1, 3, -1, -3, 5, 3, 6, 7], 3)
 
 ---
 
-## Level 9 — Hairy applications
+## [x] Level 9 — Hairy applications
 
-### 9a — Queue with getMax in O(1) amortized
+- [x] **9a — Queue with getMax in O(1) amortized** — Status:
 
 Implement a `MaxQueue` class:
 
@@ -280,7 +282,7 @@ q.dequeue()        # 1
 q.get_max()        # 5
 ```
 
-### 9b — Max sum subarray of length at most k
+- [x] **9b — Max sum subarray of length at most k** — Status:
 
 ```python
 def max_subarray_at_most_k(values: list[int], k: int) -> int:
@@ -295,7 +297,7 @@ max_subarray_at_most_k([1, -2, 3, -1, 2], 3)   # 4      ([3, -1, 2])
 max_subarray_at_most_k([-3, -1, -4, -1], 2)    # -1     ([-1])
 ```
 
-### 9c — Shortest subarray with sum at least K
+- [x] **9c — Shortest subarray with sum at least K** — Status:
 
 ```python
 def shortest_subarray(values: list[int], k: int) -> int:

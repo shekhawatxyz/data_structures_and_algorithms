@@ -14,3 +14,20 @@ Recommended solve order:
 
 This file records the intended learning order without renaming directories or
 changing import paths.
+
+## Progress Markers
+
+Challenge markdown files use `_Problems: done/total._` progress counts and
+compact problem rows:
+
+```md
+- [ ] **1a — Problem name** — Status:
+```
+
+Files with levels use `## [ ] Level ...` / `## [x] Level ...` headings for a
+one-pass marker. The level checkbox is checked only when every problem in that
+level is checked. The status tag may be blank or exactly one of `[fluent]`,
+`[shaky]`, `[deep]`.
+
+Run `python challenges/validate_progress_markers.py` to check marker counts,
+level markers, and tag spelling.
