@@ -9,21 +9,32 @@ import io
 
 from contextlib import redirect_stdout
 
+
 class Stack:
     def __init__(self):
-        raise NotImplementedError('Implement Stack.__init__().')
+        self.lst = []
 
     def push(self, item):
-        raise NotImplementedError('Implement Stack.push(item).')
+        self.lst.append(item)
 
     def pop(self):
-        raise NotImplementedError('Implement Stack.pop().')
+        if self.is_empty():
+            raise IndexError("Cannot pop from an empty stack")
+        return self.lst.pop()
 
     def is_empty(self):
-        raise NotImplementedError('Implement Stack.is_empty().')
+        return len(self.lst) == 0
+
 
 def push_pop_demo():
-    raise NotImplementedError('Implement push_pop_demo().')
+    basic_stack = Stack()
+    for i in range(1, 6):
+        basic_stack.push(i)
+    for i in range(5):
+        last_pop = basic_stack.pop()
+        print(last_pop)
+
+
 #
 #
 #
