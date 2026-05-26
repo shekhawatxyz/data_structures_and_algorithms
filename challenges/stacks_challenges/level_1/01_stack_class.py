@@ -6,24 +6,31 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **1a.** Write a `Stack` class from scratch using a Python list internally. Support `push(item)`, `pop()`, `peek()`, `is_empty()`, and `size()`. Raise an appropriate error when popping or peeking an empty stack.
 
+
 class Stack:
     def __init__(self):
-        raise NotImplementedError('Implement Stack.__init__().')
+        self.lst = []
 
     def push(self, item):
-        raise NotImplementedError('Implement Stack.push(item).')
+        self.lst.append(item)
 
     def pop(self):
-        raise NotImplementedError('Implement Stack.pop().')
+        if self.is_empty():
+            raise IndexError("Stack is empty")
+        return self.lst.pop()
 
     def peek(self):
-        raise NotImplementedError('Implement Stack.peek().')
+        if self.is_empty():
+            raise IndexError("Stack is empty")
+        return self.lst[-1]
 
     def is_empty(self):
-        raise NotImplementedError('Implement Stack.is_empty().')
+        return len(self.lst) == 0
 
     def size(self):
-        raise NotImplementedError('Implement Stack.size().')
+        return len(self.lst)
+
+
 #
 #
 #
