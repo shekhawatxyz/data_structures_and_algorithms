@@ -13,7 +13,24 @@ class Node:
 
 
 def insert_at(head, index, value):
-    raise NotImplementedError("Implement insert_at(head, index, value).")
+    new_node = Node(value)
+    counter = 0
+    if index < 0:
+        raise IndexError("Index is negative")
+    if index == 0:
+        new_node.next = head
+        return new_node
+    cursor = head
+    while cursor:
+        if counter == index - 1:
+            next_value = cursor.next
+            cursor.next = new_node
+            new_node.next = next_value
+            return head
+        counter += 1
+        cursor = cursor.next
+    if index > counter:
+        raise IndexError("Index is out of range")
 
 
 #
