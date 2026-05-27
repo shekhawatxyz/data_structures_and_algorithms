@@ -34,7 +34,25 @@ def _make_level_order(values):
 
 
 def postorder_iterative(root):
-    raise NotImplementedError("Implement postorder_iterative(root).")
+    result = []
+    if root is None:
+        return result
+    stack = []
+    stack.append([root, 0, 0])
+    while stack:
+        current = stack[-1]
+        if current[1] == 0:
+            if current[0].left:
+                stack.append([current[0].left, 0, 0])
+            current[1] = 1
+        elif current[2] == 0:
+            if current[0].right:
+                stack.append([current[0].right, 0, 0])
+            current[2] = 1
+        else:
+            to_add = stack.pop()
+            result.append(to_add[0].value)
+    return result
 
 
 #
@@ -160,7 +178,10 @@ if __name__ == "__main__":
     TEST_CASES = [
         ("empty tree", test_empty_tree),
         ("single node", test_single_node),
-        ("full small tree matches recursive postorder", test_full_small_tree_matches_recursive_postorder),
+        (
+            "full small tree matches recursive postorder",
+            test_full_small_tree_matches_recursive_postorder,
+        ),
         ("right-skewed tree", test_right_skewed_tree),
         ("uneven tree", test_uneven_tree),
     ]
