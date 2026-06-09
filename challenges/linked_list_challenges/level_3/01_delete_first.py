@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **3.1** Write `delete_first(head, value)` — removes the first node with the given value. Returns the (possibly new) head. Do nothing if the value isn't found.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,19 @@ class Node:
 
 
 def delete_first(head, value):
-    raise NotImplementedError('Implement delete_first(head, value).')
+    if head is None:
+        return None
+    dummy = Node(0)
+    current = dummy
+    current.next = head
+    while current.next:
+        if current.next.data == value:
+            current.next = current.next.next
+            break
+        else:
+            current = current.next
+    return dummy.next
+
 
 #
 #
