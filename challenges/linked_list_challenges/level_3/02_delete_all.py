@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **3.2** Write `delete_all(head, value)` — removes *every* node with the given value.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,15 @@ class Node:
 
 
 def delete_all(head, value):
-    raise NotImplementedError('Implement delete_all(head, value).')
+    dummy = Node(0, head)
+    current = dummy
+    while current.next:
+        if current.next.data == value:
+            current.next = current.next.next
+        else:
+            current = current.next
+    return dummy.next
+
 
 #
 #
