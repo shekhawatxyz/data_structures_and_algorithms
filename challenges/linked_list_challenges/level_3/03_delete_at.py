@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **3.3** Write `delete_at(head, index)` — removes the node at position `index`. Returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,19 @@ class Node:
 
 
 def delete_at(head, index):
-    raise NotImplementedError('Implement delete_at(head, index).')
+    if index < 0:
+        raise IndexError("Only works for positive values")
+    dummy = Node(0, head)
+    current = dummy
+    count = 0
+    while current.next:
+        if index == count:
+            current.next = current.next.next
+            return dummy.next
+        current = current.next
+        count += 1
+    raise IndexError("Index out of bounds")
+
 
 #
 #
