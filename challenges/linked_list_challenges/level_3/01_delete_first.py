@@ -13,11 +13,10 @@ class Node:
 
 
 def delete_first(head, value):
-    if head is None:
-        return None
-    dummy = Node(0)
+    # if head is None:
+    #     return None
+    dummy = Node(0, head)
     current = dummy
-    current.next = head
     while current.next:
         if current.next.data == value:
             current.next = current.next.next
