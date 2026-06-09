@@ -5,14 +5,51 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **3.4** Write `delete_range(head, start, end)` — removes all nodes from index `start` to index `end` (inclusive). Returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
         self.next = next
 
 
+def validate_range(head, start, end):
+    """
+    validate_range simply checks if the range is valid or not.
+    If end is beyond length, it raises an error at the end.
+    It also raises errors at the start if there other discrepancies like start
+    being higher than end or either being below 0.
+    """
+    if start < 0 or end < 0 or start > end:
+        raise IndexError("Invalid range")
+    count = 0
+    current = head
+    while current:
+        current = current.next
+        count += 1
+    if end >= count:
+        raise IndexError("End is outside of the length of the linked list")
+
+
 def delete_range(head, start, end):
-    raise NotImplementedError('Implement delete_range(head, start, end).')
+    """
+    This takes a head, a start and and end, and if start and end are within
+    the length of the sll, it removes that part of the sll and returns the head.
+    It can be a new head. If the range of start and end is off, the helper raises
+    errors.
+    """
+    validate_range(head, start, end)
+    dummy = Node(0, head)
+    current = dummy
+    count = 0
+    while current.next:
+        if count in range(start, end + 1):
+            current.next = current.next.next
+            if count == end:
+                return dummy.next
+        else:
+            current = current.next
+        count += 1
+
 
 #
 #
