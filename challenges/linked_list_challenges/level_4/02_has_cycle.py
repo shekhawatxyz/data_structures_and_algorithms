@@ -13,13 +13,13 @@ class Node:
 
 
 def has_cycle(head):
-    lookup = set()
-    current = head
-    while current:
-        if current in lookup:
+    slow = head
+    fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
             return True
-        lookup.add(current)
-        current = current.next
     return False
 
 
