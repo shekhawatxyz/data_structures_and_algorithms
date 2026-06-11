@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **4.1** Write `nth_from_end(head, n)` — returns the value of the nth node from the end (1-indexed, so `n=1` gives the last node). Do this in a single pass.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,23 @@ class Node:
 
 
 def nth_from_end(head, n):
-    raise NotImplementedError('Implement nth_from_end(head, n).')
+    if n < 1:
+        raise IndexError("n cannot be below 1")
+    count = 0
+    pointer1 = head
+    pointer2 = head
+    while pointer2:
+        if count < n:
+            pointer2 = pointer2.next
+            count += 1
+        else:
+            pointer1 = pointer1.next
+            pointer2 = pointer2.next
+    if n > count:
+        raise IndexError
+    else:
+        return pointer1.data
+
 
 #
 #
