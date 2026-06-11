@@ -83,11 +83,11 @@ Write `delete_range(head, start, end)` — removes all nodes from index `start` 
 
 These are still single-list problems, but each one requires you to think slightly beyond simple traversal.
 
-- [x] **4.1** — Status:
+- [x] **4.1** — Status: shaky
 
 Write `nth_from_end(head, n)` — returns the value of the nth node from the end (1-indexed, so `n=1` gives the last node). Do this in a single pass.
 
-- [x] **4.2** — Status:
+- [x] **4.2** — Status: hard
 
 Write `has_cycle(head)` — returns `True` if the linked list contains a cycle. (Construct a test case by manually pointing a node's `next` to an earlier node.)
 
