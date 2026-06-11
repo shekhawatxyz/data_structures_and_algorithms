@@ -36,7 +36,14 @@ def _make_level_order(values):
 
 
 def max_value(root):
-    raise NotImplementedError("Implement max_value(root).")
+    if root is None:
+        raise ValueError
+    candidates = [root.value]
+    if root.left:
+        candidates.append(max_value(root.left))
+    if root.right:
+        candidates.append(max_value(root.right))
+    return max(candidates)
 
 
 #
@@ -130,7 +137,9 @@ def _run_all_tests(test_cases):
 
 
 def test_empty_tree_raises_value_error():
-    _assert_raises(ValueError, lambda: max_value(None), "empty tree behavior should be documented.")
+    _assert_raises(
+        ValueError, lambda: max_value(None), "empty tree behavior should be documented."
+    )
 
 
 def test_single_node_max():
@@ -149,7 +158,9 @@ def test_max_in_left_subtree():
 
 def test_all_negative_values():
     tree = _make_level_order([-10, -4, -7, -20])
-    _assert_equal(max_value(tree), -4, "maximum among negatives is the least negative value.")
+    _assert_equal(
+        max_value(tree), -4, "maximum among negatives is the least negative value."
+    )
 
 
 if __name__ == "__main__":
