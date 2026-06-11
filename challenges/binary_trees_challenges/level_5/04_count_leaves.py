@@ -34,7 +34,11 @@ def _make_level_order(values):
 
 
 def count_leaves(root):
-    raise NotImplementedError("Implement count_leaves(root).")
+    if root is None:
+        return 0
+    elif root.left is None and root.right is None:
+        return 1
+    return 0 + count_leaves(root.left) + count_leaves(root.right)
 
 
 #
@@ -145,7 +149,10 @@ if __name__ == "__main__":
     TEST_CASES = [
         ("empty tree has zero leaves", test_empty_tree_has_zero_leaves),
         ("single node is one leaf", test_single_node_is_one_leaf),
-        ("full three node tree has two leaves", test_full_three_node_tree_has_two_leaves),
+        (
+            "full three node tree has two leaves",
+            test_full_three_node_tree_has_two_leaves,
+        ),
         ("uneven tree leaf count", test_uneven_tree_leaf_count),
         ("skewed tree has one leaf", test_skewed_tree_has_one_leaf),
     ]
