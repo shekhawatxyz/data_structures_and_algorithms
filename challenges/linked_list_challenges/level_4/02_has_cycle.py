@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **4.2** Write `has_cycle(head)` — returns `True` if the linked list contains a cycle. (Construct a test case by manually pointing a node's `next` to an earlier node.)
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,15 @@ class Node:
 
 
 def has_cycle(head):
-    raise NotImplementedError('Implement has_cycle(head).')
+    lookup = set()
+    current = head
+    while current:
+        if current in lookup:
+            return True
+        lookup.add(current)
+        current = current.next
+    return False
+
 
 #
 #
