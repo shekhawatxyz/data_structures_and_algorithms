@@ -1,6 +1,6 @@
 # Singly Linked Lists: Graduated Programming Challenges
 
-_Problems: 32/32._
+_Problems: 32._
 
 Assume throughout that you are working with this node definition (or your own equivalent):
 
@@ -13,7 +13,7 @@ class Node:
 
 ---
 
-## [x] Level 1: Getting Comfortable with the Structure
+## Level 1: Getting Comfortable with the Structure
 
 The point here is to get your hands on the basic shape — a node points to the next node, the last node points to `None` — and to write your first traversals.
 
@@ -35,7 +35,7 @@ Write a function `length(head)` that returns the number of nodes in the list.
 
 ---
 
-## [x] Level 2: Single-Point Insertion and Search
+## Level 2: Single-Point Insertion and Search
 
 You now manipulate the list at specific points, which requires thinking about pointer updates.
 
@@ -57,7 +57,7 @@ Write `insert_at(head, index, value)` — inserts a new node at position `index`
 
 ---
 
-## [x] Level 3: Deletion
+## Level 3: Deletion
 
 Deletion is where pointer manipulation starts requiring more care: you need to keep track of the node *before* the one you want to remove.
 
@@ -79,7 +79,7 @@ Write `delete_range(head, start, end)` — removes all nodes from index `start` 
 
 ---
 
-## [x] Level 4: Queries That Require Some Thought
+## Level 4: Queries That Require Some Thought
 
 These are still single-list problems, but each one requires you to think slightly beyond simple traversal.
 
@@ -101,7 +101,7 @@ Write `remove_duplicates_sorted(head)` — given a list whose values are in non-
 
 ---
 
-## [x] Level 5: Structural Transformation
+## Level 5: Structural Transformation
 
 Now you're changing the shape of the list itself, not just adding or removing nodes. These require you to hold and update multiple pointers simultaneously.
 
@@ -123,7 +123,7 @@ Write `is_palindrome(head)` — returns `True` if the list reads the same forwar
 
 ---
 
-## [x] Level 6: Multi-List Operations
+## Level 6: Multi-List Operations
 
 You now have to reason about two lists at once, advancing through both while maintaining invariants.
 
@@ -145,7 +145,7 @@ Write `split_alternating(head)` — split a single list into two lists by altern
 
 ---
 
-## [x] Level 7: Complex Manipulation
+## Level 7: Complex Manipulation
 
 Each of these demands that you hold more state in your head, manage more pointers at once, or think recursively about subproblems within the list.
 
@@ -167,7 +167,7 @@ Now write `remove_duplicates_unsorted_no_extra(head)` — same as above, but wit
 
 ---
 
-## [x] Level 8: The Hairy Stuff
+## Level 8: The Hairy Stuff
 
 These problems require you to combine multiple ideas — reversal, merging, careful pointer surgery — or demand recursive thinking about groups and substructure within the list.
 

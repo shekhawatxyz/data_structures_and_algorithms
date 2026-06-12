@@ -1,6 +1,6 @@
 # Queue Challenges
 
-_Problems: 18/18._
+_Problems: 18._
 
 A graduated sequence of programming challenges for building deep fluency with queues and their variants.
 
@@ -12,7 +12,7 @@ A graduated sequence of programming challenges for building deep fluency with qu
 
 ---
 
-## [x] Level 1 — Build a queue
+## Level 1 — Build a queue
 
 - [x] **1a — Queue with a list** — Status:
 
@@ -52,7 +52,7 @@ q.dequeue()        # 2
 
 ---
 
-## [x] Level 2 — Drive a queue
+## Level 2 — Drive a queue
 
 - [x] **2a — Command stream** — Status:
 
@@ -88,7 +88,7 @@ eliminate(["A", "B", "C"], 1)            # "C"
 
 ---
 
-## [x] Level 3 — Queue as a generator
+## Level 3 — Queue as a generator
 
 - [x] **3a — First n binary numbers** — Status:
 
@@ -123,7 +123,7 @@ first_unique_stream("aabbcc")  # ["a", "#", "b", "#", "c", "#"]
 
 ---
 
-## [x] Level 4 — Queue manipulations
+## Level 4 — Queue manipulations
 
 For all of Level 4, assume access to a queue with the operations from 1a/1b. You may use the call stack (recursion) freely. Where stated, you may also use a single auxiliary stack or queue.
 
@@ -174,7 +174,7 @@ q: front [1, 4, 2, 5, 3, 6] back
 
 ---
 
-## [x] Level 5 — Cross-structure implementation
+## Level 5 — Cross-structure implementation
 
 You may treat a stack as a black box with `push`, `pop`, `top`, `is_empty`, `__len__`.
 
@@ -192,7 +192,7 @@ Implement a `StackQueue` class with the operations of `ListQueue` (1a), but inte
 
 ---
 
-## [x] Level 6 — Deque
+## Level 6 — Deque
 
 - [x] **6a — Build a deque** — Status:
 
@@ -207,7 +207,7 @@ All operations O(1).
 
 ---
 
-## [x] Level 7 — Sliding window primer
+## Level 7 — Sliding window primer
 
 - [x] **7a — Moving average** — Status:
 
@@ -228,7 +228,7 @@ ma.next(5)    # 6.0     (window is now [10, 3, 5])
 
 ---
 
-## [x] Level 8 — Monotonic deque
+## Level 8 — Monotonic deque
 
 - [x] **8a — First negative in each window** — Status:
 
@@ -260,7 +260,7 @@ sliding_max([1, 3, -1, -3, 5, 3, 6, 7], 3)
 
 ---
 
-## [x] Level 9 — Hairy applications
+## Level 9 — Hairy applications
 
 - [x] **9a — Queue with getMax in O(1) amortized** — Status:
 

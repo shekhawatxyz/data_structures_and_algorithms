@@ -17,17 +17,17 @@ changing import paths.
 
 ## Progress Markers
 
-Challenge markdown files use `_Problems: done/total._` progress counts and
-compact problem rows:
+Challenge markdown files use `_Problems: total._` problem counts and compact
+problem rows:
 
 ```md
 - [ ] **1a — Problem name** — Status:
 ```
 
-Files with levels use `## [ ] Level ...` / `## [x] Level ...` headings for a
-one-pass marker. The level checkbox is checked only when every problem in that
-level is checked. The status tag may be blank or exactly one of `[fluent]`,
-`[shaky]`, `[deep]`.
+Tick the problem row when it is done. Do not update a separate completed count
+or a level heading checkbox. `Status:` is optional free text for notes like
+`shaky`, `hard`, `revisit`, or `deep practice`.
 
-Run `python challenges/validate_progress_markers.py` to check marker counts,
-level markers, and tag spelling.
+Run `python challenges/validate_progress_markers.py` to check that every
+challenge file has one problem marker and that the total problem count still
+matches the files on disk.

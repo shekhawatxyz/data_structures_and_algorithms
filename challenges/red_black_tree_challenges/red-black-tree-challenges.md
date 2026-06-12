@@ -1,6 +1,6 @@
 # Red-Black Tree Programming Challenges
 
-_Problems: 0/30._
+_Problems: 30._
 
 A graduated sequence of programming challenges for understanding, implementing, and manipulating red-black trees in Python. Each level adds a single new dimension of complexity to what came before. The property checker built in Level 1 is the keystone — reuse it as your verification tool throughout.
 
@@ -27,7 +27,7 @@ The five RBT properties (CLRS notation):
 
 ---
 
-## [ ] Level 1 — Foundations
+## Level 1 — Foundations
 
 - [ ] **1a. `Node` class and property verifier** — Status:
 
@@ -73,7 +73,7 @@ Run them through your verifier from 1a. Confirm valid trees pass and invalid tre
 
 ---
 
-## [ ] Level 2 — BST operations on an RBT (free reuse)
+## Level 2 — BST operations on an RBT (free reuse)
 
 Color is irrelevant to all of these. Implement them anyway, both to confirm your `Node` interface works and to have them available for later levels.
 
@@ -106,7 +106,7 @@ Verify the result is sorted on every tree you have. This will be your sanity che
 
 ---
 
-## [ ] Level 3 — Rotations
+## Level 3 — Rotations
 
 - [ ] **3a. Left rotate** — Status:
 
@@ -133,7 +133,7 @@ Write a test: take any tree, perform any sequence of rotations on any nodes, and
 
 ---
 
-## [ ] Level 4 — Insertion
+## Level 4 — Insertion
 
 - [ ] **4a. BST-style colored insert (no fix-up yet)** — Status:
 
@@ -205,7 +205,7 @@ If anything fails, your `render` from 1b should be your first stop.
 
 ---
 
-## [ ] Level 5 — Empirical structural checks
+## Level 5 — Empirical structural checks
 
 These are not new operations; they are diagnostics that build intuition about *why* the RBT properties give logarithmic height.
 
@@ -232,7 +232,7 @@ Print the height of each. The BST will be `n`. The RBT will be roughly `2 log n`
 
 ---
 
-## [ ] Level 6 — Deletion
+## Level 6 — Deletion
 
 Delete is structurally similar to insert (BST mechanics, then fix-up) but the fix-up is harder: there are four cases instead of three, and the asymmetry between left and right children makes the mirror cases less mechanical.
 
@@ -297,7 +297,7 @@ When something breaks, the trace + your renderer is your debugging path.
 
 ---
 
-## [ ] Level 7 — Augmentation: order-statistics tree
+## Level 7 — Augmentation: order-statistics tree
 
 This is the first step toward seeing RBTs as a substrate that supports *more* than ordered set operations. The key technical insight: any subtree-summary (like size) that can be computed from a node's two children's summaries can be maintained across insert, delete, and rotation in O(1) extra work per structural change.
 
@@ -341,7 +341,7 @@ How many keys are in `[low, high]`? Equivalent to `rank(predecessor_or_equal(hig
 
 ---
 
-## [ ] Level 8 — Truly hairy
+## Level 8 — Truly hairy
 
 Three classic CLRS problems. Each is a multi-day undertaking; do not expect to finish one in a single session.
 

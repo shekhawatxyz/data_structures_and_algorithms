@@ -1,6 +1,6 @@
 # Binary Tree Challenges
 
-_Problems: 13/38._
+_Problems: 38._
 
 A graduated sequence of programming challenges for building deep fluency with binary trees: construction, the standard traversals, structural operations, search-tree variants, reconstruction, and a final tier of harder applications.
 
@@ -12,7 +12,7 @@ A graduated sequence of programming challenges for building deep fluency with bi
 
 ---
 
-## [x] Level 1 — Build a binary tree
+## Level 1 — Build a binary tree
 
 - [x] **1a — Node class** — Status:
 
@@ -42,7 +42,7 @@ from_level_order([1, 2, 3, None, 4, 5, None])
 
 ---
 
-## [x] Level 2 — Recursive traversals
+## Level 2 — Recursive traversals
 
 - [x] **2a — Preorder** — Status:
 
@@ -70,7 +70,7 @@ postorder(from_level_order([1, 2, 3, 4, 5]))  # [4, 5, 2, 3, 1]
 
 ---
 
-## [ ] Level 3 — Iterative traversals
+## Level 3 — Iterative traversals
 
 For Level 3, you may use an explicit stack. No recursion — assume the tree may be deeper than the call stack allows.
 
@@ -88,7 +88,7 @@ Implement `postorder_iterative(root) -> list`. The output must match `postorder`
 
 ---
 
-## [x] Level 4 — Level-order traversal
+## Level 4 — Level-order traversal
 
 For Level 4, you may use a queue (e.g. `collections.deque`).
 
@@ -120,7 +120,7 @@ right_view(from_level_order([1, 2, 3, None, 4, None, None]))
 
 ---
 
-## [ ] Level 5 — Properties
+## Level 5 — Properties
 
 - [x] **5a — Count nodes** — Status:
 
@@ -157,7 +157,7 @@ min_depth(from_level_order([1, None, 2, None, 3]))   # 2
 
 ---
 
-## [ ] Level 6 — Paths
+## Level 6 — Paths
 
 - [ ] **6a — Has path sum** — Status:
 
@@ -179,7 +179,7 @@ all_paths(from_level_order([1, 2, 3, 4, 5]))
 
 ---
 
-## [ ] Level 7 — Structural operations
+## Level 7 — Structural operations
 
 - [ ] **7a — Equal** — Status:
 
@@ -215,7 +215,7 @@ is_balanced(from_level_order([1, 2, None, 3]))   # False
 
 ---
 
-## [ ] Level 8 — Structural modification
+## Level 8 — Structural modification
 
 These return or rearrange nodes. Be precise, on paper, about which pointers change and in what order.
 
@@ -264,7 +264,7 @@ flatten_to_right(from_level_order([1, 2, 5, 3, 4, None, 6]))
 
 ---
 
-## [ ] Level 9 — Information flowing both ways
+## Level 9 — Information flowing both ways
 
 Each subtree returns a small piece of information *up* while a result is accumulated *across* the whole tree. 9a and 9d are the same shape at two intensities.
 
@@ -300,7 +300,7 @@ max_path_sum(from_level_order([-10, 9, 20, None, None, 15, 7]))   # 42
 
 ---
 
-## [ ] Level 10 — Binary search trees
+## Level 10 — Binary search trees
 
 A binary search tree is a binary tree carrying an ordering invariant. This is the one genuinely new *idea* in the sequence — everything else is the recursion machinery you already have. Treat the input as a BST built by left-then-right key comparisons; duplicate keys (where applicable) go to the right.
 
@@ -330,7 +330,7 @@ is_valid_bst(from_level_order([5, 1, 4, None, None, 3, 6]))   # False
 
 ---
 
-## [ ] Level 11 — Reconstruction and serialization
+## Level 11 — Reconstruction and serialization
 
 Recovering structure from sequences; round-trippable representations.
 
@@ -353,7 +353,7 @@ Implement `deserialize(data) -> Node | None`, the inverse of `serialize` (11b). 
 
 ---
 
-## [ ] Level 12 — The hairy tier
+## Level 12 — The hairy tier
 
 - [ ] **12a — Morris inorder** — Status:
 

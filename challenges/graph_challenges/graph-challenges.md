@@ -1,6 +1,6 @@
 # Graph Programming Challenges
 
-_Problems: 0/60._
+_Problems: 60._
 
 A graduated sequence. Each level introduces a single new conceptual wrinkle on top of what came before. Sub-problems within a level explore that wrinkle from different angles — pick what stretches you; you don't have to do all of a–d.
 
@@ -15,7 +15,7 @@ A graduated sequence. Each level introduces a single new conceptual wrinkle on t
 
 ---
 
-## [ ] Level 1 — Representation
+## Level 1 — Representation
 
 The graph as a thing that lives in memory.
 
@@ -43,7 +43,7 @@ Produce the canonical edge list back out of an adjacency list. For undirected gr
 
 ---
 
-## [ ] Level 2 — Basic queries
+## Level 2 — Basic queries
 
 Reading a graph without modifying it.
 
@@ -65,7 +65,7 @@ Return the set of vertices `u ≠ v` such that there exists some `w` with `v–w
 
 ---
 
-## [ ] Level 3 — Mutation
+## Level 3 — Mutation
 
 The graph changes.
 
@@ -87,7 +87,7 @@ For a simple undirected graph, return its complement: an edge in the result iff 
 
 ---
 
-## [ ] Level 4 — Depth-first search
+## Level 4 — Depth-first search
 
 Visiting every reachable vertex, systematically.
 
@@ -109,7 +109,7 @@ Return a list where `label[i]` is the component ID of vertex `i`. Assign IDs `0,
 
 ---
 
-## [ ] Level 5 — Breadth-first search
+## Level 5 — Breadth-first search
 
 Layer by layer.
 
@@ -131,7 +131,7 @@ Given a set of sources `S`, return for each vertex its distance to the *nearest*
 
 ---
 
-## [ ] Level 6 — Cycles
+## Level 6 — Cycles
 
 Detection, finding, classifying.
 
@@ -153,7 +153,7 @@ During a DFS run on a directed graph, count the back edges. A primer for full ed
 
 ---
 
-## [ ] Level 7 — Topological order
+## Level 7 — Topological order
 
 Linearising a DAG.
 
@@ -175,7 +175,7 @@ Length of the longest path in a DAG. The whole graph is the search space — but
 
 ---
 
-## [ ] Level 8 — Colouring and bipartiteness
+## Level 8 — Colouring and bipartiteness
 
 Constraints propagating during traversal.
 
@@ -197,7 +197,7 @@ Given `k`, decide if the graph admits a `k`-colouring. NP-hard in general — ba
 
 ---
 
-## [ ] Level 9 — Weighted shortest paths
+## Level 9 — Weighted shortest paths
 
 Edge weights enter.
 
@@ -219,7 +219,7 @@ Shortest distance from `s` to `t` using at most `k` edges. The Bellman-Ford skel
 
 ---
 
-## [ ] Level 10 — All-pairs shortest paths
+## Level 10 — All-pairs shortest paths
 
 A different paradigm: DP over intermediate vertices.
 
@@ -241,7 +241,7 @@ The largest shortest-path distance between any pair of vertices. For unweighted 
 
 ---
 
-## [ ] Level 11 — Spanning trees
+## Level 11 — Spanning trees
 
 Greedy growth.
 
@@ -263,7 +263,7 @@ The second-best MST: a spanning tree of minimum weight among those that are *not
 
 ---
 
-## [ ] Level 12 — DFS edge classification and lowlink
+## Level 12 — DFS edge classification and lowlink
 
 The structural insights of DFS — this is where things deepen.
 
@@ -285,7 +285,7 @@ Decompose an undirected graph into biconnected components. Maintain a stack of e
 
 ---
 
-## [ ] Level 13 — Strong connectivity
+## Level 13 — Strong connectivity
 
 Directed connectivity is genuinely harder than undirected.
 
@@ -307,7 +307,7 @@ A directed graph is semiconnected iff for every pair `(u, v)`, at least one of `
 
 ---
 
-## [ ] Level 14 — Eulerian paths
+## Level 14 — Eulerian paths
 
 Walking every edge exactly once.
 
@@ -329,7 +329,7 @@ Return one Eulerian path. The standard trick: add a virtual edge between the two
 
 ---
 
-## [ ] Level 15 — Flow
+## Level 15 — Flow
 
 The hardest level. A new conceptual machinery: residual graphs and augmenting paths.
 

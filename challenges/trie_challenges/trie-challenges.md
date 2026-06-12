@@ -1,6 +1,6 @@
 # Trie programming challenges
 
-_Problems: 0/22._
+_Problems: 22._
 
 A graduated sequence of programming challenges to build and stress-test understanding of tries (prefix trees) in Python. Each level introduces one new conceptual demand on top of the previous; sub-problems within a level explore variations of that demand and consolidate the new mental move.
 
@@ -36,7 +36,7 @@ Edge cases worth keeping in your peripheral vision throughout: the empty string,
 
 ---
 
-## [ ] Level 1 — Build and lookup
+## Level 1 — Build and lookup
 
 - [ ] **1a. `insert(root, word)`** — Status:
 
@@ -52,7 +52,7 @@ Return `True` iff some inserted word has `prefix` as a prefix. The terminal flag
 
 ---
 
-## [ ] Level 2 — Full traversals
+## Level 2 — Full traversals
 
 Now you visit nodes you didn't navigate to via a known string. The skill is DFS over the whole trie, often carrying the current path.
 
@@ -70,7 +70,7 @@ Return the longest word in the trie. Tie-break however you like, but state your 
 
 ---
 
-## [ ] Level 3 — Navigate, then traverse
+## Level 3 — Navigate, then traverse
 
 Same DFS skill as level 2, but starting from a node deep in the trie rather than the root.
 
@@ -84,7 +84,7 @@ List the words. Each returned word should be the *full* word, not just the suffi
 
 ---
 
-## [ ] Level 4 — Walking with state
+## Level 4 — Walking with state
 
 An external string drives the walk; you maintain bookkeeping along the way. The recurring question is *what do I remember as I descend, and when do I commit to it*.
 
@@ -108,7 +108,7 @@ Example: trie = `{"cat", "bat", "rat"}`, sentence = `"the cattle was rattled by 
 
 ---
 
-## [ ] Level 5 — Deletion
+## Level 5 — Deletion
 
 - [ ] **5a. `delete(root, word)`** — Status:
 
@@ -118,7 +118,7 @@ Cases worth thinking through *before* you code (try to enumerate your own list b
 
 ---
 
-## [ ] Level 6 — Augmented tries
+## Level 6 — Augmented tries
 
 One small extension to the node enables much faster queries and a new class of operations.
 
@@ -132,7 +132,7 @@ Using the `word_count` augmentation, return the `k`-th word in lexicographic ord
 
 ---
 
-## [ ] Level 7 — Wildcard search
+## Level 7 — Wildcard search
 
 Branching recursion: the search may fork at certain characters in the query.
 
@@ -148,7 +148,7 @@ Same wildcard rules; return the list of all matching words.
 
 ---
 
-## [ ] Level 8 — Trie + segmentation
+## Level 8 — Trie + segmentation
 
 Trie used as a sub-procedure inside a larger search over an input string.
 
@@ -166,7 +166,7 @@ Example: trie = `{"cat", "cats", "and", "sand", "dog"}`, `s = "catsanddog"` → 
 
 ---
 
-## [ ] Level 9 — Bit trie
+## Level 9 — Bit trie
 
 Same data structure, different alphabet. Each node has at most two children, indexed `0` and `1`. For these problems integers are treated as fixed-width bit strings — assume 32 bits, most-significant bit first.
 
@@ -188,7 +188,7 @@ Given a list of non-negative integers, return the maximum XOR over all pairs `(v
 
 ---
 
-## [ ] Level 10 — Capstones
+## Level 10 — Capstones
 
 - [ ] **10a. `AutocompleteSystem`** — Status:
 

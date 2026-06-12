@@ -1,12 +1,12 @@
 # Graduated Stack Challenges
 
-_Problems: 34/34._
+_Problems: 34._
 
 A sequence of programming challenges for learning stacks in Python. Each level is a cluster of problems that build toward a key idea, with interstitial steps to make the progression gradual.
 
 ---
 
-## [x] Level 1 — Implement the Thing
+## Level 1 — Implement the Thing
 
 **Core demand:** Understanding the stack ADT itself.
 
@@ -24,7 +24,7 @@ Add a `__str__` method to your `Stack` class that prints the stack contents from
 
 ---
 
-## [x] Level 2 — Single-Pass, Uniform Use
+## Level 2 — Single-Pass, Uniform Use
 
 **Core demand:** The basic push-everything-then-pop-everything pattern.
 
@@ -42,7 +42,7 @@ Write a function that takes a positive integer and returns its binary representa
 
 ---
 
-## [x] Level 3 — Conditional Push/Pop
+## Level 3 — Conditional Push/Pop
 
 **Core demand:** Push/pop decisions depend on what you encounter.
 
@@ -60,7 +60,7 @@ Write a function that takes a string containing `(` and `)` among other characte
 
 ---
 
-## [x] Level 4 — Matching Across Types
+## Level 4 — Matching Across Types
 
 **Core demand:** Pop decisions require inspecting and comparing what's on top.
 
@@ -78,7 +78,7 @@ Write a function that takes an incomplete bracket string and returns the *minimu
 
 ---
 
-## [x] Level 5 — Stack as Computation Engine
+## Level 5 — Stack as Computation Engine
 
 **Core demand:** The stack holds intermediate computed values; you operate on popped values and push results back.
 
@@ -96,7 +96,7 @@ Add support for a `"dup"` operator (duplicates the top of the stack) and a `"swa
 
 ---
 
-## [x] Level 6 — Precedence and Associativity
+## Level 6 — Precedence and Associativity
 
 **Core demand:** When to pop is governed by comparing precedence of the incoming operator vs. the stack top.
 
@@ -118,7 +118,7 @@ Extend your shunting-yard to handle right-associative exponentiation `^`. For ex
 
 ---
 
-## [x] Level 7 — Auxiliary Stack as Design Constraint
+## Level 7 — Auxiliary Stack as Design Constraint
 
 **Core demand:** Figure out what auxiliary information to maintain and keep it synchronised.
 
@@ -136,7 +136,7 @@ Using only stacks, implement a queue. That is, build a class `StackQueue` suppor
 
 ---
 
-## [x] Level 8 — Monotonic Stack Reasoning
+## Level 8 — Monotonic Stack Reasoning
 
 **Core demand:** Maintain a stack invariant (monotonicity) and reason about what the stack *represents*.
 
@@ -158,7 +158,7 @@ Given a circular array (the element after the last is the first), find the next 
 
 ---
 
-## [x] Level 9 — Hard Monotonic Stack
+## Level 9 — Hard Monotonic Stack
 
 **Core demand:** Subtler invariant, boundary reasoning on each pop, tricky edge cases.
 
@@ -180,7 +180,7 @@ Extension: given a binary matrix (0s and 1s) of size m × n, find the largest re
 
 ---
 
-## [x] Level 10 — Nested Structure with State Recovery
+## Level 10 — Nested Structure with State Recovery
 
 **Core demand:** The stack saves and restores entire computation state across nesting levels.
 

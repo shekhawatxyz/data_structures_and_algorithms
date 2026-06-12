@@ -1,6 +1,6 @@
 # Doubly Linked Lists: Graduated Programming Challenges
 
-_Problems: 33/33._
+_Problems: 33._
 
 Assume throughout that you are working with this node definition (or your own equivalent):
 
@@ -16,7 +16,7 @@ The key difference from singly linked lists: every node now points both forward 
 
 ---
 
-## [x] Level 1: Getting Comfortable with the Structure
+## Level 1: Getting Comfortable with the Structure
 
 Same spirit as the singly linked list Level 1, but now you must keep `prev` pointers consistent from the start.
 
@@ -38,7 +38,7 @@ Write `verify(head)` — traverses the entire list and checks that for every nod
 
 ---
 
-## [x] Level 2: Insertion
+## Level 2: Insertion
 
 Each of these requires updating two pointers per affected node instead of one. Get in the habit of thinking: "which pointers need to change, and in what order?"
 
@@ -64,7 +64,7 @@ Write `insert_before_node(node, value)` — same, but insert before the given no
 
 ---
 
-## [x] Level 3: Deletion
+## Level 3: Deletion
 
 Deletion is where the doubly linked list really shines: given a reference to a node, you can remove it in O(1) without needing to find its predecessor.
 
@@ -86,7 +86,7 @@ Write `delete_range(head, start, end)` — removes all nodes from index `start` 
 
 ---
 
-## [x] Level 4: Exploiting Bidirectionality
+## Level 4: Exploiting Bidirectionality
 
 These problems are either easier or only possible because you can go backwards.
 
@@ -108,7 +108,7 @@ Write `reverse_traversal(head, start, end)` — given indices `start` and `end`,
 
 ---
 
-## [x] Level 5: Structural Transformation
+## Level 5: Structural Transformation
 
 Same spirit as the singly linked list versions, but now every pointer swap has a `prev` counterpart to maintain.
 
@@ -130,7 +130,7 @@ Write `move_node_to_front(head, node)` — given a reference to a node anywhere 
 
 ---
 
-## [x] Level 6: Multi-List Operations
+## Level 6: Multi-List Operations
 
 - [x] **6.1** — Status:
 
@@ -150,7 +150,7 @@ Write `concatenate(head1, head2)` — join two doubly linked lists end to end. R
 
 ---
 
-## [x] Level 7: Complex Manipulation
+## Level 7: Complex Manipulation
 
 - [x] **7.1** — Status:
 
@@ -180,7 +180,7 @@ Write `remove_duplicates_unsorted(head)` — remove duplicate values from an uns
 
 ---
 
-## [x] Level 8: The Hairy Stuff
+## Level 8: The Hairy Stuff
 
 - [x] **8.1** — Status:
 

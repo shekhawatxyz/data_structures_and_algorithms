@@ -1,6 +1,6 @@
 # Hashmap Programming Challenges
 
-_Problems: 0/16._
+_Problems: 16._
 
 A graduated sequence of problems for understanding, programming, and manipulating hashmaps (Python `dict`). Work through them in order — each builds on techniques developed in the previous ones.
 
