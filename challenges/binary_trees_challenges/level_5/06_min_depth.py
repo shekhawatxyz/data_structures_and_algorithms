@@ -43,7 +43,17 @@ def _make_level_order(values):
 
 
 def min_depth(root):
-    raise NotImplementedError("Implement min_depth(root).")
+    if root is None:
+        return -1
+    if not root.left and not root.right:
+        return 0
+    if root.left:
+        if root.right:
+            return 1 + min(min_depth(root.left), min_depth(root.right))
+        else:
+            return 1 + min_depth(root.left)
+    if root.right:
+        return 1 + min_depth(root.right)
 
 
 #
@@ -133,7 +143,9 @@ def test_single_node_min_depth_is_zero():
 
 
 def test_balanced_three_node_tree():
-    _assert_equal(min_depth(_make_level_order([1, 2, 3])), 1, "nearest leaf is one edge away.")
+    _assert_equal(
+        min_depth(_make_level_order([1, 2, 3])), 1, "nearest leaf is one edge away."
+    )
 
 
 def test_spec_right_chain():
