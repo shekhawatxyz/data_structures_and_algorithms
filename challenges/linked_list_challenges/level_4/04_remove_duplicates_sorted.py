@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **4.4** Write `remove_duplicates_sorted(head)` — given a list whose values are in non-decreasing order, remove all duplicate values so each value appears only once.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,15 @@ class Node:
 
 
 def remove_duplicates_sorted(head):
-    raise NotImplementedError('Implement remove_duplicates_sorted(head).')
+    dummy = Node(0, head)
+    current = dummy
+    while current and current.next:
+        if current.next.data == current.data:
+            current.next = current.next.next
+        else:
+            current = current.next
+    return dummy.next
+
 
 #
 #
