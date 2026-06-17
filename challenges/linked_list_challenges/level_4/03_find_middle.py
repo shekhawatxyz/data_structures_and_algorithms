@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **4.3** Write `find_middle(head)` — returns the middle node's value. (For even-length lists, return the second of the two middle nodes.) Do this in a single pass.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,15 @@ class Node:
 
 
 def find_middle(head):
-    raise NotImplementedError('Implement find_middle(head).')
+    if head is None:
+        raise IndexError("No middle for a null value")
+    fast = head
+    slow = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow.data
+
 
 #
 #
