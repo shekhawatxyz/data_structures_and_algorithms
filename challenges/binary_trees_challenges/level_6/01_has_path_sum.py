@@ -11,6 +11,7 @@
 # has_path_sum(from_level_order([1, 2, 3]), 5)                            # False
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -37,8 +38,20 @@ def _make_level_order(values):
     return root
 
 
+def all_paths(root):
+    if root is None:
+        return []
+    if not root.left and not root.right:
+        return [[root.value]]
+    child_paths = all_paths(root.left) + all_paths(root.right)
+    return [[root.value] + p for p in child_paths]
+
+
 def has_path_sum(root, target):
-    raise NotImplementedError("Implement has_path_sum(root, target).")
+    new_list = all_paths(root)
+    new_list = list(map(sum, new_list))
+    return target in new_list
+
 
 #
 #
@@ -130,19 +143,26 @@ def test_spec_example_match():
 
 
 def test_spec_example_no_match():
-    _assert_equal(has_path_sum(_make_level_order([1, 2, 3]), 5), False,
-                  "no root-to-leaf path in [1,2,3] sums to 5.")
+    _assert_equal(
+        has_path_sum(_make_level_order([1, 2, 3]), 5),
+        False,
+        "no root-to-leaf path in [1,2,3] sums to 5.",
+    )
 
 
 def test_partial_path_does_not_count():
     tree = _make_level_order([1, 2, None, 3])
-    _assert_equal(has_path_sum(tree, 3), False,
-                  "1->2 sums to 3 but is not a root-to-leaf path; should not count.")
+    _assert_equal(
+        has_path_sum(tree, 3),
+        False,
+        "1->2 sums to 3 but is not a root-to-leaf path; should not count.",
+    )
 
 
 def test_single_node_match():
-    _assert_equal(has_path_sum(Node(7), 7), True,
-                  "single node is itself a root-to-leaf path.")
+    _assert_equal(
+        has_path_sum(Node(7), 7), True, "single node is itself a root-to-leaf path."
+    )
 
 
 if __name__ == "__main__":
