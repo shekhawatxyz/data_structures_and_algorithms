@@ -5,6 +5,7 @@
 # Complete Exact Problem Statement (from linked-list-challenges.md):
 # **5.1** Write `reverse(head)` — reverse the linked list iteratively. Returns the new head.
 
+
 class Node:
     def __init__(self, data, next=None):
         self.data = data
@@ -12,7 +13,15 @@ class Node:
 
 
 def reverse(head):
-    raise NotImplementedError('Implement reverse(head).')
+    current = head
+    behind = None
+    while current:
+        cn = current.next
+        current.next = behind
+        behind = current
+        current = cn
+    return behind
+
 
 #
 #
