@@ -13,14 +13,13 @@ class Node:
 
 
 def remove_duplicates_sorted(head):
-    dummy = Node(0, head)
-    current = dummy
+    current = head
     while current and current.next:
         if current.next.data == current.data:
             current.next = current.next.next
         else:
             current = current.next
-    return dummy.next
+    return head
 
 
 #
