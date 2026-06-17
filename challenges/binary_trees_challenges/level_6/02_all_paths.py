@@ -11,6 +11,7 @@
 # # [[1, 2, 4], [1, 2, 5], [1, 3]]
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -38,7 +39,13 @@ def _make_level_order(values):
 
 
 def all_paths(root):
-    raise NotImplementedError("Implement all_paths(root).")
+    if root is None:
+        return []
+    if not root.left and not root.right:
+        return [[root.value]]
+    child_paths = all_paths(root.left) + all_paths(root.right)
+    return [[root.value] + p for p in child_paths]
+
 
 #
 #
@@ -130,14 +137,18 @@ def test_single_node_path():
 
 def test_three_paths_in_preorder_leaf_order():
     tree = _make_level_order([1, 2, 3, 4, 5])
-    _assert_equal(all_paths(tree), [[1, 2, 4], [1, 2, 5], [1, 3]],
-                  "paths should appear in left-to-right preorder leaf order.")
+    _assert_equal(
+        all_paths(tree),
+        [[1, 2, 4], [1, 2, 5], [1, 3]],
+        "paths should appear in left-to-right preorder leaf order.",
+    )
 
 
 def test_left_skew_one_path():
     tree = _make_level_order([1, 2, None, 3])
-    _assert_equal(all_paths(tree), [[1, 2, 3]],
-                  "left-skewed tree should produce a single path.")
+    _assert_equal(
+        all_paths(tree), [[1, 2, 3]], "left-skewed tree should produce a single path."
+    )
 
 
 if __name__ == "__main__":
