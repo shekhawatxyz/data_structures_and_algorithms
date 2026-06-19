@@ -38,13 +38,20 @@ def _make_level_order(values):
     return root
 
 
+def path_function(root, path, result):
+    if not root:
+        return
+    path_function(root.left, path + [root.value], result)
+    path_function(root.right, path + [root.value], result)
+    if root.left is None and root.right is None:
+        result.append(path + [root.value])
+
+
 def all_paths(root):
-    if root is None:
-        return []
-    if not root.left and not root.right:
-        return [[root.value]]
-    child_paths = all_paths(root.left) + all_paths(root.right)
-    return [[root.value] + p for p in child_paths]
+    result = []
+    path = []
+    path_function(root, path, result)
+    return result
 
 
 #
