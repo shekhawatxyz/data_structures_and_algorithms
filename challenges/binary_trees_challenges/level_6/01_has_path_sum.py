@@ -38,19 +38,16 @@ def _make_level_order(values):
     return root
 
 
-def all_paths(root):
-    if root is None:
-        return []
-    if not root.left and not root.right:
-        return [[root.value]]
-    child_paths = all_paths(root.left) + all_paths(root.right)
-    return [[root.value] + p for p in child_paths]
-
-
 def has_path_sum(root, target):
-    new_list = all_paths(root)
-    new_list = list(map(sum, new_list))
-    return target in new_list
+    if root is None:
+        return False
+    elif root.left is None and root.right is None:
+        return root.value == target
+    else:
+        return has_path_sum(root.left, target - root.value) or has_path_sum(
+            root.right, target - root.value
+        )
+    return False
 
 
 #
