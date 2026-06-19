@@ -5,8 +5,13 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **2b.** Write a function that takes a list of integers and checks whether it is a palindrome, using only a stack. Do *not* reverse the list directly — use the stack to produce the reversed sequence and compare element by element.
 
+
 def is_palindrome_list_stack(values):
-    raise NotImplementedError('Implement is_palindrome_list_stack(values).')
+    stack1 = list(values)
+    stack2 = [stack1.pop() for _ in range(len(stack1))]
+    return stack2 == values
+
+
 #
 #
 #
