@@ -4,8 +4,13 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **2a.** Write a function that takes a string and returns it reversed, using only a stack. (Push every character, then pop them all.)
 
+
 def reverse_string_stack(text):
-    raise NotImplementedError('Implement reverse_string_stack(text).')
+    stack1 = list(text)
+    stack2 = [stack1.pop() for _ in range(len(stack1))]
+    return "".join(stack2)
+
+
 #
 #
 #
