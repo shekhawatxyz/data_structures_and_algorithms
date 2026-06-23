@@ -38,8 +38,20 @@ def _make_level_order(values):
     return root
 
 
+def height(root):
+    if root is None:
+        return 0
+    return 1 + max(height(root.left), height(root.right))
+
+
 def is_balanced(root):
-    raise NotImplementedError("Implement is_balanced(root).")
+    if root is None:
+        return True
+    left, right = root.left, root.right
+    left_height, right_height = height(left), height(right)
+    if is_balanced(left) and is_balanced(right):
+        return abs(left_height - right_height) <= 1
+    return False
 
 
 #
@@ -129,7 +141,11 @@ def test_single_node_is_balanced():
 
 
 def test_spec_balanced_tree():
-    _assert_equal(is_balanced(_make_level_order([1, 2, 3])), True, "spec balanced tree should pass.")
+    _assert_equal(
+        is_balanced(_make_level_order([1, 2, 3])),
+        True,
+        "spec balanced tree should pass.",
+    )
 
 
 def test_spec_unbalanced_tree():
