@@ -5,8 +5,17 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **3b.** Write a function that takes a string (of any characters, not just parentheses) and removes all adjacent duplicates, using a stack. For example: `"abbaca"` → `"ca"`. (Process each character: if it matches the top of the stack, pop; otherwise push. Whatever remains in the stack is the result.)
 
+
 def remove_adjacent_duplicates(text):
-    raise NotImplementedError('Implement remove_adjacent_duplicates(text).')
+    stack = []
+    for t in text:
+        if stack and t == stack[-1]:
+            stack.pop()
+        else:
+            stack.append(t)
+    return "".join(stack)
+
+
 #
 #
 #
@@ -52,6 +61,7 @@ def remove_adjacent_duplicates(text):
 #
 #
 #
+
 
 def _assert_equal(actual, expected, context):
     if actual != expected:
@@ -107,29 +117,29 @@ _CASE_EXPECTS_RAISE = object()
 
 
 PEDAGOGY_CASES = [
-    ('empty string', '', ''),
-    ('single char', 'a', 'a'),
-    ('one duplicate pair', 'aa', ''),
-    ('no duplicates', 'ab', 'ab'),
-    ('example case', 'abbaca', 'ca'),
+    ("empty string", "", ""),
+    ("single char", "a", "a"),
+    ("one duplicate pair", "aa", ""),
+    ("no duplicates", "ab", "ab"),
+    ("example case", "abbaca", "ca"),
 ]
 
 
 BOUNDARY_CASES = [
-    ('all duplicates', 'aaaa', ''),
-    ('pair cancellation chain', 'abba', ''),
-    ('no adjacent duplicates', 'abab', 'abab'),
-    ('mixed cancellation', 'aabcca', 'ba'),
-    ('full collapse palindrome-like', 'abcddcba', ''),
+    ("all duplicates", "aaaa", ""),
+    ("pair cancellation chain", "abba", ""),
+    ("no adjacent duplicates", "abab", "abab"),
+    ("mixed cancellation", "aabcca", "ba"),
+    ("full collapse palindrome-like", "abcddcba", ""),
 ]
 
 
 INTERACTION_CASES = [
-    ('known test pattern', 'azxxzy', 'ay'),
-    ('odd duplicate block', 'abbba', 'aba'),
-    ('staggered cascade', 'aabccba', 'a'),
-    ('multi-stage cascade', 'abcddcbae', 'e'),
-    ('symmetric full collapse', 'cabbaac', 'cac'),
+    ("known test pattern", "azxxzy", "ay"),
+    ("odd duplicate block", "abbba", "aba"),
+    ("staggered cascade", "aabccba", "a"),
+    ("multi-stage cascade", "abcddcbae", "e"),
+    ("symmetric full collapse", "cabbaac", "cac"),
 ]
 
 
@@ -137,7 +147,9 @@ def _run_case_group(group_name, cases):
     for case_index, (case_label, input_value, expected) in enumerate(cases, start=1):
         if expected is _CASE_EXPECTS_RAISE:
             _assert_raises(
-                lambda value=copy.deepcopy(input_value): remove_adjacent_duplicates(value),
+                lambda value=copy.deepcopy(input_value): remove_adjacent_duplicates(
+                    value
+                ),
                 (
                     f"{group_name} case {case_index} ({case_label}) expected an exception "
                     f"for input {input_value!r}."
@@ -157,21 +169,21 @@ def _run_case_group(group_name, cases):
 
 
 def test_01_pedagogical_progression():
-    _run_case_group('Pedagogy', PEDAGOGY_CASES)
+    _run_case_group("Pedagogy", PEDAGOGY_CASES)
 
 
 def test_02_boundaries_and_off_by_ones():
-    _run_case_group('Boundaries', BOUNDARY_CASES)
+    _run_case_group("Boundaries", BOUNDARY_CASES)
 
 
 def test_03_complex_input_interactions():
-    _run_case_group('Interactions', INTERACTION_CASES)
+    _run_case_group("Interactions", INTERACTION_CASES)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     TEST_CASES = [
-        ('pedagogical progression', test_01_pedagogical_progression),
-        ('boundary and off-by-one coverage', test_02_boundaries_and_off_by_ones),
-        ('complex interaction coverage', test_03_complex_input_interactions),
+        ("pedagogical progression", test_01_pedagogical_progression),
+        ("boundary and off-by-one coverage", test_02_boundaries_and_off_by_ones),
+        ("complex interaction coverage", test_03_complex_input_interactions),
     ]
     _run_all_tests(TEST_CASES)
