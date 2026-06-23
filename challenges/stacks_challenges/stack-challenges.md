@@ -50,11 +50,11 @@ Write a function that takes a positive integer and returns its binary representa
 
 Write a function that takes a string of parentheses — only `(` and `)` — and returns whether they are balanced. Think carefully about what "balanced" means: every opener has a corresponding closer *in the right order*, and there are no unmatched closers or openers.
 
-- [x] **3b.** — Status:
+- [x] **3b.** — Status: shaky
 
 Write a function that takes a string (of any characters, not just parentheses) and removes all adjacent duplicates, using a stack. For example: `"abbaca"` → `"ca"`. (Process each character: if it matches the top of the stack, pop; otherwise push. Whatever remains in the stack is the result.)
 
-- [x] **3c.** — Status:
+- [x] **3c.** — Status: hard
 
 Write a function that takes a string containing `(` and `)` among other characters and returns the string with the minimum number of parentheses removed to make it valid. For example: `"a(b(c)d"` → `"ab(c)d"` (one possible answer). Use a stack to identify which parentheses are unmatched, then build the output string excluding them.
 
