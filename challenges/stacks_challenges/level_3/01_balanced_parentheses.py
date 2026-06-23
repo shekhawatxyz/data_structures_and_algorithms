@@ -4,8 +4,19 @@
 # Complete Exact Problem Statement (from stack-challenges.md):
 # **3a.** Write a function that takes a string of parentheses — only `(` and `)` — and returns whether they are balanced. Think carefully about what "balanced" means: every opener has a corresponding closer *in the right order*, and there are no unmatched closers or openers.
 
+
 def is_balanced_parentheses(text):
-    raise NotImplementedError('Implement is_balanced_parentheses(text).')
+    total = 0
+    for t in text:
+        if total < 0:
+            return False
+        if t == "(":
+            total += 1
+        elif t == ")":
+            total -= 1
+    return total == 0
+
+
 #
 #
 #
