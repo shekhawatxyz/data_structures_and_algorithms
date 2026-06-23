@@ -6,6 +6,7 @@
 #
 # Implement `equals(a, b) -> bool`. Two trees are equal iff they have the same shape and the same values at corresponding positions. Two empty trees are equal.
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -33,7 +34,16 @@ def _make_level_order(values):
 
 
 def equals(a, b):
-    raise NotImplementedError("Implement equals(a, b).")
+    if a is None and b is None:
+        return True
+    if a is None or b is None:
+        return False
+    if a.value != b.value:
+        return False
+    left = equals(a.left, b.left)
+    right = equals(a.right, b.right)
+    return left and right
+
 
 #
 #
@@ -120,8 +130,12 @@ def test_two_empty_trees_are_equal():
 
 
 def test_empty_vs_non_empty():
-    _assert_equal(equals(None, Node(1)), False, "empty tree should not equal non-empty.")
-    _assert_equal(equals(Node(1), None), False, "non-empty tree should not equal empty.")
+    _assert_equal(
+        equals(None, Node(1)), False, "empty tree should not equal non-empty."
+    )
+    _assert_equal(
+        equals(Node(1), None), False, "non-empty tree should not equal empty."
+    )
 
 
 def test_same_shape_and_values():
