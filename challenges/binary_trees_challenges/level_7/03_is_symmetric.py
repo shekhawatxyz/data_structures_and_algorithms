@@ -11,6 +11,7 @@
 # is_symmetric(from_level_order([1, 2, 2, None, 3, None, 3]))   # False
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -37,8 +38,21 @@ def _make_level_order(values):
     return root
 
 
+def is_symmetric_helper(a, b):
+    if a is None and b is None:
+        return True
+    if a is None or b is None:
+        return False
+    if a.value != b.value:
+        return False
+    return is_symmetric_helper(a.left, b.right) and is_symmetric_helper(a.right, b.left)
+
+
 def is_symmetric(root):
-    raise NotImplementedError("Implement is_symmetric(root).")
+    if root is None:
+        return True
+    return is_symmetric_helper(root.left, root.right)
+
 
 #
 #
@@ -130,19 +144,27 @@ def test_single_node_is_symmetric():
 
 def test_symmetric_example():
     tree = _make_level_order([1, 2, 2, 3, 4, 4, 3])
-    _assert_equal(is_symmetric(tree), True, "spec example with mirrored values should be symmetric.")
+    _assert_equal(
+        is_symmetric(tree),
+        True,
+        "spec example with mirrored values should be symmetric.",
+    )
 
 
 def test_asymmetric_shape():
     tree = _make_level_order([1, 2, 2, None, 3, None, 3])
-    _assert_equal(is_symmetric(tree), False,
-                  "asymmetric shape from spec example should not be symmetric.")
+    _assert_equal(
+        is_symmetric(tree),
+        False,
+        "asymmetric shape from spec example should not be symmetric.",
+    )
 
 
 def test_asymmetric_values():
     tree = _make_level_order([1, 2, 2, 3, 4, 5, 3])
-    _assert_equal(is_symmetric(tree), False,
-                  "different inner values should break symmetry.")
+    _assert_equal(
+        is_symmetric(tree), False, "different inner values should break symmetry."
+    )
 
 
 if __name__ == "__main__":
