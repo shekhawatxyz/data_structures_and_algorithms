@@ -12,6 +12,7 @@
 # level_order(t)   # [1, 3, 2, 5, 4]
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -54,7 +55,14 @@ def _level_order_values(root):
 
 
 def mirror_in_place(root):
-    raise NotImplementedError("Implement mirror_in_place(root).")
+    if root is None:
+        return None
+    right = root.right
+    left = root.left
+    root.right, root.left = left, right
+    mirror_in_place(root.right)
+    mirror_in_place(root.left)
+
 
 #
 #
@@ -155,16 +163,20 @@ def test_single_node_unchanged():
 def test_full_tree_mirrored():
     tree = _make_level_order([1, 2, 3, 4, 5])
     mirror_in_place(tree)
-    _assert_equal(_level_order_values(tree), [1, 3, 2, 5, 4],
-                  "level-order of mirrored tree should match spec example.")
+    _assert_equal(
+        _level_order_values(tree),
+        [1, 3, 2, 5, 4],
+        "level-order of mirrored tree should match spec example.",
+    )
 
 
 def test_mirror_is_in_place():
     tree = _make_level_order([1, 2, 3])
     result = mirror_in_place(tree)
     _assert_true(result is None, "mirror_in_place should return None.")
-    _assert_equal(_level_order_values(tree), [1, 3, 2],
-                  "tree should be modified in place.")
+    _assert_equal(
+        _level_order_values(tree), [1, 3, 2], "tree should be modified in place."
+    )
 
 
 if __name__ == "__main__":
