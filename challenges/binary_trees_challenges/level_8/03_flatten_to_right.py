@@ -59,8 +59,23 @@ def _right_chain_values(root):
     return values
 
 
+def _flatten(root):
+    if root is None or (root.right is None and root.left is None):
+        return root
+    if root.left is None:
+        return _flatten(root.right)
+    rr = root.right
+    left = _flatten(root.left)
+    right = _flatten(root.right)
+    root.right = root.left
+    left.right = rr
+    root.left = None
+    return right if right else left
+
+
 def flatten_to_right(root):
-    raise NotImplementedError("Implement flatten_to_right(root).")
+    _flatten(root)
+    return None
 
 
 #
@@ -148,25 +163,33 @@ def test_empty_tree_is_noop():
 def test_single_node_stays_single_chain():
     root = Node(7)
     flatten_to_right(root)
-    _assert_equal(_right_chain_values(root), [7], "single node should remain a one-node chain.")
+    _assert_equal(
+        _right_chain_values(root), [7], "single node should remain a one-node chain."
+    )
 
 
 def test_spec_example_preorder_chain():
     root = _make_level_order([1, 2, 5, 3, 4, None, 6])
     flatten_to_right(root)
-    _assert_equal(_right_chain_values(root), [1, 2, 3, 4, 5, 6], "chain should follow preorder.")
+    _assert_equal(
+        _right_chain_values(root), [1, 2, 3, 4, 5, 6], "chain should follow preorder."
+    )
 
 
 def test_left_skewed_tree():
     root = _make_level_order([1, 2, None, 3])
     flatten_to_right(root)
-    _assert_equal(_right_chain_values(root), [1, 2, 3], "left chain should become right chain.")
+    _assert_equal(
+        _right_chain_values(root), [1, 2, 3], "left chain should become right chain."
+    )
 
 
 def test_right_skewed_tree_keeps_order():
     root = _make_level_order([1, None, 2, None, 3])
     flatten_to_right(root)
-    _assert_equal(_right_chain_values(root), [1, 2, 3], "right chain should keep preorder order.")
+    _assert_equal(
+        _right_chain_values(root), [1, 2, 3], "right chain should keep preorder order."
+    )
 
 
 if __name__ == "__main__":
