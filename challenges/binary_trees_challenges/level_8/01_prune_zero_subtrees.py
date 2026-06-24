@@ -44,7 +44,13 @@ def _make_level_order(values):
 
 
 def prune_zero_subtrees(root):
-    raise NotImplementedError("Implement prune_zero_subtrees(root).")
+    if root is None:
+        return None
+    root.left = prune_zero_subtrees(root.left)
+    root.right = prune_zero_subtrees(root.right)
+    if root.left is None and root.right is None and root.value == 0:
+        root = None
+    return root
 
 
 #
@@ -135,7 +141,9 @@ def test_empty_tree_stays_none():
 
 
 def test_single_zero_node_is_pruned():
-    _assert_true(prune_zero_subtrees(Node(0)) is None, "single zero node is an all-zero subtree.")
+    _assert_true(
+        prune_zero_subtrees(Node(0)) is None, "single zero node is an all-zero subtree."
+    )
 
 
 def test_single_nonzero_node_is_kept():
@@ -156,7 +164,9 @@ def test_spec_example_prunes_left_subtree():
 def test_zero_node_with_nonzero_descendant_is_kept():
     tree = _make_level_order([1, 0, 0, None, 1])
     result = prune_zero_subtrees(tree)
-    _assert_true(result.left is not None, "zero node with nonzero descendant should remain.")
+    _assert_true(
+        result.left is not None, "zero node with nonzero descendant should remain."
+    )
     _assert_equal(result.left.right.value, 1, "nonzero descendant should remain.")
     _assert_true(result.right is None, "all-zero right child should be pruned.")
 
@@ -167,6 +177,9 @@ if __name__ == "__main__":
         ("single zero node is pruned", test_single_zero_node_is_pruned),
         ("single nonzero node is kept", test_single_nonzero_node_is_kept),
         ("spec example prunes left subtree", test_spec_example_prunes_left_subtree),
-        ("zero node with nonzero descendant is kept", test_zero_node_with_nonzero_descendant_is_kept),
+        (
+            "zero node with nonzero descendant is kept",
+            test_zero_node_with_nonzero_descendant_is_kept,
+        ),
     ]
     _run_all_tests(TEST_CASES)
