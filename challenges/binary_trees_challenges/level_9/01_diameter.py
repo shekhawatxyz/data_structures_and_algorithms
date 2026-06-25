@@ -10,6 +10,7 @@
 # diameter(from_level_order([1, 2, 3, 4, 5]))   # 3
 # ```
 
+
 class Node:
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -37,7 +38,22 @@ def _make_level_order(values):
 
 
 def diameter(root):
-    raise NotImplementedError("Implement diameter(root).")
+    best = 0
+
+    def report(node):
+        nonlocal best
+        if node is None:
+            return 0
+        L = report(node.left)
+        R = report(node.right)
+        peak = L + R
+        if peak > best:
+            best = peak
+        return 1 + max(L, R)
+
+    report(root)
+    return best
+
 
 #
 #
@@ -128,29 +144,47 @@ def test_single_node_diameter_is_zero():
 
 
 def test_spec_example_diameter():
-    _assert_equal(diameter(_make_level_order([1, 2, 3, 4, 5])), 3,
-                  "spec example tree should have diameter 3.")
+    _assert_equal(
+        diameter(_make_level_order([1, 2, 3, 4, 5])),
+        3,
+        "spec example tree should have diameter 3.",
+    )
 
 
 def test_diameter_through_root():
     # Path 4 -> 2 -> 1 -> 3 -> 6: 4 edges
     tree = _make_level_order([1, 2, 3, 4, None, None, 6])
-    _assert_equal(diameter(tree), 4,
-                  "diameter should pass through the root when both subtrees extend.")
+    _assert_equal(
+        diameter(tree),
+        4,
+        "diameter should pass through the root when both subtrees extend.",
+    )
 
 
 def test_diameter_off_root():
     # Tree: longest path lives entirely in the left subtree, not crossing root.
-    # 1 -> 2 -> 4 -> 6 -> 8 (and 4 -> 7 -> 9 branch off):
-    # Build by hand to control shape.
+    # Build by hand to control the shape:
+    #
+    #           1
+    #          / \
+    #         2   3
+    #        / \
+    #       4   5
+    #      /     \
+    #     6       7
+    #    /         \
+    #   8           9
     n8 = Node(8)
     n6 = Node(6, left=n8)
-    n4 = Node(4, left=n6, right=Node(7, left=Node(9)))
-    n2 = Node(2, left=n4)
+    n4 = Node(4, left=n6)
+    n9 = Node(9)
+    n7 = Node(7, right=n9)
+    n5 = Node(5, right=n7)
+    n2 = Node(2, left=n4, right=n5)
     root = Node(1, left=n2, right=Node(3))
-    # Longest path inside the left subtree: 8 - 6 - 4 - 7 - 9 = 4 edges.
-    _assert_equal(diameter(root), 4,
-                  "longest path may live entirely off the root.")
+    # Off-root path 8 - 6 - 4 - 2 - 5 - 7 - 9 is 6 edges.
+    # Any path crossing root is at most 8 - 6 - 4 - 2 - 1 - 3, which is 5.
+    _assert_equal(diameter(root), 6, "longest path may live entirely off the root.")
 
 
 if __name__ == "__main__":
